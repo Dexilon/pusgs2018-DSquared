@@ -305,6 +305,7 @@
     <Compile Include="Models\Entities\Vehicle.cs" />
     <Compile Include="Persistance\RADBContext.cs" />
     <Compile Include="Persistance\Repository\BranchRepository.cs" />
+    <Compile Include="Persistance\Repository\IAppUserRepository.cs" />
     <Compile Include="Persistance\Repository\IBranchRepository.cs" />
     <Compile Include="Persistance\Repository\IRepository.cs" />
     <Compile Include="Persistance\Repository\Repository.cs" />
