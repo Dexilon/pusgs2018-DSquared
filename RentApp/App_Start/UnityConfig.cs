@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using RentApp.Models.Entities;
 using RentApp.Persistance;
+using RentApp.Persistance.Repository;
 using RentApp.Providers;
 using System;
 using System.Data.Entity;
@@ -55,6 +56,12 @@ namespace RentApp
             container.RegisterType<ISecureDataFormat<AuthenticationTicket>, CustomJwtFormat>(new InjectionConstructor("http://localhost:51680"));
             container.RegisterType<IUserStore<RAIdentityUser>, UserStore<RAIdentityUser>>(
             new InjectionConstructor(typeof(DbContext)));
+            container.RegisterType<IAppUserRepository, AppUserRepository>();
+            container.RegisterType<IBranchRepository, BranchRepository>();
+            container.RegisterType<IRentRepository, RentRepository>();
+            container.RegisterType<ITypeOfVehicleRepository, TypeOfVehicleRepository>();
+            container.RegisterType<IVehicleRepository, VehicleRepository>();
+            container.RegisterType<IServicesRepository, ServicesRepository>();
         }
     }
 }
