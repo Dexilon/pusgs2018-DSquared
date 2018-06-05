@@ -280,6 +280,14 @@
     <Compile Include="Migrations\201806041041598_HopeItWillWork.Designer.cs">
       <DependentUpon>201806041041598_HopeItWillWork.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806050636462_Model entities.cs" />
+    <Compile Include="Migrations\201806050636462_Model entities.Designer.cs">
+      <DependentUpon>201806050636462_Model entities.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806050703567_Model changed.cs" />
+    <Compile Include="Migrations\201806050703567_Model changed.Designer.cs">
+      <DependentUpon>201806050703567_Model changed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -380,6 +388,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806041041598_HopeItWillWork.resx">
       <DependentUpon>201806041041598_HopeItWillWork.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806050636462_Model entities.resx">
+      <DependentUpon>201806050636462_Model entities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806050703567_Model changed.resx">
+      <DependentUpon>201806050703567_Model changed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
