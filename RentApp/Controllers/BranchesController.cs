@@ -10,24 +10,29 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using RentApp.Models.Entities;
 using RentApp.Persistance;
+using RentApp.Persistance.UnitOfWork;
 
 namespace RentApp.Controllers
 {
     public class BranchesController : ApiController
     {
-        private RADBContext db = new RADBContext();
+        private readonly IUnitOfWork unitOfWork;
 
-        // GET: api/Branches
-        public IQueryable<Branch> GetBranches()
+        public BranchesController(IUnitOfWork unitOfWork)
         {
-            return db.Branches;
+            this.unitOfWork = unitOfWork;
+        }
+        // GET: api/Branches
+        public IEnumerable<Branch> GetBranches()
+        {
+            return unitOfWork.Branches.GetAll();
         }
 
         // GET: api/Branches/5
         [ResponseType(typeof(Branch))]
         public IHttpActionResult GetBranch(int id)
         {
-            Branch branch = db.Branches.Find(id);
+            Branch branch = unitOfWork.Branches.Get(id);
             if (branch == null)
             {
                 return NotFound();
@@ -50,11 +55,10 @@ namespace RentApp.Controllers
                 return BadRequest();
             }
 
-            db.Entry(branch).State = EntityState.Modified;
-
             try
             {
-                db.SaveChanges();
+                unitOfWork.Branches.Update(branch);
+                unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,8 +84,8 @@ namespace RentApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Branches.Add(branch);
-            db.SaveChanges();
+            unitOfWork.Branches.Add(branch);
+            unitOfWork.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = branch.Id }, branch);
         }
@@ -90,14 +94,14 @@ namespace RentApp.Controllers
         [ResponseType(typeof(Branch))]
         public IHttpActionResult DeleteBranch(int id)
         {
-            Branch branch = db.Branches.Find(id);
+            Branch branch = unitOfWork.Branches.Get(id);
             if (branch == null)
             {
                 return NotFound();
             }
 
-            db.Branches.Remove(branch);
-            db.SaveChanges();
+            unitOfWork.Branches.Remove(branch);
+            unitOfWork.Complete();
 
             return Ok(branch);
         }
@@ -106,14 +110,14 @@ namespace RentApp.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool BranchExists(int id)
         {
-            return db.Branches.Count(e => e.Id == id) > 0;
+            return unitOfWork.Branches.Get(id) != null;
         }
     }
 }
