@@ -1,0 +1,50 @@
+<form #f="ngForm" (ngSubmit)="onSubmit(f)" class="form-horizontal">
+  <fieldset>
+  
+  <!-- Form Name -->
+  <legend>Add Service</legend>
+  
+  <!-- Text input-->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="textinput">Service Name</label>  
+    <div class="col-md-4">
+    <input id="serviceName" name="serviceName" type="text" ngModel #serviceName="ngModel" placeholder="" class="form-control input-md">
+      
+    </div>
+  </div>
+  
+  <!-- File Button --> 
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="logo">Logo</label>
+    <div class="col-md-4">
+      <input id="logo" name="logo" class="input-file" ngModel #logo="ngModel" type="file">
+    </div>
+  </div>
+  
+  <!-- Text input-->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="email">E-mail</label>  
+    <div class="col-md-4">
+    <input id="email" name="email" type="text" placeholder="" ngModel #email="ngModel" class="form-control input-md">
+      
+    </div>
+  </div>
+  
+  <!-- Textarea -->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="description">Description</label>
+    <div class="col-md-4">                     
+      <textarea class="form-control" id="description" name="description" ngModel #description="ngModel"></textarea>
+    </div>
+  </div>
+  
+  <!-- Button -->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="addServiceButton"></label>
+    <div class="col-md-4">
+      <button type="submit" id="addServiceButton" name="addServiceButton" class="btn btn-success">Add Service</button>
+    </div>
+  </div>
+  
+  </fieldset>
+  </form>
