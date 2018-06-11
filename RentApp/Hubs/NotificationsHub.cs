@@ -4,15 +4,18 @@ using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using System.Timers;
 
 namespace RentApp.Hubs
 {
     [HubName("notifications")]
     public class NotificationsHub : Hub
     {
-        public void Hello()
+        private static IHubContext hubContext = GlobalHost.ConnectionManager.GetHubContext<NotificationsHub>();
+        private static Timer t = new Timer();
+        public static void Hello()
         {
-            Clients.All.hello();
+            hubContext.Clients.All.hello("Hello from server");
         }
         public void GetRealTime()
         {

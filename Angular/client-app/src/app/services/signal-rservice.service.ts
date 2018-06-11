@@ -55,5 +55,8 @@ import {
             console.log('received in SignalRService: ' + JSON.stringify(data));  
             this.messageReceived.emit(data);  
         });  
+        this.proxy.on('hello', (data: string) => {
+            alert(data);
+        });
     }  
   }  
