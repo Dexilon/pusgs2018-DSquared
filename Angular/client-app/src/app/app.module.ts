@@ -11,6 +11,8 @@ import { RegisterComponent } from './register/register.component';
 import { AddServiceComponent } from './add-service/add-service.component';
 import { AddVehicleComponent } from './add-vehicle/add-vehicle.component';
 import { AddBranchComponent } from './add-branch/add-branch.component';
+import { ClockComponent } from './clock/clock.component';
+import { SignalRService } from 'src/app/services/signal-rservice.service';
 
 const Routes = [
   {
@@ -43,14 +45,15 @@ const Routes = [
     RegisterComponent,
     AddServiceComponent,
     AddVehicleComponent,
-    AddBranchComponent
+    AddBranchComponent,
+    ClockComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     RouterModule.forRoot(Routes)
   ],
-  providers: [],
+  providers: [SignalRService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

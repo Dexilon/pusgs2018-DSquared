@@ -3,11 +3,11 @@
     <nav class="navbar navbar-inverse">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">Rent a car</a>
+          <a class="navbar-brand" [routerLink]="['/']">Rent a car</a>
         </div>
         <ul class="nav navbar-nav">
-          <li class="active"><a [routerLink]="['/addVehicle']">Add Vehicle</a></li>
-          <li class="active"><a [routerLink]="['/addService']">Add Service</a></li>
+          <li><a [routerLink]="['/addVehicle']">Add Vehicle</a></li>
+          <li><a [routerLink]="['/addService']">Add Service</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><a [routerLink]="['/register']"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
