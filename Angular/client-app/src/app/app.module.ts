@@ -4,13 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientXsrfModule } from '@angular/common/http';
-<<<<<<< HEAD
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/interceptor';
 
-=======
->>>>>>> 77080bae314bf6105be3509556c5c6f8db7b0bdc
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
