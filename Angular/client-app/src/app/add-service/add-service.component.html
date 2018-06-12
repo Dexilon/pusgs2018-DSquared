@@ -1,4 +1,4 @@
-<form #f="ngForm" (ngSubmit)="onSubmit(f)" class="form-horizontal">
+<form #f="ngForm" (ngSubmit)="onSubmit(f.value,f)" class="form-horizontal">
   <fieldset>
   
   <!-- Form Name -->
@@ -8,33 +8,52 @@
   <div class="form-group">
     <label class="col-md-4 control-label" for="textinput">Service Name</label>  
     <div class="col-md-4">
-    <input id="serviceName" name="serviceName" type="text" ngModel #serviceName="ngModel" placeholder="" class="form-control input-md">
-      
+    <input id="Name" name="Name" type="text" ngModel #Name="ngModel" placeholder="" required minlength="6" maxlength="42" class="form-control input-md">
+    <div *ngIf="Name.errors && (Name.dirty || Name.touched)" class="alert alert-danger">
+      <div [hidden]="!Name.errors.required">
+        Service name is required!
+      </div>
+      <div [hidden]="!Name.errors.minlength">
+        Service name must be at least 6 characters long.
+      </div>
+      <div [hidden]="!Name.errors.maxlength">
+        Service name cannot be more than 42 characters long.
+      </div>
+    </div>
     </div>
   </div>
   
   <!-- File Button --> 
   <div class="form-group">
-    <label class="col-md-4 control-label" for="logo">Logo</label>
+    <label class="col-md-4 control-label" for="Logo">Logo</label>
     <div class="col-md-4">
-      <input id="logo" name="logo" class="input-file" ngModel #logo="ngModel" type="file">
+      <input id="Logo" name="Logo" class="input-file" ngModel #Logo="ngModel" type="file">
     </div>
   </div>
   
   <!-- Text input-->
   <div class="form-group">
-    <label class="col-md-4 control-label" for="email">E-mail</label>  
+    <label class="col-md-4 control-label" for="Email">E-mail</label>  
     <div class="col-md-4">
-    <input id="email" name="email" type="text" placeholder="" ngModel #email="ngModel" class="form-control input-md">
-      
+    <input id="Email" name="Email" type="text" placeholder="" ngModel required #Email="ngModel" class="form-control input-md"
+    pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+    <div *ngIf="Email.errors && (Email.dirty || Email.touched)"
+    class="alert alert-danger">  
+     <div [hidden]="!Email.errors.required">
+       Email is required!
+     </div>
+     <div [hidden]="!Email.errors.pattern">
+       Email form is invalid (example jondoe@gmail.com)
+     </div>
+   </div>
     </div>
   </div>
   
   <!-- Textarea -->
   <div class="form-group">
-    <label class="col-md-4 control-label" for="description">Description</label>
+    <label class="col-md-4 control-label" for="Description">Description</label>
     <div class="col-md-4">                     
-      <textarea class="form-control" id="description" name="description" ngModel #description="ngModel"></textarea>
+      <textarea class="form-control" id="Description" name="Description" ngModel #Description="ngModel"></textarea>
     </div>
   </div>
   
@@ -48,3 +67,13 @@
   
   </fieldset>
   </form>
+  <table class="table table-striped table-dark" >
+    <tbody *ngFor = "let item of services">
+        <tr>
+            <td style="width: 250px;"><img width="200" src="assets/img/{{item.Logo}}" />Slika</td>
+            <td>Name: {{item.Name}}</td>
+            <td>Description: {{item.Description}}</td>
+            <td>Email: {{item.Email}}</td>
+        </tr>
+    </tbody>
+</table>

@@ -24,6 +24,7 @@ import { Http } from '@angular/http/src/http';
 
 import {CanActivateViaAuthGuard} from './guard/auth.guard';
 import { RegisterServiceService } from 'src/app/registerService/register-service.service';
+import { ServiceServiceService } from 'src/app/serviceService/service-service.service';
 
 const Routes = [
   {
@@ -68,7 +69,7 @@ const Routes = [
     HttpClientModule,
     HttpClientXsrfModule
   ],
-  providers: [SignalRService,RegisterServiceService,
+  providers: [SignalRService,RegisterServiceService, ServiceServiceService,
     CanActivateViaAuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
