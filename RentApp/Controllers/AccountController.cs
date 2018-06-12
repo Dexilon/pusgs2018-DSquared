@@ -327,6 +327,8 @@ namespace RentApp.Controllers
                 return GetErrorResult(result);
             }
 
+            //userManager.Create(user);
+            //userManager.AddToRole(user.Id, appUser);
             return Ok();
         }
 

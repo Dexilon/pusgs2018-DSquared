@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NgForm} from '@angular/forms';
+import { LoginService } from 'src/app/login-service/login.service';
+import { AppUser } from 'src/app/models/AppUser';
 
 @Component({
   selector: 'app-login',
@@ -8,13 +10,23 @@ import {NgForm} from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  private result: AppUser;
+
+  constructor(private loginService: LoginService) { }
 
   ngOnInit() {
   }
  
   onSubmit(f: NgForm){
+    this.loginService.getTheToken(f.value)
     console.log(f.value.email, f.value.password)
   }
+
+  // callGet(){
+  //   debugger
+  //   console.log("CAO POOZZ");
+  //   this.loginService.getTheToken()
+  // }
+
 
 }

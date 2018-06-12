@@ -12,4 +12,13 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
   }
 
+  checkIfLogged() {
+    return localStorage.jwt;
+  }
+
+  logout()
+  {
+    localStorage.clear();
+  }
+
 }
