@@ -17,6 +17,7 @@ using RentApp.Models;
 using RentApp.Models.Entities;
 using RentApp.Providers;
 using RentApp.Results;
+using System.Linq;
 
 namespace RentApp.Controllers
 {
@@ -318,9 +319,27 @@ namespace RentApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new RAIdentityUser() { UserName = model.Email, Email = model.Email };
+            var appUser = new AppUser()
+            {
+                BirthDay = model.BirthDay,
+                Email = model.Email,
+                FullName = model.FullName,
+                Activated = false,
+                PersonalDocument = null,
+                Rents = new List<Rent>()
+            };
+
+            var user = new RAIdentityUser()
+            {
+                AppUser = appUser,
+                PasswordHash = RAIdentityUser.HashPassword(model.Password),
+                UserName = model.Email,
+                Email = model.Email
+            };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
+            var errorMessage = result.Errors.ToList();
 
             if (!result.Succeeded)
             {
