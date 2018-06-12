@@ -4,10 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientXsrfModule } from '@angular/common/http';
+<<<<<<< HEAD
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/interceptor';
 
+=======
+>>>>>>> 77080bae314bf6105be3509556c5c6f8db7b0bdc
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -23,6 +26,7 @@ import { SignalRService } from 'src/app/services/signal-rservice.service';
 import { Http } from '@angular/http/src/http';
 
 import {CanActivateViaAuthGuard} from './guard/auth.guard';
+import { RegisterServiceService } from 'src/app/registerService/register-service.service';
 
 const Routes = [
   {
@@ -67,7 +71,7 @@ const Routes = [
     HttpClientModule,
     HttpClientXsrfModule
   ],
-  providers: [SignalRService,
+  providers: [SignalRService,RegisterServiceService,
     CanActivateViaAuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
