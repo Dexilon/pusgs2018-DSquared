@@ -327,6 +327,7 @@ namespace RentApp.Controllers
                 Activated = false,
                 PersonalDocument = null,
                 Rents = new List<Rent>()
+                
             };
 
             var user = new RAIdentityUser()
@@ -334,11 +335,12 @@ namespace RentApp.Controllers
                 AppUser = appUser,
                 PasswordHash = RAIdentityUser.HashPassword(model.Password),
                 UserName = model.Email,
-                Email = model.Email
+                Email = model.Email,
+                
             };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-
+            UserManager.AddToRole(user.Id,"AppUser");
             var errorMessage = result.Errors.ToList();
 
             if (!result.Succeeded)

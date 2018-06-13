@@ -16,6 +16,11 @@ export class NavbarComponent implements OnInit {
     return localStorage.jwt;
   }
 
+  checkUserType()
+  {
+    return localStorage.role == 'Admin' || localStorage.role == 'Manager';
+  }
+
   logout()
   {
     localStorage.clear();

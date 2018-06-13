@@ -30,7 +30,7 @@ const Routes = [
   {
     path: "register",
     component: RegisterComponent,
-    canActivate: [CanActivateViaAuthGuard]
+    
   },
   {
     path: "login",
@@ -38,15 +38,18 @@ const Routes = [
   },
   {
     path: "addService",
-    component: AddServiceComponent
+    component: AddServiceComponent,
+    canActivate: [CanActivateViaAuthGuard]
   },
   {
     path: "addVehicle",
-    component: AddVehicleComponent
+    component: AddVehicleComponent,
+    canActivate: [CanActivateViaAuthGuard]
   },
   {
     path: "addBranch",
-    component: AddBranchComponent
+    component: AddBranchComponent,
+    canActivate: [CanActivateViaAuthGuard]
   }
 ]
 
