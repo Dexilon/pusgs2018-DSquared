@@ -40,4 +40,8 @@ export class AddServiceComponent implements OnInit {
         });
     }
 
+    checkIfLogged() {
+      return localStorage.jwt;
+    }
+
 }

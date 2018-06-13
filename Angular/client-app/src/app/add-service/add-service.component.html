@@ -1,5 +1,5 @@
 <form #f="ngForm" (ngSubmit)="onSubmit(f.value,f)" class="form-horizontal">
-  <fieldset>
+  <fieldset *ngIf="checkIfLogged()">
   
   <!-- Form Name -->
   <legend>Add Service</legend>
@@ -72,8 +72,8 @@
         <tr>
             <td style="width: 250px;"><img width="200" src="assets/img/{{item.Logo}}" />Slika</td>
             <td>Name: {{item.Name}}</td>
-            <td>Description: {{item.Description}}</td>
             <td>Email: {{item.Email}}</td>
+            <td>Description: {{item.Description}}</td>
         </tr>
     </tbody>
 </table>
