@@ -6,8 +6,11 @@
           <a class="navbar-brand" [routerLink]="['/']">Rent a car</a>
         </div>
         <ul class="nav navbar-nav">
-          <li><a *ngIf="checkIfLogged() && checkUserType()" [routerLink]="['/addVehicle']">Add Vehicle</a></li>
+          <li><a [routerLink]="['/showServices']">Services</a></li>
+          <li><a [routerLink]="['/showBranches']">Branches</a></li>
+          <li><a *ngIf="checkIfLogged() && checkUserType()" [routerLink]="['/addBranch']">Add Branch</a></li>
           <li><a *ngIf="checkIfLogged() && checkUserType()" [routerLink]="['/addService']">Add Service</a></li>
+          <li><a *ngIf="checkIfLogged() && checkUserType()" [routerLink]="['/addVehicle']">Add Vehicle</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li *ngIf="!checkIfLogged()"><a [routerLink]="['/register']"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
