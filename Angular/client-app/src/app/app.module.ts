@@ -7,7 +7,7 @@ import { HttpClientXsrfModule } from '@angular/common/http';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/interceptor';
-
+import { FileSelectDirective } from 'ng2-file-upload';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -73,6 +73,7 @@ const Routes = [
   declarations: [
     AppComponent,
     NavbarComponent,
+    FileSelectDirective,
     LoginComponent,
     RegisterComponent,
     AddServiceComponent,
