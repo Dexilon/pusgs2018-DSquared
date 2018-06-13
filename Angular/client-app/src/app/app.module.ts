@@ -18,6 +18,7 @@ import { RegisterComponent } from './register/register.component';
 import { AddServiceComponent } from './add-service/add-service.component';
 import { AddVehicleComponent } from './add-vehicle/add-vehicle.component';
 import { AddBranchComponent } from './add-branch/add-branch.component';
+import { ShowServicesComponent } from './show-services/show-services.component';
 import { ClockComponent } from './clock/clock.component';
 import { SignalRService } from 'src/app/services/signal-rservice.service';
 import { Http } from '@angular/http/src/http';
@@ -25,6 +26,7 @@ import { Http } from '@angular/http/src/http';
 import {CanActivateViaAuthGuard} from './guard/auth.guard';
 import { RegisterServiceService } from 'src/app/registerService/register-service.service';
 import { ServiceServiceService } from 'src/app/serviceService/service-service.service';
+import { BranchServiceService } from 'src/app/branchService/branch-service.service';
 
 const Routes = [
   {
@@ -50,6 +52,10 @@ const Routes = [
     path: "addBranch",
     component: AddBranchComponent,
     canActivate: [CanActivateViaAuthGuard]
+  },
+  {
+    path: "showServices",
+    component: ShowServicesComponent
   }
 ]
 
@@ -62,6 +68,7 @@ const Routes = [
     AddServiceComponent,
     AddVehicleComponent,
     AddBranchComponent,
+    ShowServicesComponent,
     ClockComponent
   ],
   imports: [
@@ -72,7 +79,7 @@ const Routes = [
     HttpClientModule,
     HttpClientXsrfModule
   ],
-  providers: [SignalRService,RegisterServiceService, ServiceServiceService,
+  providers: [SignalRService,RegisterServiceService, ServiceServiceService, BranchServiceService,
     CanActivateViaAuthGuard,
     {
       provide: HTTP_INTERCEPTORS,

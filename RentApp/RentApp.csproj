@@ -311,6 +311,10 @@
     <Compile Include="Migrations\201806121610211_Service changed.Designer.cs">
       <DependentUpon>201806121610211_Service changed.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806130920458_Branch modified.cs" />
+    <Compile Include="Migrations\201806130920458_Branch modified.Designer.cs">
+      <DependentUpon>201806130920458_Branch modified.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -438,6 +442,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806121610211_Service changed.resx">
       <DependentUpon>201806121610211_Service changed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806130920458_Branch modified.resx">
+      <DependentUpon>201806130920458_Branch modified.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

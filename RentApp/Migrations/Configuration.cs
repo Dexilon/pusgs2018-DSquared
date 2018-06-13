@@ -74,7 +74,7 @@ namespace RentApp.Migrations
 
             );
 
-            var tov1 = new TypeOfVehicle() { Name = "Karavan" };
+            /*var tov1 = new TypeOfVehicle() { Name = "Karavan" };
             var tov2 = new TypeOfVehicle() { Name = "Limuzina" };
 
             var v1 = new Vehicle() { Manufactor = "Zastava", Model = "101", PricePerHour = 10.4m, Type = tov1, Year = 1969 };
@@ -86,7 +86,7 @@ namespace RentApp.Migrations
 
             context.Services.Add(s1);
 
-            SaveChanges(context);
+            SaveChanges(context);*/
 
             var userStore = new UserStore<RAIdentityUser>(context);
             var userManager = new UserManager<RAIdentityUser>(userStore);
