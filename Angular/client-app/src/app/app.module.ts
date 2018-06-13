@@ -28,6 +28,7 @@ import { RegisterServiceService } from 'src/app/registerService/register-service
 import { ServiceServiceService } from 'src/app/serviceService/service-service.service';
 import { BranchServiceService } from 'src/app/branchService/branch-service.service';
 import { ShowBranchesComponent } from './show-branches/show-branches.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const Routes = [
   {
@@ -61,6 +62,10 @@ const Routes = [
   {
     path: "showBranches",
     component: ShowBranchesComponent
+  },
+  {
+    path: "profile",
+    component: ProfileComponent
   }
 ]
 
@@ -76,7 +81,8 @@ const Routes = [
     AddBranchComponent,
     ShowServicesComponent,
     ClockComponent,
-    ShowBranchesComponent
+    ShowBranchesComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
