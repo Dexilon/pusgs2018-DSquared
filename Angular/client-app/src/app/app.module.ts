@@ -27,6 +27,7 @@ import {CanActivateViaAuthGuard} from './guard/auth.guard';
 import { RegisterServiceService } from 'src/app/registerService/register-service.service';
 import { ServiceServiceService } from 'src/app/serviceService/service-service.service';
 import { BranchServiceService } from 'src/app/branchService/branch-service.service';
+import { ShowBranchesComponent } from './show-branches/show-branches.component';
 
 const Routes = [
   {
@@ -56,6 +57,10 @@ const Routes = [
   {
     path: "showServices",
     component: ShowServicesComponent
+  },
+  {
+    path: "showBranches",
+    component: ShowBranchesComponent
   }
 ]
 
@@ -69,7 +74,8 @@ const Routes = [
     AddVehicleComponent,
     AddBranchComponent,
     ShowServicesComponent,
-    ClockComponent
+    ClockComponent,
+    ShowBranchesComponent
   ],
   imports: [
     BrowserModule,
