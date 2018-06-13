@@ -15,8 +15,9 @@ namespace RentApp.Controllers
 
         [Route("user/PostUserImage")]
         [AllowAnonymous]
-        public async Task<HttpResponseMessage> PostUserImage()
+        public async Task<string> PostUserImage()
         {
+            string finalPath = "http://localhost:51680/";
             Dictionary<string, object> dict = new Dictionary<string, object>();
             try
             {
@@ -42,7 +43,7 @@ namespace RentApp.Controllers
                             var message = string.Format("Please Upload image of type .jpg,.gif,.png.");
 
                             dict.Add("error", message);
-                            return Request.CreateResponse(HttpStatusCode.BadRequest, dict);
+                            return dict.ToString();
                         }
                         else if (postedFile.ContentLength > MaxContentLength)
                         {
@@ -50,32 +51,32 @@ namespace RentApp.Controllers
                             var message = string.Format("Please Upload a file upto 1 mb.");
 
                             dict.Add("error", message);
-                            return Request.CreateResponse(HttpStatusCode.BadRequest, dict);
+                            return dict.ToString();
                         }
                         else
                         {
 
 
 
-                            var filePath = HttpContext.Current.Server.MapPath("~/App_Data/" + postedFile.FileName + extension);
-
+                            var filePath = HttpContext.Current.Server.MapPath("~/Content/ServiceLogos/" + postedFile.FileName);
+                            finalPath = finalPath + "/Content/ServiceLogos/" + postedFile.FileName;
                             postedFile.SaveAs(filePath);
 
                         }
                     }
 
-                    var message1 = string.Format("Image Updated Successfully.");
-                    return Request.CreateErrorResponse(HttpStatusCode.Created, message1); ;
+                    var message1 = finalPath;
+                    return message1; ;
                 }
                 var res = string.Format("Please Upload a image.");
                 dict.Add("error", res);
-                return Request.CreateResponse(HttpStatusCode.NotFound, dict);
+                return dict.ToString();
             }
             catch (Exception ex)
             {
                 var res = string.Format("some Message");
                 dict.Add("error", res);
-                return Request.CreateResponse(HttpStatusCode.NotFound, dict);
+                return dict.ToString();
             }
         }
     }

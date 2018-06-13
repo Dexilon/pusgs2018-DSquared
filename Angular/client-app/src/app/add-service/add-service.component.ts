@@ -5,6 +5,7 @@ import {ServiceServiceService} from '../serviceService/service-service.service';
 import { Observable } from 'rxjs/internal/Observable';
 import {FileUploader,FileSelectDirective } from 'ng2-file-upload/ng2-file-upload';
 
+
 const URL = 'http://localhost:51680/api/Upload/user/PostUserImage';
 
 @Component({
@@ -19,15 +20,15 @@ export class AddServiceComponent implements OnInit {
   public uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'photo'});
   url: string;
 
+
   constructor(private serviceServiceService: ServiceServiceService) { 
     this.uploader.onAfterAddingFile = (file) => {file.withCredentials = false;};
     this.uploader.onCompleteItem = (item: any, response: any,status: any, headers: any) => {
-        this.url=response;
+        this.url=JSON.parse(response);        
     };
   }
 
   uploadFile: any;
-
 
   
   ngOnInit() {
@@ -42,6 +43,8 @@ export class AddServiceComponent implements OnInit {
   }
 
   onSubmit(service: Service, form: NgForm) {
+    
+      service.Logo=this.url;
       console.log(service);
       this.serviceServiceService.postMethodService(service)
       .subscribe(
