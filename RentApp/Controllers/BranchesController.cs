@@ -11,6 +11,7 @@ using System.Web.Http.Description;
 using RentApp.Models.Entities;
 using RentApp.Persistance;
 using RentApp.Persistance.UnitOfWork;
+using RentApp.Models;
 
 namespace RentApp.Controllers
 {
@@ -77,14 +78,37 @@ namespace RentApp.Controllers
 
         // POST: api/Branches
         [ResponseType(typeof(Branch))]
-        public IHttpActionResult PostBranch(Branch branch)
+        public IHttpActionResult PostBranch(BranchBindingModel branchBindingModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            var branch = new Branch()
+            {
+                Address = branchBindingModel.Address,
+                Latitude = branchBindingModel.Latitude,
+                Longitude = branchBindingModel.Longitude,
+                Logo = branchBindingModel.Logo
+            };
+
+            var services = unitOfWork.Services.GetAll();
+
+            Service service = new Service();
+
+            foreach(var item in services)
+            {
+                if(item.Name == branchBindingModel.ServiceName)
+                {
+                    service = item;
+                }
+            }
+
+            service.Branches.Add(branch);
+
             unitOfWork.Branches.Add(branch);
+            unitOfWork.Services.Update(service);
             unitOfWork.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = branch.Id }, branch);

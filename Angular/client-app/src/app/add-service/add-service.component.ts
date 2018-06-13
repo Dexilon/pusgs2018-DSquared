@@ -3,6 +3,9 @@ import {NgForm} from '@angular/forms';
 import {Service} from '../models/service'
 import {ServiceServiceService} from '../serviceService/service-service.service';
 import { Observable } from 'rxjs/internal/Observable';
+import {FileUploader,FileSelectDirective } from 'ng2-file-upload/ng2-file-upload';
+
+const URL = 'http://localhost:51680/api/Upload/user/PostUserImage';
 
 @Component({
   selector: 'app-add-service',
@@ -13,9 +16,20 @@ import { Observable } from 'rxjs/internal/Observable';
 export class AddServiceComponent implements OnInit {
 
   services: Service[];
+  public uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'photo'});
+  url: string;
 
-  constructor(private serviceServiceService: ServiceServiceService) { }
+  constructor(private serviceServiceService: ServiceServiceService) { 
+    this.uploader.onAfterAddingFile = (file) => {file.withCredentials = false;};
+    this.uploader.onCompleteItem = (item: any, response: any,status: any, headers: any) => {
+        this.url=response;
+    };
+  }
 
+  uploadFile: any;
+
+
+  
   ngOnInit() {
     this.serviceServiceService.getMethodService()
     .subscribe(
@@ -43,5 +57,13 @@ export class AddServiceComponent implements OnInit {
     checkIfLogged() {
       return localStorage.jwt;
     }
+
+    
+  handleUpload(data): void{
+    if(data && data.response){
+      data = JSON.parse(data.response);
+      this.uploadFile = data;
+    }
+  }
 
 }
