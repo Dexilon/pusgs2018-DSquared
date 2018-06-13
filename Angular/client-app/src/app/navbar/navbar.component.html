@@ -15,6 +15,7 @@
         <ul class="nav navbar-nav navbar-right">
           <li *ngIf="!checkIfLogged()"><a [routerLink]="['/register']"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
           <li *ngIf="!checkIfLogged()"><a [routerLink]="['/login']"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          <li><a *ngIf="checkIfLogged()" [routerLink]="['/profile']"><span class="glyphicon glyphicon-pencil"></span> Profile</a></li>
           <li *ngIf="checkIfLogged()"><a [routerLink]="['/login']" role="button" (click)="logout()"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
         </ul>
       </div>
