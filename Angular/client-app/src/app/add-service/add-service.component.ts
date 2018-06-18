@@ -66,6 +66,7 @@ export class AddServiceComponent implements OnInit {
     if(data && data.response){
       data = JSON.parse(data.response);
       this.uploadFile = data;
+      console.log(this.uploadFile);
     }
   }
 

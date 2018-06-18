@@ -1,0 +1,26 @@
+<form class="form-horizontal" #f="ngForm" (ngSubmit)="onSubmit(f.value, f)">
+  <fieldset>
+  
+  <!-- Form Name -->
+  <legend>Add Vehicle Type</legend>
+  
+  
+  <!-- Text input-->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="textinput">Name:</label>  
+    <div class="col-md-4">
+    <input id="name" name="name" type="text" placeholder="" class="form-control input-md" ngModel required #name="ngModel">    
+    </div>
+  </div>
+
+  <!-- Button -->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="singlebutton"></label>
+    <div class="col-md-4">
+      <button type="submit"  id="singlebutton" name="singlebutton" class="btn btn-success" [disabled]="!f.valid">Add Vehicle Type</button>
+    </div>
+  </div>
+  
+  </fieldset>
+  </form>
+  

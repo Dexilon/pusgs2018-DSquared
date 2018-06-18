@@ -11,6 +11,7 @@
           <li><a *ngIf="checkIfLogged() && checkUserType()" [routerLink]="['/addBranch']">Add Branch</a></li>
           <li><a *ngIf="checkIfLogged() && checkUserType()" [routerLink]="['/addService']">Add Service</a></li>
           <li><a *ngIf="checkIfLogged() && checkUserType()" [routerLink]="['/addVehicle']">Add Vehicle</a></li>
+          <li><a *ngIf="checkIfLogged() && checkUserType()" [routerLink]="['/addTypeOfVehicle']">Add Vehicle Type</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li *ngIf="!checkIfLogged()"><a [routerLink]="['/register']"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
