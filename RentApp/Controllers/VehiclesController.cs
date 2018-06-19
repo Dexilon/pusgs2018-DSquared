@@ -94,6 +94,7 @@ namespace RentApp.Controllers
                 Description = vehicleBindingModel.Description,
                 PricePerHour = vehicleBindingModel.PricePerHour,
                 Unavailable = vehicleBindingModel.Unavailable,
+                Images = vehicleBindingModel.Images
             };
 
             var typesOfVehicle = unitOfWork.TypesOfVehicle.GetAll();
