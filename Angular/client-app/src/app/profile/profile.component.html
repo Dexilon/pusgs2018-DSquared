@@ -52,7 +52,7 @@
             </div>
           </div>
 
-          <!--<form #form = "ngForm" class="groove">
+          <form *ngIf="!checkIfUploaded()" #form = "ngForm" class="groove">
 
               <label class="col-md-4 control-label" for="Logo">License photo</label>
                 <input type="file" name="photo" ng2FileSelect [uploader]="uploader" enctype = "multipart/form-data"/>
@@ -61,7 +61,7 @@
                 [disabled] ="!uploader.getNotUploadedItems().length">Upload picture</button>
           
           </form>
-        -->
+        
           <br>
             <button type="submit" class="btn btn-success" [disabled]="!f.valid">Save Changes</button>
         </div>

@@ -5,7 +5,8 @@ import {FileUploader,FileSelectDirective } from 'ng2-file-upload/ng2-file-upload
 import {AppUser} from '../models/appUser'
 import {ProfileServiceService} from '../profileService/profile-service.service';
 
-const URL = 'http://localhost:51680/api/Upload/user/PostBranchImage';
+
+const URL = 'http://localhost:51680/api/Upload/user/PostProfileDocumentImage';
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +17,17 @@ const URL = 'http://localhost:51680/api/Upload/user/PostBranchImage';
 export class ProfileComponent implements OnInit {
   profile: AppUser
 
-  constructor(private profileServiceService: ProfileServiceService) { }
+  public uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'photo'});
+  url: string;
+
+  constructor(private profileServiceService: ProfileServiceService) { 
+    this.uploader.onAfterAddingFile = (file) => {file.withCredentials = false;};
+    this.uploader.onCompleteItem = (item: any, response: any,status: any, headers: any) => {
+        this.url=JSON.parse(response);        
+    }
+  }
+
+  uploadFile: any;  
 
   ngOnInit() {
     this.profileServiceService.getMethodProfile()
@@ -26,21 +37,37 @@ export class ProfileComponent implements OnInit {
       },
       error => {
         alert(error.error.ModelState[""][0])
-      })
+      });
   }
 
   onSubmit(appUser: AppUser, form: NgForm) {
-    //branch.Logo = this.url;
+    appUser.Activated = false;
+    appUser.PersonalDocument = this.url;
     appUser.Id = this.profile.Id;
     this.profileServiceService.putMethodProfile(appUser.Id,appUser)
     .subscribe(
       data => {
         alert("Your changes updated successfully!");
-        form.reset();
       },
       error => {
         alert(error.error.ModelState[""][0])
       });
+  }
+
+  checkIfUploaded(){
+    if(this.profile.PersonalDocument == ""){
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+
+  handleUpload(data): void{
+    if(data && data.response){
+      data = JSON.parse(data.response);
+      this.uploadFile = data;
+    }
   }
 
 }
