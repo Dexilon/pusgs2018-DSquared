@@ -34,8 +34,6 @@ export class VehicleServiceService {
     }
   
     postMethodVehicle(newMember): Observable<any> {
-      debugger
-      console.log(newMember);
       return this.httpClient.post("http://localhost:51680/api/Vehicles", newMember)
     }
 }

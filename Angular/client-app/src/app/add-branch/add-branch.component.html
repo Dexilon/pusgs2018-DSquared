@@ -20,7 +20,7 @@
           <input multiple type="file" name="photo" ng2FileSelect [uploader]="uploader" enctype = "multipart/form-data"/>
           <button type="button" class ="btn btn-success btn-s"
           (click)="uploader.uploadAll()"
-          [disabled] ="!uploader.getNotUploadedItems().length"></button>
+          [disabled] ="!uploader.getNotUploadedItems().length">Upload Image</button>
     
     </form>
     

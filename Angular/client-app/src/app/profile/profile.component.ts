@@ -55,7 +55,7 @@ export class ProfileComponent implements OnInit {
   }
 
   checkIfUploaded(){
-    if(this.profile.PersonalDocument == ""){
+    if(this.profile.PersonalDocument == null || this.profile.PersonalDocument == ""){
       return false;
     }
     else{

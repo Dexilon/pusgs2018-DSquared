@@ -18,16 +18,24 @@ const URL = 'http://localhost:51680/api/Upload/user/PostVehicleImage';
   selector: 'app-add-vehicle',
   templateUrl: './add-vehicle.component.html',
   styleUrls: ['./add-vehicle.component.css'],
-  providers: [VehicleServiceService, VehicleServiceService]
+  providers: [VehicleServiceService, ServiceServiceService, AddTypeOfVehicleServiceService]
 })
 export class AddVehicleComponent implements OnInit {
   vehicles: Vehicle[];
   services: Service[];
-  url: string;
   typeOfVehicles: TypeOfVehicle[];
+
+  public uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'photo'});
+  url: string;
+
   constructor(private branchServiceService: BranchServiceService, private serviceServiceService: ServiceServiceService, private vehicleServiceService: VehicleServiceService, private addTypeOfVehicleServiceService: AddTypeOfVehicleServiceService) {
-    
+    this.uploader.onAfterAddingFile = (file) => {file.withCredentials = false;};
+    this.uploader.onCompleteItem = (item: any, response: any,status: any, headers: any) => {
+        this.url=JSON.parse(response);        
+    }
    }
+
+   uploadFile: any;
 
   ngOnInit() {
     this.serviceServiceService.getMethodService()
@@ -68,19 +76,28 @@ export class AddVehicleComponent implements OnInit {
 
   onSubmit(vehicle:Vehicle,f: NgForm){
     // console.log(f.value.serviceName, f.value.email)
-    console.log(vehicle);
+    vehicle.Unavailable = false;
+    vehicle.Images = this.url;
+    //console.log(vehicle);
     debugger
     // vehicle.Images.push(this.url);
     this.vehicleServiceService.postMethodVehicle(vehicle)
     .subscribe(
       data => {
         debugger
-        alert("You added branch successfully!");
+        alert("You added vehicle successfully!");
         f.reset();
       },
       error => {
         alert(error.error.ModelState[""][0])
       });
+  }
+
+  handleUpload(data): void{
+    if(data && data.response){
+      data = JSON.parse(data.response);
+      this.uploadFile = data;
+    }
   }
   
 }

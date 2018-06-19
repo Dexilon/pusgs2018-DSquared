@@ -32,6 +32,7 @@ import { ShowBranchesComponent } from './show-branches/show-branches.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AddTypeOfVehicleComponent } from './add-type-of-vehicle/add-type-of-vehicle.component';
 import { TypeOfVehicle } from 'src/app/models/typeOfVehicle';
+import { ShowVehiclesComponent } from './show-vehicles/show-vehicles.component';
 
 const Routes = [
   {
@@ -68,11 +69,17 @@ const Routes = [
   },
   {
     path: "profile",
-    component: ProfileComponent
+    component: ProfileComponent,
+    canActivate: [CanActivateViaAuthGuard]
   },
   {
     path: "addTypeOfVehicle",
-    component: AddTypeOfVehicleComponent
+    component: AddTypeOfVehicleComponent,
+    canActivate: [CanActivateViaAuthGuard]
+  },
+  {
+    path: "showVehicles",
+    component: ShowVehiclesComponent
   }
 ]
 
@@ -90,7 +97,8 @@ const Routes = [
     ClockComponent,
     ShowBranchesComponent,
     ProfileComponent,
-    AddTypeOfVehicleComponent
+    AddTypeOfVehicleComponent,
+    ShowVehiclesComponent
   ],
   imports: [
     BrowserModule,
@@ -100,7 +108,7 @@ const Routes = [
     HttpClientModule,
     HttpClientXsrfModule
   ],
-  providers: [SignalRService,RegisterServiceService, ServiceServiceService, BranchServiceService,
+  providers: [SignalRService,RegisterServiceService, ServiceServiceService, BranchServiceService, VehicleServiceService,
     CanActivateViaAuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
