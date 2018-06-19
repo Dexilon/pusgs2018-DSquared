@@ -17,7 +17,7 @@
   
           <div class="form-group">
             <label for="name">Full Name</label>
-            <input type="text" class="form-control" name="FullName" required minlength="6" maxlength="42" ngModel #FullName="ngModel">
+            <input type="text" class="form-control" placeholder="Full Name" name="FullName" required minlength="6" maxlength="42" ngModel #FullName="ngModel">
             <div *ngIf="FullName.errors && (FullName.dirty || FullName.touched)" class="alert alert-danger">
               <div [hidden]="!FullName.errors.required">
                 Full name is required!
@@ -32,7 +32,7 @@
           </div>
 
           <div class="form-group">
-            <label for="name">BirthDay</label>
+            <label for="name">Birthday</label>
             <input type="date" class="form-control" name="BirthDay" required length="10" ngModel #BirthDay="ngModel">
             <div *ngIf="BirthDay.errors && (BirthDay.dirty || BirthDay.touched)" class="alert alert-danger">
               <div [hidden]="!BirthDay.errors.required">
@@ -43,7 +43,7 @@
   
           <div class="form-group">
             <label for="Email">Email</label>
-            <input type="text" class="form-control" name="Email" ngModel required #Email="ngModel"
+            <input type="text" placeholder="Email" class="form-control" name="Email" ngModel required #Email="ngModel"
             pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
             <div *ngIf="Email.errors && (Email.dirty || Email.touched)"
              class="alert alert-danger">  
@@ -58,7 +58,7 @@
   
           <div class="form-group">
             <label for="Password">Password</label>
-            <input type="Password" class="form-control" name="Password" ngModel required minlength="7" maxlength="42" #Password="ngModel">
+            <input type="Password" placeholder="Password" class="form-control" name="Password" ngModel required minlength="7" maxlength="42" #Password="ngModel">
             <div *ngIf="Password.errors && (Password.dirty || Password.touched)"
              class="alert alert-danger">  
               <div [hidden]="!Password.errors.required">
@@ -75,7 +75,7 @@
   
           <div class="form-group">
             <label for="ConfirmPassword">Confirm Password</label>
-            <input type="Password" class="form-control" name="ConfirmPassword" ngModel required minlength="7" maxlength="42" #ConfirmPassword="ngModel">
+            <input type="Password" placeholder="Confirm password" class="form-control" name="ConfirmPassword" ngModel required minlength="7" maxlength="42" #ConfirmPassword="ngModel">
             <div *ngIf="ConfirmPassword.errors && (ConfirmPassword.dirty || ConfirmPassword.touched)"
              class="alert alert-danger">
              <div [hidden]="!ConfirmPassword.errors.required">

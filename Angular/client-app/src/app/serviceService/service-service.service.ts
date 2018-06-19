@@ -36,4 +36,12 @@ export class ServiceServiceService {
     console.log(newMember);
     return this.httpClient.post("http://localhost:51680/api/Services", newMember)
   }
+
+  deleteMethodService(serviceId): Observable<any> {
+    return this.httpClient.delete("http://localhost:51680/api/Services/"+serviceId)
+  }
+
+  updateMethodService(serviceId, newMember): Observable<any> {
+    return this.httpClient.put("http://localhost:51680/api/Services/"+serviceId,newMember)
+  }
 }

@@ -16,7 +16,6 @@ export class TokenInterceptor implements HttpInterceptor {
     console.log("Token : ", localStorage.jwt);
 
     let jwt = localStorage.jwt;
-
     if (jwt) 
     {
         console.log(request)

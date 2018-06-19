@@ -42,6 +42,20 @@ namespace RentApp.Controllers
             return Ok(appUser);
         }
 
+        [Route("api/AppUsers/GetCurrentUser")]
+        [HttpGet]
+        //[Authorize]
+        public IHttpActionResult GetCurrentAppUser()
+        {
+            var username = User.Identity.Name;
+
+            RADBContext db = new RADBContext();
+            var user = db.Users.Where(u => u.UserName == username).Include(u1 => u1.AppUser).First();
+            var appUser = user.AppUser;
+
+            return Ok(appUser);
+        } 
+
         // PUT: api/AppUsers/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutAppUser(int id, AppUser appUser)

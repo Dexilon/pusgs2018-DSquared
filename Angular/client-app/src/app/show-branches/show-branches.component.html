@@ -1,14 +1,84 @@
 <table class="table table-striped table-dark" >
-    <tbody *ngFor = "let item of branches">
+    <tbody *ngFor = "let item of branches; let i = index">
         <tr>
-<<<<<<< HEAD
-            <td style="width: 250px;"><img width="200" src="{{item.Logo}}" />Logo</td>
-=======
-            <td style="width: 250px;"><img width="200" src='{{item.Logo}}' />Slika</td>
->>>>>>> 33683b0d21f4dae11962c88b32e1222f2172326c
-            <td>Address: {{item.Address}}</td>
-            <td>Latitude: {{item.Latitude}}</td>
-            <td>Longitude: {{item.Longitude}}</td>
+            <td style="width: 250px;"><label class="col-md-4 control-label">Logo</label><img width="200" src='{{item.Logo}}' /></td>
+            <td><div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">Adress:</label>  
+                    <div class="col-md-4">
+                    <input id="address" [(ngModel)]="item.Address" name="address" type="text" placeholder="" class="form-control input-md" ngModel required #address="ngModel">    
+                    </div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col col-lg-4 col-lg-push-4">
+                      <div *ngIf="address.errors && (address.dirty || address.touched)"
+                            class="alert alert-danger">  
+                          <div [hidden]="!address.errors.required">
+                              Address is required!
+                          </div>
+                          <div [hidden]="!address.errors.pattern">
+                              Address form is invalid
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+            <td><div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">Latitude:</label>  
+                    <div class="col-md-4">
+                    <input id="latitude" [(ngModel)]="item.Latitude" name="latitude" type="text" class="form-control input-md" ngModel required #latitude="ngModel">   
+                    </div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col col-lg-4 col-lg-push-4">
+                      <div *ngIf="latitude.errors && (latitude.dirty || latitude.touched)"
+                            class="alert alert-danger">  
+                          <div [hidden]="!latitude.errors.required">
+                            Latitude is required!
+                          </div>
+                          <div [hidden]="!latitude.errors.pattern">
+                            Latitude form is invalid
+                          </div>
+                      </div>
+                    </div>
+                  </div></td>
+            <td><div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">Longitude:</label>  
+                    <div class="col-md-4">
+                    <input id="longitude" [(ngModel)]="item.Longitude" name="longitude" type="text" class="form-control input-md" ngModel required #longitude="ngModel">   
+                    </div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col col-lg-4 col-lg-push-4">
+                      <div *ngIf="longitude.errors && (longitude.dirty || longitude.touched)"
+                            class="alert alert-danger">  
+                          <div [hidden]="!longitude.errors.required">
+                            Longitude is required!
+                          </div>
+                          <div [hidden]="!longitude.errors.pattern">
+                            Longitude form is invalid
+                          </div>
+                      </div>
+                    </div>
+                  </div></td>
+            <td>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="singlebutton"></label>
+                        <div class="col-md-4">
+                            <button *ngIf="this.navbarComponent.checkIfLogged() && this.navbarComponent.checkUserType()" id="singlebutton" (click)="deleteBranch(item.Id)" name="singlebutton" class="btn btn-danger">Delete Branch</button>
+                        </div>
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="singlebutton"></label>
+                        <div class="col-md-4">
+                            <button *ngIf="this.navbarComponent.checkIfLogged() && this.navbarComponent.checkUserType()" id="singlebutton" (click)="saveChanges(i)" name="singlebutton" class="btn btn-primary">Save Branch</button>
+                        </div>
+                </div>
+            </td>
         </tr>
     </tbody>
   </table>

@@ -42,8 +42,7 @@ export class LoginService {
         
         if(!localStorage.jwt)
         {
-          console.log(user.username);
-          console.log(user.password);
+          debugger
            let x = this.httpClient.post('http://localhost:51680/oauth/token',`username=${user.email}&password=${user.password}&grant_type=password`, {"headers": headers}) as Observable<any>
     
           x.subscribe(
@@ -55,6 +54,8 @@ export class LoginService {
               let jwtData = jwt.split('.')[1]
               let decodedJwtJsonData = window.atob(jwtData)
               let decodedJwtData = JSON.parse(decodedJwtJsonData)
+
+              //console.log(decodedJwtData)
     
               let role = decodedJwtData.role
     
@@ -71,7 +72,7 @@ export class LoginService {
             }
           );
         }
-        else
+        /*else
         {
            let x = this.http.get('http://localhost:51680/api/Services') as Observable<any>
     
@@ -83,7 +84,7 @@ export class LoginService {
               console.log("Error occured");
             }
           );
-        }
+        }*/
         
       }
 

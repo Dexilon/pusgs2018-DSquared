@@ -13,7 +13,7 @@
   
           <div class="form-group">
             <label for="name">Full Name</label>
-            <input type="text" class="form-control" name="FullName" required minlength="6" maxlength="42" ngModel #FullName="ngModel">
+            <input [(ngModel)]="this.profile.FullName" type="text" class="form-control" name="FullName" required minlength="6" maxlength="42" ngModel #FullName="ngModel">
             <div *ngIf="FullName.errors && (FullName.dirty || FullName.touched)" class="alert alert-danger">
               <div [hidden]="!FullName.errors.required">
                 Full name is required!
@@ -29,7 +29,7 @@
 
           <div class="form-group">
             <label for="name">BirthDay</label>
-            <input type="date" class="form-control" name="BirthDay" required length="10" ngModel #BirthDay="ngModel">
+            <input [(ngModel)]="this.profile.BirthDay" type="date" class="form-control" name="BirthDay" required length="10" ngModel #BirthDay="ngModel">
             <div *ngIf="BirthDay.errors && (BirthDay.dirty || BirthDay.touched)" class="alert alert-danger">
               <div [hidden]="!BirthDay.errors.required">
                 Birthday is required!
@@ -39,7 +39,7 @@
   
           <div class="form-group">
             <label for="Email">Email</label>
-            <input type="text" class="form-control" name="Email" ngModel required #Email="ngModel"
+            <input [(ngModel)]="this.profile.Email" type="text" class="form-control" name="Email" ngModel required #Email="ngModel"
             pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
             <div *ngIf="Email.errors && (Email.dirty || Email.touched)"
              class="alert alert-danger">  
@@ -51,41 +51,17 @@
               </div>
             </div>
           </div>
-  
-          <div class="form-group">
-            <label for="Password">Password</label>
-            <input type="Password" class="form-control" name="Password" ngModel required minlength="7" maxlength="42" #Password="ngModel">
-            <div *ngIf="Password.errors && (Password.dirty || Password.touched)"
-             class="alert alert-danger">  
-              <div [hidden]="!Password.errors.required">
-                Password is required!
-              </div>
-              <div [hidden]="!Password.errors.minlength">
-                Password min length is 7 characters.
-              </div>
-              <div [hidden]="!Password.errors.maxlength">
-                Password max length is 42 characters.
-              </div>
-            </div>
-          </div>
-  
-          <div class="form-group">
-            <label for="ConfirmPassword">Confirm Password</label>
-            <input type="Password" class="form-control" name="ConfirmPassword" ngModel required minlength="7" maxlength="42" #ConfirmPassword="ngModel">
-            <div *ngIf="ConfirmPassword.errors && (ConfirmPassword.dirty || ConfirmPassword.touched)"
-             class="alert alert-danger">
-             <div [hidden]="!ConfirmPassword.errors.required">
-              Password is required!
-            </div>
-            <div [hidden]="!ConfirmPassword.errors.minlength">
-              Password min length is 7 characters.
-            </div>
-            <div [hidden]="!ConfirmPassword.errors.maxlength">
-              Password max length is 42 characters.
-            </div>
-            </div>
-          </div>
-  
+
+          <!--<form #form = "ngForm" class="groove">
+
+              <label class="col-md-4 control-label" for="Logo">License photo</label>
+                <input type="file" name="photo" ng2FileSelect [uploader]="uploader" enctype = "multipart/form-data"/>
+                <button type="button" class ="btn btn-success btn-s"
+                (click)="uploader.uploadAll()"
+                [disabled] ="!uploader.getNotUploadedItems().length">Upload picture</button>
+          
+          </form>
+        -->
           <br>
             <button type="submit" class="btn btn-success" [disabled]="!f.valid">Save Changes</button>
         </div>
