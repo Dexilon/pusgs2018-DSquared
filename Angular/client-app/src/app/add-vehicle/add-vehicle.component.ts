@@ -10,6 +10,7 @@ import {FileUploader,FileSelectDirective } from 'ng2-file-upload/ng2-file-upload
 import {Vehicle} from '../models/vehicle';
 import { TypeOfVehicle } from 'src/app/models/typeOfVehicle';
 import { AddTypeOfVehicleServiceService } from 'src/app/type-of-vehicle-service/add-type-of-vehicle-service.service';
+import { debuglog } from 'util';
 
 
 const URL = 'http://localhost:51680/api/Upload/user/PostVehicleImage';
@@ -24,14 +25,18 @@ export class AddVehicleComponent implements OnInit {
   vehicles: Vehicle[];
   services: Service[];
   typeOfVehicles: TypeOfVehicle[];
+  url: string[]= [];
 
   public uploader: FileUploader = new FileUploader({url: URL, itemAlias: 'photo'});
-  url: string;
+  
+  helper: string;
 
   constructor(private branchServiceService: BranchServiceService, private serviceServiceService: ServiceServiceService, private vehicleServiceService: VehicleServiceService, private addTypeOfVehicleServiceService: AddTypeOfVehicleServiceService) {
     this.uploader.onAfterAddingFile = (file) => {file.withCredentials = false;};
     this.uploader.onCompleteItem = (item: any, response: any,status: any, headers: any) => {
-        this.url=JSON.parse(response);        
+      debugger
+        this.helper = JSON.parse(response);
+        this.url.push(this.helper);        
     }
    }
 
