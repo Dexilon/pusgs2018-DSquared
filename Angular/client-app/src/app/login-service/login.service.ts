@@ -42,7 +42,6 @@ export class LoginService {
         
         if(!localStorage.jwt)
         {
-          debugger
            let x = this.httpClient.post('http://localhost:51680/oauth/token',`username=${user.email}&password=${user.password}&grant_type=password`, {"headers": headers}) as Observable<any>
     
           x.subscribe(

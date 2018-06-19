@@ -77,7 +77,7 @@ export class AddVehicleComponent implements OnInit {
   onSubmit(vehicle:Vehicle,f: NgForm){
     // console.log(f.value.serviceName, f.value.email)
     vehicle.Unavailable = false;
-    vehicle.Images = this.url;
+    //vehicle.Images = this.url;
     //console.log(vehicle);
     debugger
     // vehicle.Images.push(this.url);
