@@ -17,7 +17,7 @@
     <form #form = "ngForm" class="groove">
       <!-- File Button --> 
         <label class="col-md-4 control-label" for="Logo">Logo</label>
-          <input type="file" name="photo" ng2FileSelect [uploader]="uploader" enctype = "multipart/form-data"/>
+          <input multiple type="file" name="photo" ng2FileSelect [uploader]="uploader" enctype = "multipart/form-data"/>
           <button type="button" class ="btn btn-success btn-s"
           (click)="uploader.uploadAll()"
           [disabled] ="!uploader.getNotUploadedItems().length"></button>

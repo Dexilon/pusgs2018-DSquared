@@ -11,6 +11,7 @@ using System.Web.Http.Description;
 using RentApp.Models.Entities;
 using RentApp.Persistance;
 using RentApp.Persistance.UnitOfWork;
+using RentApp.Models;
 
 namespace RentApp.Controllers
 {
@@ -78,14 +79,52 @@ namespace RentApp.Controllers
 
         // POST: api/Vehicles
         [ResponseType(typeof(Vehicle))]
-        public IHttpActionResult PostVehicle(Vehicle vehicle)
+        public IHttpActionResult PostVehicle(VehicleBindingModel vehicleBindingModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            var vehicle = new Vehicle()
+            {
+                Model = vehicleBindingModel.Model,
+                Manufactor = vehicleBindingModel.Manufactor,
+                Year = vehicleBindingModel.Year,
+                Description = vehicleBindingModel.Description,
+                PricePerHour = vehicleBindingModel.PricePerHour,
+                Unavailable = vehicleBindingModel.Unavailable,
+            };
+
+            var typesOfVehicle = unitOfWork.TypesOfVehicle.GetAll();
+            var services = unitOfWork.Services.GetAll();
+
+            
+
+            TypeOfVehicle t = new TypeOfVehicle();
+            Service s = new Service();
+            foreach (var item in typesOfVehicle)
+            {
+                if(item.Name == vehicleBindingModel.type)
+                {
+                    vehicle.Type = item;
+                    t = item;
+                    item.Vehicles.Add(vehicle);
+                }
+            }
+
+            foreach (var item in services)
+            {
+                if (item.Name == vehicleBindingModel.Service)
+                {
+                    s = item;
+                    s.Vehicles.Add(vehicle);
+                }
+            }
+
             unitOfWork.Vehicles.Add(vehicle);
+            unitOfWork.TypesOfVehicle.Update(t);
+            unitOfWork.Services.Update(s);
             unitOfWork.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = vehicle.id }, vehicle);

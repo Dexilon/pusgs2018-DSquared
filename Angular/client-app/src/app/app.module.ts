@@ -27,8 +27,11 @@ import {CanActivateViaAuthGuard} from './guard/auth.guard';
 import { RegisterServiceService } from 'src/app/registerService/register-service.service';
 import { ServiceServiceService } from 'src/app/serviceService/service-service.service';
 import { BranchServiceService } from 'src/app/branchService/branch-service.service';
+import { VehicleServiceService } from 'src/app/vehicle-service/vehicle-service.service';
 import { ShowBranchesComponent } from './show-branches/show-branches.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AddTypeOfVehicleComponent } from './add-type-of-vehicle/add-type-of-vehicle.component';
+import { TypeOfVehicle } from 'src/app/models/typeOfVehicle';
 
 const Routes = [
   {
@@ -66,6 +69,10 @@ const Routes = [
   {
     path: "profile",
     component: ProfileComponent
+  },
+  {
+    path: "addTypeOfVehicle",
+    component: AddTypeOfVehicleComponent
   }
 ]
 
@@ -82,7 +89,8 @@ const Routes = [
     ShowServicesComponent,
     ClockComponent,
     ShowBranchesComponent,
-    ProfileComponent
+    ProfileComponent,
+    AddTypeOfVehicleComponent
   ],
   imports: [
     BrowserModule,

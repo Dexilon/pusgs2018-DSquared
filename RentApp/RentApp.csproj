@@ -421,6 +421,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\BranchLogos\" />
     <Folder Include="Content\ServiceLogos\" />
+    <Folder Include="Content\VehicleImages\" />
     <Folder Include="ServiceImages\" />
   </ItemGroup>
   <ItemGroup>
