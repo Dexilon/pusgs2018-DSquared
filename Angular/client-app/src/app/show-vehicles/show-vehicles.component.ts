@@ -30,30 +30,28 @@ export class ShowVehiclesComponent implements OnInit {
       })
   }
 
-  /*deleteService(id : number){
-    debugger
-    this.vehicleServiceServic(id)
+  deleteVehicle(id : number){
+    this.vehicleServiceService.deleteMethodVehicle(id)
     .subscribe(
       data => {
-        alert("Service successfully deleted!");
-        this.serviceServiceService.getMethodService();
-      },
-      error => {
-        alert(error.error.ModelState[""][0])
-      })
-  }*/
-/*
-  saveChanges(i : number){
-    debugger
-    this.vehicleServiceService.updateMethodService(this.services[i].Id,this.services[i])
-    .subscribe(
-      data => {
-        alert("Service successfully updated!");
-        this.serviceServiceService.getMethodService();
+        alert("Vehicle successfully deleted!");
+        this.vehicleServiceService.getMethodVehicle();
       },
       error => {
         alert(error.error.ModelState[""][0])
       })
   }
-*/
+
+  saveChanges(i : number){
+    this.vehicleServiceService.updateMethodVehicle(this.vehicles[i].id,this.vehicles[i])
+    .subscribe(
+      data => {
+        alert("Vehicle successfully updated!");
+        this.vehicleServiceService.getMethodVehicle();
+      },
+      error => {
+        alert(error.error.ModelState[""][0])
+      })
+  }
+
 }

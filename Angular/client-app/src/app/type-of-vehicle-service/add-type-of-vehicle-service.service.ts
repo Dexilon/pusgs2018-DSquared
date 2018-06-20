@@ -31,8 +31,14 @@ export class AddTypeOfVehicleServiceService {
     }
   
     postMethodTypeOfVehicle(newMember): Observable<any> {
-      debugger
-      console.log(newMember);
       return this.httpClient.post("http://localhost:51680/api/TypeOfVehicles", newMember)
+    }
+
+    deleteMethodTypeOfVehicle(typeOfVehicleId): Observable<any> {
+      return this.httpClient.delete("http://localhost:51680/api/TypeOfVehicles/"+typeOfVehicleId)
+    }
+  
+    updateMethodTypeOfVehicle(typeOfVehicleId, newMember): Observable<any> {
+      return this.httpClient.put("http://localhost:51680/api/TypeOfVehicles/"+typeOfVehicleId,newMember)
     }
 }

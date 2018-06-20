@@ -324,6 +324,10 @@
     <Compile Include="Migrations\201806181003467_fix.Designer.cs">
       <DependentUpon>201806181003467_fix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806191306254_Images is not working.cs" />
+    <Compile Include="Migrations\201806191306254_Images is not working.Designer.cs">
+      <DependentUpon>201806191306254_Images is not working.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -464,6 +468,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806181003467_fix.resx">
       <DependentUpon>201806181003467_fix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806191306254_Images is not working.resx">
+      <DependentUpon>201806191306254_Images is not working.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

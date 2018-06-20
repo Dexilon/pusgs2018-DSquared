@@ -117,12 +117,12 @@
               </div>
             </div>
           </td>
-          <td *ngFor = "let im of this.vehicles[i].images" style="width: 250px;"><label class="col-md-4 control-label">Slika</label><img width="200" src='{{im}}' /></td>
-          <!--<td>
+          <td *ngFor = "let im of item.Images" style="width: 250px;"><label class="col-md-4 control-label">Slike</label><img width="200" src='{{im}}' /></td>
+          <td>
               <div class="form-group">
                   <label class="col-md-4 control-label" for="singlebutton"></label>
                       <div class="col-md-4">
-                          <button *ngIf="this.navbarComponent.checkIfLogged() && this.navbarComponent.checkUserType()" id="singlebutton" (click)="deleteBranch(item.Id)" name="singlebutton" class="btn btn-danger">Delete Branch</button>
+                          <button *ngIf="this.navbarComponent.checkIfLogged() && this.navbarComponent.checkUserType()" id="singlebutton" (click)="deleteVehicle(item.id)" name="singlebutton" class="btn btn-danger">Delete Vehicle</button>
                       </div>
               </div>
           </td>
@@ -130,10 +130,10 @@
               <div class="form-group">
                   <label class="col-md-4 control-label" for="singlebutton"></label>
                       <div class="col-md-4">
-                          <button *ngIf="this.navbarComponent.checkIfLogged() && this.navbarComponent.checkUserType()" id="singlebutton" (click)="saveChanges(i)" name="singlebutton" class="btn btn-primary">Save Branch</button>
+                          <button *ngIf="this.navbarComponent.checkIfLogged() && this.navbarComponent.checkUserType()" id="singlebutton" (click)="saveChanges(i)" name="singlebutton" class="btn btn-primary">Save Vehicle</button>
                       </div>
               </div>
-          </td>-->
+          </td>
       </tr>
   </tbody>
 </table>

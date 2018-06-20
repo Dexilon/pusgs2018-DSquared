@@ -27,7 +27,19 @@ namespace RentApp.Controllers
         // GET: api/Vehicles
         public IEnumerable<Vehicle> GetVehicles()
         {
-            return unitOfWork.Vehicles.GetAll();
+            var retValue = unitOfWork.Vehicles.GetAll();
+            foreach (var item in retValue)
+            {
+                item.Images = new List<string>();
+                string[] str = item.VehicleImagesBase.Split(';');
+                foreach (var img in str)
+                {
+                    if(img != "")
+                        item.Images.Add(img);
+                }
+            }
+
+            return retValue;
         }
 
         // GET: api/Vehicles/5
@@ -86,6 +98,13 @@ namespace RentApp.Controllers
                 return BadRequest(ModelState);
             }
 
+            string images = "";
+
+            foreach(var item in vehicleBindingModel.Images)
+            {
+                images += item + ";";
+            }
+
             var vehicle = new Vehicle()
             {
                 Model = vehicleBindingModel.Model,
@@ -94,7 +113,7 @@ namespace RentApp.Controllers
                 Description = vehicleBindingModel.Description,
                 PricePerHour = vehicleBindingModel.PricePerHour,
                 Unavailable = vehicleBindingModel.Unavailable,
-                Images = vehicleBindingModel.Images
+                VehicleImagesBase = images
             };
 
             var typesOfVehicle = unitOfWork.TypesOfVehicle.GetAll();

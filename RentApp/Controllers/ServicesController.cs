@@ -101,6 +101,15 @@ namespace RentApp.Controllers
                 return NotFound();
             }
 
+            List<Vehicle> vehicles = unitOfWork.Vehicles.GetAll().Where(x => service.Vehicles.Contains(x)).ToList();
+            List<Branch> branches = unitOfWork.Branches.GetAll().Where(x => service.Branches.Contains(x)).ToList();
+
+            unitOfWork.Vehicles.RemoveRange(vehicles);
+            unitOfWork.Complete();
+
+            unitOfWork.Branches.RemoveRange(branches);
+            unitOfWork.Complete();
+
             unitOfWork.Services.Remove(service);
             unitOfWork.Complete();
 

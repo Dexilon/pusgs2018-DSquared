@@ -126,6 +126,10 @@ namespace RentApp.Models
         [Display(Name = "Images")]
         public List<string> Images { get; set; }
 
+        [DataType(DataType.Text)]
+        [Display(Name = "VehicleImagesBase")]
+        public string VehicleImagesBase { get; set; }
+
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Type")]

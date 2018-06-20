@@ -36,4 +36,14 @@ export class VehicleServiceService {
     postMethodVehicle(newMember): Observable<any> {
       return this.httpClient.post("http://localhost:51680/api/Vehicles", newMember)
     }
+
+    deleteMethodVehicle(vehicleId): Observable<any> {
+      debugger
+      return this.httpClient.delete("http://localhost:51680/api/Vehicles/" + vehicleId)
+    }
+
+    updateMethodVehicle(vehicleId, newMember): Observable<any> {
+      debugger
+      return this.httpClient.put("http://localhost:51680/api/Vehicles/" + vehicleId,newMember)
+    }
 }
