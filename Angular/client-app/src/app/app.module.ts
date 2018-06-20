@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientXsrfModule } from '@angular/common/http';
+import { AgmCoreModule } from '@agm/core';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/interceptor';
@@ -35,6 +36,7 @@ import { TypeOfVehicle } from 'src/app/models/typeOfVehicle';
 import { ShowVehiclesComponent } from './show-vehicles/show-vehicles.component';
 import { ShowTypesOfVehiclesComponent } from './show-types-of-vehicles/show-types-of-vehicles.component';
 import { AddTypeOfVehicleServiceService } from 'src/app/type-of-vehicle-service/add-type-of-vehicle-service.service';
+import { MapComponent } from './map/map.component';
 
 const Routes = [
   {
@@ -85,6 +87,10 @@ const Routes = [
   {
     path: "showTypesOfVehicles",
     component: ShowTypesOfVehiclesComponent
+  },
+  {
+    path: "map",
+    component: MapComponent
   }
 ]
 
@@ -104,7 +110,8 @@ const Routes = [
     ProfileComponent,
     AddTypeOfVehicleComponent,
     ShowVehiclesComponent,
-    ShowTypesOfVehiclesComponent
+    ShowTypesOfVehiclesComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -112,7 +119,8 @@ const Routes = [
     HttpModule,
     RouterModule.forRoot(Routes),
     HttpClientModule,
-    HttpClientXsrfModule
+    HttpClientXsrfModule,
+    AgmCoreModule.forRoot({apiKey: 'AIzaSyDnihJyw_34z5S1KZXp90pfTGAqhFszNJk'})
   ],
   providers: [SignalRService,RegisterServiceService, ServiceServiceService, BranchServiceService, VehicleServiceService, AddTypeOfVehicleServiceService,
     CanActivateViaAuthGuard,
