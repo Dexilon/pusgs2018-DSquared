@@ -134,6 +134,20 @@
                       </div>
               </div>
           </td>
+          <td>
+            <div class="form-group" *ngIf="!checkVehicleAvailability(i)">
+                <label class="col-md-4 control-label" for="singlebutton"></label>
+                    <div class="col-md-4">
+                        <button *ngIf="this.navbarComponent.checkIfLogged() && this.navbarComponent.checkUserType()" id="singlebutton" (click)="changeVehicleAvailability(i)" name="singlebutton" class="btn btn-warning">Make Unavailable</button>
+                    </div>
+            </div>
+            <div class="form-group" *ngIf="checkVehicleAvailability(i)">
+              <label class="col-md-4 control-label" for="singlebutton"></label>
+                  <div class="col-md-4">
+                      <button *ngIf="this.navbarComponent.checkIfLogged() && this.navbarComponent.checkUserType()" id="singlebutton" (click)="changeVehicleAvailability(i)" name="singlebutton" class="btn btn-info">Make Available</button>
+                  </div>
+          </div>
+        </td>
       </tr>
   </tbody>
 </table>

@@ -30,6 +30,10 @@ export class ProfileServiceService {
     }
   
     putMethodProfile(id, newMember): Observable<any> {
-      return this.httpClient.put("http://localhost:51680/api/AppUsers/" + id,newMember)
+      return this.httpClient.put("http://localhost:51680/api/AppUsers/" + id,newMember);
+    }
+
+    postMethodProfile(newMember): Observable<any> {
+      return this.httpClient.post("http://localhost:51680/api/Account/ChangePassword",newMember);
     }
 }

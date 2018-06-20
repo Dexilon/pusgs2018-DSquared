@@ -25,12 +25,6 @@ export class RegisterServiceService {
       errorMessage = error.message ? error.message : error.toString();
       return Observable.throw(errorMessage);
     }
-
-    /*getMethodRegister(): Observable<AppUser> {
-      return this.http.get('https://jsonplaceholder.typicode.com/posts/1')
-        .map(this.parseData)
-        .catch(this.handleError);
-    }*/
   
     postMethodRegister(newMember): Observable<any> {
       console.log(newMember);

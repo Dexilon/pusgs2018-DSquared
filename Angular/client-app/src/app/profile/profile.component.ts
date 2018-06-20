@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import {FileUploader,FileSelectDirective } from 'ng2-file-upload/ng2-file-upload';
 import {AppUser} from '../models/appUser'
 import {ProfileServiceService} from '../profileService/profile-service.service';
+import { UserProfile } from '../models/userProfile'
 
 
 const URL = 'http://localhost:51680/api/Upload/user/PostProfileDocumentImage';
@@ -48,6 +49,18 @@ export class ProfileComponent implements OnInit {
     .subscribe(
       data => {
         alert("Your changes updated successfully!");
+      },
+      error => {
+        alert(error.error.ModelState[""][0])
+      });
+  }
+
+  onSubmitPassword(changePassword: UserProfile, form: NgForm) {
+    this.profileServiceService.postMethodProfile(changePassword)
+    .subscribe(
+      data => {
+        alert("Your changes updated successfully!");
+        form.reset();
       },
       error => {
         alert(error.error.ModelState[""][0])

@@ -10,6 +10,7 @@
           <li><a [routerLink]="['/showBranches']">Branches</a></li>
           <li><a [routerLink]="['/showVehicles']">Vehicles</a></li>
           <li><a [routerLink]="['/showTypesOfVehicles']">Types Of Vehicle</a></li>
+          <li><a [routerLink]="['/map']">Map</a></li>
           <li><a *ngIf="checkIfLogged() && checkUserType()" [routerLink]="['/addService']">Add Service</a></li>
           <li><a *ngIf="checkIfLogged() && checkUserType()" [routerLink]="['/addBranch']">Add Branch</a></li>
           <li><a *ngIf="checkIfLogged() && checkUserType()" [routerLink]="['/addVehicle']">Add Vehicle</a></li>
