@@ -22,7 +22,6 @@ export class ShowVehiclesComponent implements OnInit {
     this.vehicleServiceService.getMethodVehicle()
     .subscribe(
       data => {
-        debugger
         this.vehicles = data;
       },
       error => {
@@ -54,4 +53,31 @@ export class ShowVehiclesComponent implements OnInit {
       })
   }
 
+  changeVehicleAvailability(i : number){
+    debugger
+    if(this.vehicles[i].Unavailable){
+      this.vehicles[i].Unavailable = false;
+    }
+    else{
+      this.vehicles[i].Unavailable = true;
+    }
+    this.vehicleServiceService.updateMethodVehicle(this.vehicles[i].id,this.vehicles[i])
+    .subscribe(
+      data => {
+        alert("Vehicle availability changed!");
+        this.vehicleServiceService.getMethodVehicle();
+      },
+      error => {
+        alert(error.error.ModelState[""][0])
+      })
+  }
+
+  checkVehicleAvailability(i : number){
+    if(this.vehicles[i].Unavailable){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
 }
