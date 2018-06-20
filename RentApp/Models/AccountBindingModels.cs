@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using RentApp.Models.Entities;
 
 namespace RentApp.Models
 {
@@ -61,6 +62,29 @@ namespace RentApp.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+    }
+
+    public class RentBindingModel
+    {
+        [Required]
+        [DataType(DataType.DateTime)]
+        [Display(Name = "Start")]
+        public DateTime Start { get; set; }
+
+        [Required]
+        [DataType(DataType.DateTime)]
+        [Display(Name = "End")]
+        public DateTime End { get; set; }
+
+        [Required]
+        [Display(Name = "Branch")]
+        public string Branch { get; set; }
+
+        [Display(Name = "Vehicle")]
+        public Vehicle Vehicle { get; set; }
+
+        [Display(Name = "Email")]
+        public string Email { get; set; }
     }
 
     public class BranchBindingModel

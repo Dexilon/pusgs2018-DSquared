@@ -32,6 +32,12 @@ export class ServiceServiceService {
       .catch(this.handleError);
   }
 
+  getMethodServiceById(Id: number): Observable<Service> {
+    return this.http.get('http://localhost:51680/api/Services/'+Id)
+      .map(this.parseData)
+      .catch(this.handleError);
+  }
+
   postMethodService(newMember): Observable<any> {
     console.log(newMember);
     return this.httpClient.post("http://localhost:51680/api/Services", newMember)

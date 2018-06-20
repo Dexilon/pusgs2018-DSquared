@@ -8,10 +8,10 @@ export class Service {
     Logo: string;
     Email: string;
     Description: string;
-    Vehicles: Observable<Vehicle>;
-    Branches: Observable<Branch>;
+    Vehicles: Vehicle[];
+    Branches: Branch[];
 
-    constructor(Id : number, Name:string, Logo:string,Email: string, Description: string, Vehicles: Observable<Vehicle>, Branches: Observable<Branch>)
+    constructor(Id : number, Name:string, Logo:string,Email: string, Description: string, Vehicles: Vehicle[], Branches: Branch[])
     {
         this.Id = Id;
         this.Name = Name;

@@ -35,6 +35,9 @@ import { TypeOfVehicle } from 'src/app/models/typeOfVehicle';
 import { ShowVehiclesComponent } from './show-vehicles/show-vehicles.component';
 import { ShowTypesOfVehiclesComponent } from './show-types-of-vehicles/show-types-of-vehicles.component';
 import { AddTypeOfVehicleServiceService } from 'src/app/type-of-vehicle-service/add-type-of-vehicle-service.service';
+import { RentAVehicleComponent } from './rent-a-vehicle/rent-a-vehicle.component';
+import { ShowVehiclesOfServiceComponent } from './show-vehicles-of-service/show-vehicles-of-service.component';
+import { RentComponent } from './rent/rent.component';
 
 const Routes = [
   {
@@ -85,7 +88,21 @@ const Routes = [
   {
     path: "showTypesOfVehicles",
     component: ShowTypesOfVehiclesComponent
+  },
+  {
+    path: "rentAVehicle",
+    component: RentAVehicleComponent
+  },
+  {
+    path: "showVehiclesOfService/:Id",
+    component: ShowVehiclesOfServiceComponent
+  },
+  {
+    path: "rentVehicle/:Id",
+    component: RentComponent
   }
+
+  
 ]
 
 @NgModule({
@@ -104,7 +121,10 @@ const Routes = [
     ProfileComponent,
     AddTypeOfVehicleComponent,
     ShowVehiclesComponent,
-    ShowTypesOfVehiclesComponent
+    ShowTypesOfVehiclesComponent,
+    RentAVehicleComponent,
+    ShowVehiclesOfServiceComponent,
+    RentComponent
   ],
   imports: [
     BrowserModule,

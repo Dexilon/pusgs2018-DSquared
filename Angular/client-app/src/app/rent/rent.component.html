@@ -1,0 +1,109 @@
+<table>
+    <tbody>
+      <tr>
+        <td>
+          <div class="form-group">
+                <label class="col-md-4 control-label" for="textinput">Manufactor:</label>  
+                <div class="col-md-4">
+                <label class="col-md-4 control-label" for="textinput">{{vehicle.Manufactor}}</label>
+                </div>
+              </div>
+              
+            </td>
+        <td><div class="form-group">
+                <label class="col-md-4 control-label" for="textinput">Model:</label>  
+                <div class="col-md-4">
+                    <label class="col-md-4 control-label" for="textinput">{{vehicle.Model}}</label>
+                </div>
+              </div>
+            </td>
+        <td><div class="form-group">
+          <label class="col-md-4 control-label" for="textinput">Year:</label>  
+          <div class="col-md-4">
+              <label class="col-md-4 control-label" for="textinput">{{vehicle.Year}}</label>
+                      </div>
+        </div>
+      </td>
+      <td>
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="textinput">Price Per Hour:</label>  
+          <div class="col-md-4">
+              <label class="col-md-4 control-label" for="textinput">{{vehicle.PricePerHour}}</label>
+                      </div>
+        </div>
+      </td>
+      <td>
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="textarea">Description:</label>
+          <div class="col-md-4">                     
+              <label class="col-md-4 control-label" for="textinput">{{vehicle.Description}}</label>
+            </div>
+        </div>
+      </td>
+      <td>
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="textinput">Type of Vehicle:</label>  
+            <div class="col-md-4">
+                <label class="col-md-4 control-label" for="textinput">{{vehicle.Type.Name}}</label>
+                          </div>
+          </div>
+        </td>        
+      </tr>
+    </tbody>
+  
+  </table>
+
+
+
+
+
+
+  <form #f="ngForm" (ngSubmit)="onSubmit(f.value, f)">
+      <div class="row">
+        <div class="col col-lg-4 col-lg-push-4">
+            <div class="row">
+              <h1>Rent a vehicle</h1>
+            </div>
+    
+            <div class="row">
+              <div class="col col-lg-4">
+                <hr>
+              </div>
+            </div>
+    
+            
+
+              <div class="form-group">
+                  <label class="col-md-4 control-label" for="textinput">Branch to return:</label>  
+                  <div class="col-md-4">
+                      <select id="Branch" ngModel #Branch="ngModel" name="Branch" class="form-control">
+                        <option *ngFor = "let item of branches" [value]="item.Address" id="Branch" name="Branch">{{item.Address}}</option>
+                      </select>
+                    </div>
+                </div>
+  
+            <div class="form-group">
+              <label for="name">Start</label>
+              <input type="date" class="form-control" name="Start" required length="10" ngModel #Start="ngModel">
+              <div *ngIf="Start.errors && (Start.dirty || Start.touched)" class="alert alert-danger">
+                <div [hidden]="!Start.errors.required">
+                  Start Day is required!
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+                <label for="name">End</label>
+                <input type="date" class="form-control" name="End" required length="10" ngModel #End="ngModel">
+                <div *ngIf="End.errors && (End.dirty || End.touched)" class="alert alert-danger">
+                  <div [hidden]="!End.errors.required">
+                    End Day is required!
+                  </div>
+                </div>
+              </div>
+          
+            <br>
+              <button type="submit" class="btn btn-success" [disabled]="!f.valid">Rent</button>
+          </div>
+      </div>
+    </form>

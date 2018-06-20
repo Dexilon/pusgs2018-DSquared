@@ -101,22 +101,6 @@ namespace RentApp.Controllers
                 return NotFound();
             }
 
-            /*List<Vehicle> vehicles = unitOfWork.Vehicles.GetAll().ToList();
-
-            foreach (var item in vehicles)
-            {
-                if(item.Type == typeOfVehicle)
-                {
-                    unitOfWork.Vehicles.Remove(item);
-                    unitOfWork.Complete();
-                }
-            }
-
-            foreach (var item in typeOfVehicle.Vehicles)
-            {
-                vehicles.Remove(item);
-            }*/
-
             List<Vehicle> vehicles = unitOfWork.Vehicles.GetAll().Where(x => x.Type == typeOfVehicle).ToList();
 
             unitOfWork.Vehicles.RemoveRange(vehicles);

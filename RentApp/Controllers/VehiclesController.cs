@@ -64,7 +64,7 @@ namespace RentApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != vehicle.id)
+            if (id != vehicle.Id)
             {
                 return BadRequest();
             }
@@ -147,7 +147,7 @@ namespace RentApp.Controllers
             unitOfWork.Services.Update(s);
             unitOfWork.Complete();
 
-            return CreatedAtRoute("DefaultApi", new { id = vehicle.id }, vehicle);
+            return CreatedAtRoute("DefaultApi", new { id = vehicle.Id }, vehicle);
         }
 
         // DELETE: api/Vehicles/5

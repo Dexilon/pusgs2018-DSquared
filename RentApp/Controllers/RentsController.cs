@@ -11,6 +11,7 @@ using System.Web.Http.Description;
 using RentApp.Models.Entities;
 using RentApp.Persistance;
 using RentApp.Persistance.UnitOfWork;
+using RentApp.Models;
 
 namespace RentApp.Controllers
 {
@@ -78,33 +79,63 @@ namespace RentApp.Controllers
 
         // POST: api/Rents
         [ResponseType(typeof(Rent))]
-        public IHttpActionResult PostRent(Rent rent)
+        public IHttpActionResult PostRent(RentBindingModel rentBindingModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            var branches = unitOfWork.Branches.GetAll();
+
+            Branch branch = new Branch();
+
+            foreach (var item in branches)
+            {
+                if (item.Address == rentBindingModel.Branch)
+                {
+                    branch = item;
+                }
+            }
+
+            var vehicles = unitOfWork.Vehicles.GetAll();
+
+            Vehicle vehicle = new Vehicle();
+
+            foreach (var item in vehicles)
+            {
+                if (item.Id == rentBindingModel.Vehicle.Id)
+                {
+                    vehicle = item;
+                }
+            }
+
+            var username = User.Identity.Name;
+
+            var users = unitOfWork.AppUsers.GetAll();
+
+            AppUser appUser = new AppUser();
+
+            foreach(var item in users)
+            {
+                if(item.Email == rentBindingModel.Email)
+                {
+                    appUser = item;
+                }
+            }
+
+            Rent rent = new Rent();
+            rent.Branch = branch;
+            rent.End = rentBindingModel.End;
+            rent.Start = rentBindingModel.Start;
+            rent.Vehicle = vehicle;
+
+            appUser.Rents.Add(rent);
+            unitOfWork.AppUsers.Update(appUser); 
             unitOfWork.Rents.Add(rent);
             unitOfWork.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = rent.Id }, rent);
-        }
-
-        // DELETE: api/Rents/5
-        [ResponseType(typeof(Rent))]
-        public IHttpActionResult DeleteRent(int id)
-        {
-            Rent rent = unitOfWork.Rents.Get(id);
-            if (rent == null)
-            {
-                return NotFound();
-            }
-
-            unitOfWork.Rents.Remove(rent);
-            unitOfWork.Complete();
-
-            return Ok(rent);
         }
 
         protected override void Dispose(bool disposing)

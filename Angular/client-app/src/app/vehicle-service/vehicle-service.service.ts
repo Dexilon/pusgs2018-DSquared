@@ -32,6 +32,12 @@ export class VehicleServiceService {
         .map(this.parseData)
         .catch(this.handleError);
     }
+
+    getMethodVehicleById(Id: number): Observable<Vehicle> {
+      return this.http.get('http://localhost:51680/api/Vehicles/'+Id)
+        .map(this.parseData)
+        .catch(this.handleError);
+    }
   
     postMethodVehicle(newMember): Observable<any> {
       return this.httpClient.post("http://localhost:51680/api/Vehicles", newMember)
