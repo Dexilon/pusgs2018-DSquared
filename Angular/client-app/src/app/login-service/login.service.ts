@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Headers, RequestOptions } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { Router, RouterModule, Routes, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AppUser } from 'src/app/models/AppUser';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-//import 'rxjs/add/observable/throw';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +15,7 @@ export class LoginService {
 
   private appUser: AppUser;
   private url: string="http://localhost:51680/api/AppUsers";
-  constructor(private http: Http,private httpClient: HttpClient) { }
+  constructor(private http: Http,private httpClient: HttpClient, private router: Router) { }
 
   private parseData(res: Response) {
     return res.json() || [];
@@ -29,7 +28,6 @@ export class LoginService {
   }
 
    getClients(): Observable<AppUser> {
-     console.log("AAAAAAAAAAAAAAAAAAAAAAAA");
     return this.http.get("http://localhost:51680/api/AppUsers")
       .map(this.parseData)
       .catch(this.handleError);      
@@ -65,31 +63,13 @@ export class LoginService {
     
               localStorage.setItem('jwt', jwt)
               localStorage.setItem('role', role);
+
+              this.router.navigateByUrl("/");              
             },
             err => {
-              console.log("Error occured");
+              alert("Wrong username/password combination!");
             }
           );
         }
-        /*else
-        {
-           let x = this.http.get('http://localhost:51680/api/Services') as Observable<any>
-    
-          x.subscribe(
-            res => {
-              console.log(res);
-            },
-            err => {
-              console.log("Error occured");
-            }
-          );
-        }*/
-        
       }
-
-  // getClients (): Observable<AppUser> {
-  //   return this.httpClient.get<AppUser>("https://localhost:51680/api/AppUsers");
-  // }
-
-
 }
