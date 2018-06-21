@@ -48,6 +48,6 @@ export class VehicleServiceService {
     }
 
     updateMethodVehicle(vehicleId, newMember): Observable<any> {
-      return this.httpClient.put("http://localhost:51680/api/Vehicles/" + vehicleId,newMember)
+      return this.httpClient.put("http://localhost:51680/api/Vehicles/" + newMember.Id,newMember)
     }
 }

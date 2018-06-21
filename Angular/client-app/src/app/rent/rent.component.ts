@@ -13,6 +13,7 @@ import {AppUser} from '../models/appUser'
 import {ProfileServiceService} from '../profileService/profile-service.service';
 import { Http } from '@angular/http/src/http';
 
+
 @Component({
   selector: 'app-rent',
   templateUrl: './rent.component.html',
