@@ -68,7 +68,8 @@
       
         <tr>
           <td>
-              
+              <label ><font *ngIf="item.Rating>=0" color="green">{{item.Rating}}</font></label>
+              <label ><font *ngIf="item.Rating<0" color="red">{{item.Rating}}</font></label>
               <button (click)="submitRatingPos(i)">Like</button>   
               <button (click)="submitRatingNeg(i)">Dislike  </button>
               

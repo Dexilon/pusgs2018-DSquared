@@ -59,9 +59,9 @@ export class ServiceServiceService {
     return this.httpClient.delete("http://localhost:51680/api/Services/"+serviceId)
   }
 
-  rateMethodService(serviceId): Observable<any> {
-    return this.httpClient.delete("http://localhost:51680/api/Services/"+serviceId)
-  }
+  // rateMethodService(serviceId, newMember): Observable<any> {
+  //   return this.httpClient.delete("http://localhost:51680/api/Services/"+serviceId, newMember)
+  // }
 
   updateMethodService(serviceId, newMember): Observable<any> {
     return this.httpClient.put("http://localhost:51680/api/Services/"+serviceId,newMember)

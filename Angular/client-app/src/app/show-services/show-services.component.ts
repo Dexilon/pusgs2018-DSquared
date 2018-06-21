@@ -57,7 +57,8 @@ export class ShowServicesComponent implements OnInit {
     }
 
     submitRatingPos(id: number) {
-      this.serviceServiceService.rateMethodService(id)
+      this.services[id].Rating += 1;
+      this.serviceServiceService.updateMethodService(this.services[id].Id, this.services[id])
       .subscribe(
         data => {
           alert("Service rated successfully!");
@@ -69,6 +70,16 @@ export class ShowServicesComponent implements OnInit {
       }
 
     submitRatingNeg(id: number) {
+      this.services[id].Rating -= 1;
+      this.serviceServiceService.updateMethodService(this.services[id].Id, this.services[id])
+      .subscribe(
+        data => {
+          alert("Service rated successfully!");
+          this.serviceServiceService.getMethodService();
+        },
+        error => {
+          alert(error.error.ModelState[""][0])
+        })
         
       }
 

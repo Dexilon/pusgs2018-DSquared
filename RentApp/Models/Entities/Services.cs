@@ -29,6 +29,8 @@ namespace RentApp.Models.Entities
         [Display(Name = "Description")]
         public string Description { get; set; }
 
+        public int Rating { get; set; }
+
         public virtual List<Vehicle> Vehicles { get; set; }
         public virtual List<Branch> Branches { get; set; }
     }
