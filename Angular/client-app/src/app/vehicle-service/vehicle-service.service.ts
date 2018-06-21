@@ -26,6 +26,13 @@ export class VehicleServiceService {
       errorMessage = error.message ? error.message : error.toString();
       return Observable.throw(errorMessage);
     }
+
+    searchKeyWord(criteria:string, keyWord:string): Observable<Vehicle[]>{
+      var nesto = 'http://localhost:51680/api/Vehicles/Search/' + criteria + '/' + keyWord;
+      return this.http.get(nesto)
+      .map(this.parseData)
+      .catch(this.handleError);
+    }
   
     getMethodVehicle(): Observable<Vehicle[]> {
       return this.http.get('http://localhost:51680/api/Vehicles')

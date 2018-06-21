@@ -1,5 +1,55 @@
 <table class="table table-striped table-dark" >
+    <tr>
+        <td>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="textinput">Mode:</label>  
+                    <select id="Mode" ngModel #Mode="ngModel" name="Mode" class="form-control">
+                      <option value="Search" selected>Search</option>
+                      <option value="Filter">Filter</option>
+                    </select>
+              </div>
+        </td>
+        <td>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="textinput">Criteria:</label>  
+                <select id="Criteria" ngModel #Criteria="ngModel" name="Criteria" class="form-control">
+                    <option value="Price Per Hour" selected>Price Per Hour</option>
+                    <option value="Type of Vehicle">Type of Vehicle</option>
+                  </select>
+            </div>
+        </td>
+        <td>
+            <div *ngIf="Criteria.value == 'Price Per Hour' && Mode.value == 'Filter'" class="form-group">
+                <label for="between">Price Per Hour:</label>                  
+                  <input class="form-control" placeholder="From" type="text" id="From" name="From" [(ngModel)]="from">
+                  <input class="form-control" placeholder="To" type="text" id="To" name="To" [(ngModel)]="to">
+              </div>
+              <div *ngIf="Criteria.value == 'Type of Vehicle' && Mode.value == 'Filter'" class="form-group">
+                  <label for="textarea">Type of Vehicle:</label>                  
+                  <div class="form-group">
+                          <select id="Type" [(ngModel)]="type" name="Type" class="form-control">
+                            <option *ngFor = "let item of this.typesOfVehicle" [value]="item.Name" id="Type" name="Type">{{item.Name}}</option>
+                          </select>
+                    </div>
+                </div>
+        </td>
+        <td>
+            <div *ngIf="Mode.value == 'Search'" class="form-group">
+                <label class="col-md-4 control-label" for="textinput">Key word:</label>  
+                <div class="form-group">                 
+                      <textarea class="form-control" id="description" name="description" [(ngModel)]="keyWord"></textarea>
+                  </div>
+            </div>
+        </td>
+        <td>
+                <label class="col-md-4 control-label" for="singlebutton"></label>
+                    <div class="col-md-4">
+                        <button id="singlebutton" (click)="doAction(Mode.value,Criteria.value)" name="singlebutton" class="btn btn-success">Confirm</button>
+                    </div>
+        </td>
+      </tr>
   <tbody *ngFor = "let item of vehicles; let i = index">
+    
       <tr>
           <!--<td style="width: 250px;"><label class="col-md-4 control-label">Logo</label><img width="200" src='{{item.Logo}}' /></td>-->
           <td>

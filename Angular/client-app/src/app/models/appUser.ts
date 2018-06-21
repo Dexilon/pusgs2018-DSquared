@@ -1,4 +1,4 @@
-import { Rent } from "../models/rent"
+import { Rent } from "../models/rent";
 
 export class AppUser {
     Id: number;
