@@ -85,6 +85,28 @@ export class NotificationComponent implements OnInit {
           alert(error.error.ModelState[""][0])
         });
     }
+
+
+    deleteService(id : number){
+      debugger
+      this.serviceServiceService.deleteMethodService(id)
+      .subscribe(
+        data => {
+          alert("Service successfully deleted!");
+          this.serviceServiceService.getMethodServiceForValidation()
+          .subscribe(
+            data => {
+              this.services = data;
+              
+            },
+            error => {
+              alert(error.error.ModelState[""][0])
+            });
+        },
+        error => {
+          alert(error.error.ModelState[""][0])
+        })
+    }
     // checkIfUploaded(){
     //   for(var i = 0; i<this.profiles.length; i++)
     //   {
