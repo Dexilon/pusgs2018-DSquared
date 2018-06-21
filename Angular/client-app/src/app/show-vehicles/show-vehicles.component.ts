@@ -13,21 +13,87 @@ import { NavbarComponent } from '../navbar/navbar.component';
   providers: [AddTypeOfVehicleServiceService, NavbarComponent, VehicleServiceService]
 })
 export class ShowVehiclesComponent implements OnInit {
-
+  mode : string;
+  criteria : string;
+  from: number;
+  to: number;
+  type: string;
+  keyWord: string;
+  typesOfVehicle : TypeOfVehicle[];
   vehicles: Vehicle[];
   pageNumber: number = 1;
+  pomVehicles : Vehicle[];
 
-    constructor(private vehicleServiceService: VehicleServiceService, private navbarComponent: NavbarComponent) { }
+
+    constructor(private vehicleServiceService: VehicleServiceService, private navbarComponent: NavbarComponent, 
+      private addTypeOfVehicleServiceService: AddTypeOfVehicleServiceService) { }
 
   ngOnInit() {
     this.vehicleServiceService.getMethodVehiclePag(this.pageNumber)
     .subscribe(
       data => {
         this.vehicles = data;
+        this.addTypeOfVehicleServiceService.getMethodTypeOfVehicle()
+        .subscribe(
+          data => {
+            this.typesOfVehicle = data;
+          },
+          error => {
+            alert(error.error.ModelState[""][0])
+          })
       },
       error => {
         alert(error.error.ModelState[""][0])
       })
+  }
+
+  doAction(Mode:string,Criteria:string){
+    this.mode = Mode;
+    this.criteria = Criteria;
+
+    if(this.mode == "Filter"){
+      this.vehicleServiceService.getMethodVehicle()
+      .subscribe(
+        data => {
+          this.pomVehicles = data;
+          this.vehicles = [];
+          if(this.criteria=="Price Per Hour"){
+            for(var pom = 0; pom < this.pomVehicles.length; pom++){
+              if(this.pomVehicles[pom].PricePerHour >= this.from && this.pomVehicles[pom].PricePerHour <= this.to){
+                this.vehicles.push(this.pomVehicles[pom]);
+              }
+            }
+          }
+          else{
+            for(var pom = 0; pom < this.pomVehicles.length; pom++){
+              if(this.pomVehicles[pom].Type.Name == this.type){
+                this.vehicles.push(this.pomVehicles[pom]);
+              }
+            }
+          }
+          
+        },
+        error => {
+          alert(error.error.ModelState[""][0])
+        })
+    }
+    else{
+      this.vehicles = [];
+      if(this.criteria == "Price Per Hour"){
+        this.criteria = "PricePerHour";
+      }
+      else{
+        this.criteria = "TypeOfVehicle";
+      }
+      this.vehicleServiceService.searchKeyWord(this.criteria, this.keyWord)
+      .subscribe(
+        data => {
+          this.vehicles = data;
+        },
+        error => {
+          alert(error.error.ModelState[""][0])
+        })
+    }
   }
 
   deleteVehicle(id : number){

@@ -73,6 +73,46 @@ namespace RentApp.Controllers
             return Ok(vehicle);
         }
 
+        [Route("api/Vehicles/Search/{criteria}/{keyword}")]
+        [HttpGet]
+        public IHttpActionResult SearchVehicle(string criteria, string keyword)
+        {
+            var vehicles = unitOfWork.Vehicles.GetAll().ToList();
+
+            List<Vehicle> retVal = new List<Vehicle>();
+
+            foreach (var item in vehicles)
+            {
+                if(criteria == "TypeOfVehicle")
+                {
+                    if(item.Type.Name.Contains(keyword))
+                    {
+                        retVal.Add(item);
+                    }
+                }
+                else
+                {
+                    if(item.PricePerHour == Convert.ToDecimal(keyword))
+                    {
+                        retVal.Add(item);
+                    }
+                }
+            }
+
+            foreach (var item in retVal)
+            {
+                item.Images = new List<string>();
+                string[] str = item.VehicleImagesBase.Split(';');
+                foreach (var img in str)
+                {
+                    if (img != "")
+                        item.Images.Add(img);
+                }
+            }
+
+            return Ok(retVal);
+        }
+
         // PUT: api/Vehicles/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutVehicle(int id, Vehicle vehicle)
