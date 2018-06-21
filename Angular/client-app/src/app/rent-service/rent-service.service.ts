@@ -44,6 +44,7 @@ export class RentServiceService {
     }
   
     deleteMethodRent(serviceId): Observable<any> {
+      debugger
       return this.httpClient.delete("http://localhost:51680/api/Rents/"+serviceId)
     }
   

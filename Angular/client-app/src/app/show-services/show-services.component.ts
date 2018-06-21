@@ -47,12 +47,29 @@ export class ShowServicesComponent implements OnInit {
   onSubmit(comment: UserComment, form: NgForm, Id: number) {
     debugger
       comment.Service_Id = Id;
-      console.log(comment);
       this.serviceServiceService.postMethodComment(comment)
       .subscribe(
         data => {
           alert("You commented successfully!");
           form.reset();
+          this.serviceServiceService.getMethodService()
+          .subscribe(
+            data => {
+              this.services = data;
+            },
+            error => {
+              alert(error.error.ModelState[""][0])
+            })
+              debugger
+            this.serviceServiceService.getMethodComment()
+            .subscribe(
+              data => {
+                this.comments = data;
+                debugger
+              },
+              error => {
+                alert(error.error.ModelState[""][0])
+              })
         },
         error => {
           alert(error.error.ModelState[""][0])
@@ -77,7 +94,24 @@ export class ShowServicesComponent implements OnInit {
       .subscribe(
         data => {
           alert("Service rated successfully!");
-          this.serviceServiceService.getMethodService();
+          this.serviceServiceService.getMethodService()
+          .subscribe(
+            data => {
+              this.services = data;
+            },
+            error => {
+              alert(error.error.ModelState[""][0])
+            })
+              debugger
+            this.serviceServiceService.getMethodComment()
+            .subscribe(
+              data => {
+                this.comments = data;
+                debugger
+              },
+              error => {
+                alert(error.error.ModelState[""][0])
+              })
         },
         error => {
           alert(error.error.ModelState[""][0])
@@ -90,7 +124,24 @@ export class ShowServicesComponent implements OnInit {
       .subscribe(
         data => {
           alert("Service rated successfully!");
-          this.serviceServiceService.getMethodService();
+          this.serviceServiceService.getMethodService()
+          .subscribe(
+            data => {
+              this.services = data;
+            },
+            error => {
+              alert(error.error.ModelState[""][0])
+            })
+              debugger
+            this.serviceServiceService.getMethodComment()
+            .subscribe(
+              data => {
+                this.comments = data;
+                debugger
+              },
+              error => {
+                alert(error.error.ModelState[""][0])
+              })
         },
         error => {
           alert(error.error.ModelState[""][0])
@@ -104,7 +155,24 @@ export class ShowServicesComponent implements OnInit {
     .subscribe(
       data => {
         alert("Service successfully deleted!");
-        this.serviceServiceService.getMethodService();
+        this.serviceServiceService.getMethodService()
+        .subscribe(
+          data => {
+            this.services = data;
+          },
+          error => {
+            alert(error.error.ModelState[""][0])
+          })
+            debugger
+          this.serviceServiceService.getMethodComment()
+          .subscribe(
+            data => {
+              this.comments = data;
+              debugger
+            },
+            error => {
+              alert(error.error.ModelState[""][0])
+            })
       },
       error => {
         alert(error.error.ModelState[""][0])
@@ -119,7 +187,24 @@ export class ShowServicesComponent implements OnInit {
     .subscribe(
       data => {
         alert("Service successfully updated!");
-        this.serviceServiceService.getMethodService();
+        this.serviceServiceService.getMethodService()
+        .subscribe(
+          data => {
+            this.services = data;
+          },
+          error => {
+            alert(error.error.ModelState[""][0])
+          })
+            debugger
+          this.serviceServiceService.getMethodComment()
+          .subscribe(
+            data => {
+              this.comments = data;
+              debugger
+            },
+            error => {
+              alert(error.error.ModelState[""][0])
+            })
       },
       error => {
         alert(error.error.ModelState[""][0])

@@ -31,7 +31,15 @@ export class ShowTypesOfVehiclesComponent implements OnInit {
     .subscribe(
       data => {
         alert("Type of Vehicle successfully deleted!");
-        this.addTypeOfVehicleServiceService.getMethodTypeOfVehicle();
+        this.addTypeOfVehicleServiceService.getMethodTypeOfVehicle()
+        .subscribe(
+          data => {
+            this.typesOfVehicles = [];
+            this.typesOfVehicles = data;
+          },
+          error => {
+            alert(error.error.ModelState[""][0])
+          })
       },
       error => {
         alert(error.error.ModelState[""][0])
@@ -43,7 +51,15 @@ export class ShowTypesOfVehiclesComponent implements OnInit {
     .subscribe(
       data => {
         alert("Type of Vehicle successfully updated!");
-        this.addTypeOfVehicleServiceService.getMethodTypeOfVehicle();
+        this.addTypeOfVehicleServiceService.getMethodTypeOfVehicle()
+        .subscribe(
+          data => {
+            this.typesOfVehicles = [];
+            this.typesOfVehicles = data;
+          },
+          error => {
+            alert(error.error.ModelState[""][0])
+          })
       },
       error => {
         alert(error.error.ModelState[""][0])

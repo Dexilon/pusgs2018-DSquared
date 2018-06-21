@@ -9,6 +9,15 @@
                     <label>{{item.Vehicle.Manufactor}} {{item.Vehicle.Model}}</label> 
                     </div>
                   </div>
+            </td>
+            <td>
+                <div *ngIf="!checkButton(item)" class="form-group">
+                    <label class="col-md-4 control-label" for="singlebutton"></label>
+                        <div class="col-md-4">
+                            <button id="singlebutton" (click)="deleteRent(item.Id)" name="singlebutton" class="btn btn-danger">Delete Rent</button>
+                        </div>
+                </div>
+            </td>
         </tr>
         <tr>
             <td>
