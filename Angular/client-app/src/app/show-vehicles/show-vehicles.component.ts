@@ -42,7 +42,7 @@ export class ShowVehiclesComponent implements OnInit {
   }
 
   saveChanges(i : number){
-    this.vehicleServiceService.updateMethodVehicle(this.vehicles[i].id,this.vehicles[i])
+    this.vehicleServiceService.updateMethodVehicle(this.vehicles[i].Id,this.vehicles[i])
     .subscribe(
       data => {
         alert("Vehicle successfully updated!");
@@ -60,7 +60,7 @@ export class ShowVehiclesComponent implements OnInit {
     else{
       this.vehicles[i].Unavailable = true;
     }
-    this.vehicleServiceService.updateMethodVehicle(this.vehicles[i].id,this.vehicles[i])
+    this.vehicleServiceService.updateMethodVehicle(this.vehicles[i].Id,this.vehicles[i])
     .subscribe(
       data => {
         alert("Vehicle availability changed!");
