@@ -6,11 +6,11 @@ export class Rent {
     Id : number;
     Start: Date;
     End: Date;
-    Branch: Branch;
+    Branch: string;
     Vehicle: Vehicle;
     Email: string;
 
-    constructor(Id : number, Start:Date, End:Date, Branch: Branch, Vehicle: Vehicle, Email: string)
+    constructor(Id : number, Start:Date, End:Date, Branch: string, Vehicle: Vehicle, Email: string)
     {
         this.Id = Id;
         this.Start = Start;

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { Service } from 'src/app/models/service';
 import { BranchServiceService } from 'src/app/branchService/branch-service.service';
 import { Branch } from 'src/app/models/branch';
@@ -12,14 +11,18 @@ import { RentServiceService } from 'src/app/rent-service/rent-service.service';
 import {AppUser} from '../models/appUser'
 import {ProfileServiceService} from '../profileService/profile-service.service';
 import { Http } from '@angular/http/src/http';
-
+import { MapInfo } from '../map/map-info.model';
+import { Router, RouterModule, Routes, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-rent',
   templateUrl: './rent.component.html',
-  styleUrls: ['./rent.component.css']
+  styleUrls: ['./rent.component.css'],
+  styles: ['agm-map {height: 500px; width: 700px;}'] //postavljamo sirinu i visinu mape
 })
 export class RentComponent implements OnInit {
+  branchToSend: string;
+  mapInfo: any;
   someDate: Date;
   today: Date;
   Id: number = -1;
@@ -28,22 +31,28 @@ export class RentComponent implements OnInit {
   branches: Branch[];
   vehicle: Vehicle;
   services: Service[];
+  branchMarker: any;
 appUser: AppUser;
 
-  constructor(private profileServiceService: ProfileServiceService,private rentServiceService: RentServiceService, private serviceServiceService: ServiceServiceService, private activatedRoute: ActivatedRoute, private branchServiceService: BranchServiceService, private vehicleServiceService: VehicleServiceService) {
+  constructor(private router: Router,private profileServiceService: ProfileServiceService,private rentServiceService: RentServiceService, private serviceServiceService: ServiceServiceService, private activatedRoute: ActivatedRoute, private branchServiceService: BranchServiceService, private vehicleServiceService: VehicleServiceService) {
     activatedRoute.params.subscribe(params => {this.Id = params["Id"]});
+    this.mapInfo = new MapInfo(45.242268, 19.842954, 
+      "assets/ftn.png",
+      "Jugodrvo" , "" , "http://ftn.uns.ac.rs/691618389/fakultet-tehnickih-nauka");
    }
   
   ngOnInit() {
     this.serviceServiceService.getMethodService()
     .subscribe(
       data => {
+        debugger
         this.services = data;
         
 
         this.vehicleServiceService.getMethodVehicleById(this.Id)
         .subscribe(
           data => {
+            debugger
             this.vehicle = data;
   
             debugger
@@ -71,6 +80,7 @@ appUser: AppUser;
   }
 
   onSubmit(rent:Rent,f: NgForm){
+    debugger
     this.today = new Date();
     this.someDate = new Date(rent.Start);
     if(this.someDate < this.today){
@@ -89,13 +99,14 @@ appUser: AppUser;
           data => {
             this.appUser = data;
             rent.Email = this.appUser.Email;
-            
+            rent.Branch = this.branchToSend;
           this.rentServiceService.postMethodRent(rent)
           .subscribe(
             data => {
               debugger
               alert("You rented vehicle successfully!");
               f.reset();
+              this.router.navigateByUrl("/showUserRents");              
             },
             error => {
               alert(error.error.ModelState[""][0])
@@ -107,6 +118,10 @@ appUser: AppUser;
       }
     }
     
+  }
+
+  setBranch(br : string){
+    this.branchToSend = br;
   }
 
 }

@@ -21,7 +21,7 @@ export class MapComponent implements OnInit {
     }
   
     placeMarker($event){
-      console.log($event.coords.lat);
-      console.log($event.coords.lng);
+      localStorage.setItem('branchLatitude',$event.coords.lat);
+      localStorage.setItem('branchLongitude',$event.coords.lng);
     }
 }

@@ -70,18 +70,6 @@
                 <hr>
               </div>
             </div>
-    
-            
-
-              <div class="form-group">
-                  <label class="col-md-4 control-label" for="textinput">Branch to return:</label>  
-                  <div class="col-md-4">
-                      <select id="Branch" ngModel #Branch="ngModel" name="Branch" class="form-control">
-                        <option *ngFor = "let item of branches" [value]="item.Address" id="Branch" name="Branch">{{item.Address}}</option>
-                      </select>
-                    </div>
-                </div>
-  
             <div class="form-group">
               <label for="name">Start</label>
               <input type="date" class="form-control" name="Start" required length="10" ngModel #Start="ngModel">
@@ -101,6 +89,26 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Kreiramo mapu -->
+    <agm-map [latitude]="mapInfo.centerLat" [longitude]="mapInfo.centerLong" [zoom]="18">
+        <div *ngFor="let item of branches">
+         <!-- Postavljamo markere -->
+         <agm-marker [latitude]="item.Latitude" [longitude]="item.Longitude" [title]="mapInfo.title"
+         [label]="mapInfo.label">
+     
+           <!-- Svakom markeru dodajemo info-window (Nije obavezno!)-->
+           <agm-info-window [latitude]="item.Latitude" [longitude]="item.Longitude" >
+     
+             <!-- U info-window stavljamo html -->
+             <span style="font-size: 16px;font-family:'Times New Roman'">{{item.Address}}</span>
+             <br/>
+             <a type="submit" class="btn btn-primary" (click)="setBranch(item.Address)">Set Branch</a>
+           </agm-info-window>
+     
+         </agm-marker>
+        </div>
+       </agm-map>
           
             <br>
               <button type="submit" class="btn btn-success" [disabled]="!f.valid">Rent</button>
