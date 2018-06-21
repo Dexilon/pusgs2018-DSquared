@@ -277,6 +277,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppUsersController.cs" />
     <Compile Include="Controllers\BranchesController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RentsController.cs" />
@@ -328,10 +329,15 @@
     <Compile Include="Migrations\201806201719170_new.Designer.cs">
       <DependentUpon>201806201719170_new.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806210731211_new model migration.cs" />
+    <Compile Include="Migrations\201806210731211_new model migration.Designer.cs">
+      <DependentUpon>201806210731211_new model migration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Entities\Branch.cs" />
+    <Compile Include="Models\Entities\Comment.cs" />
     <Compile Include="Models\Entities\RAIdentityUser.cs" />
     <Compile Include="Models\Entities\AppUser.cs" />
     <Compile Include="Models\Entities\Rent.cs" />
@@ -471,6 +477,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806201719170_new.resx">
       <DependentUpon>201806201719170_new.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806210731211_new model migration.resx">
+      <DependentUpon>201806210731211_new model migration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

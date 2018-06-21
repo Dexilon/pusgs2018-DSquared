@@ -43,6 +43,11 @@ export class ServiceServiceService {
     return this.httpClient.post("http://localhost:51680/api/Services", newMember)
   }
 
+  postMethodComment(newMember): Observable<any> {
+    console.log(newMember);
+    return this.httpClient.post("http://localhost:51680/api/Comments", newMember)
+  }
+
   deleteMethodService(serviceId): Observable<any> {
     return this.httpClient.delete("http://localhost:51680/api/Services/"+serviceId)
   }

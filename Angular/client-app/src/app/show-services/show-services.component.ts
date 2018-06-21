@@ -3,6 +3,9 @@ import {Service} from '../models/service'
 import {ServiceServiceService} from '../serviceService/service-service.service';
 import { Observable } from 'rxjs/internal/Observable';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { NgForm } from '@angular/forms';
+import { UserComment } from 'src/app/models/comment';
+import { Services } from '@angular/core/src/view';
 
 @Component({
   selector: 'app-show-services',
@@ -25,6 +28,21 @@ export class ShowServicesComponent implements OnInit {
         alert(error.error.ModelState[""][0])
       })
   }
+
+  onSubmit(comment: UserComment, form: NgForm, Id: number) {
+    debugger
+      comment.Service_Id = Id;
+      console.log(comment);
+      this.serviceServiceService.postMethodComment(comment)
+      .subscribe(
+        data => {
+          alert("You added service successfully!");
+          form.reset();
+        },
+        error => {
+          alert(error.error.ModelState[""][0])
+        });
+    }
 
   deleteService(id : number){
     debugger

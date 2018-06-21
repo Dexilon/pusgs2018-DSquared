@@ -62,5 +62,33 @@
                 </div>
             </td>
       </tr>
+      <form class="form-horizontal" #f="ngForm" (ngSubmit)="onSubmit(f.value, f, item.Id)">
+      <tr>
+        <td>
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="textinput">Comments:</label>  
+            <div class="col-md-4">
+            <input id="manufactor" [(ngModel)]="vehicle.Manufactor" name="manufactor" type="text" placeholder="" class="form-control input-md">    
+            </div>
+          </div>
+        </td>
+        </tr>
+        <tr>
+        <td>
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="textinput"></label>  
+            <div class="col-md-4">
+            <input id="manufactor" name="manufactor" type="text" placeholder="" class="form-control input-md" ngModel #comment="ngModel">    
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="singlebutton"></label>
+            <div class="col-md-4">
+              <button type="submit"  id="singlebutton" name="singlebutton" class="btn btn-success" [disabled]="!f.valid">Add Comment</button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </form>
   </tbody>
 </table>

@@ -25,5 +25,7 @@ namespace RentApp.Persistance
         {
             return new RADBContext();
         }
+
+        public System.Data.Entity.DbSet<RentApp.Models.Entities.Comment> Comments { get; set; }
     }
 }

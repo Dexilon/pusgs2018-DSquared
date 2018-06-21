@@ -6,12 +6,12 @@ import { Branch } from 'src/app/models/branch';
 import { VehicleServiceService } from 'src/app/vehicle-Service/vehicle-service.service';
 import { Vehicle } from 'src/app/models/vehicle';
 import { ServiceServiceService } from 'src/app/serviceService/service-service.service';
-import { Server } from 'http';
 import { Rent } from 'src/app/models/rent';
 import { NgForm } from '@angular/forms';
 import { RentServiceService } from 'src/app/rent-service/rent-service.service';
 import {AppUser} from '../models/appUser'
 import {ProfileServiceService} from '../profileService/profile-service.service';
+import { Http } from '@angular/http/src/http';
 
 @Component({
   selector: 'app-rent',
