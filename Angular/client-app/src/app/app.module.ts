@@ -36,13 +36,10 @@ import { TypeOfVehicle } from 'src/app/models/typeOfVehicle';
 import { ShowVehiclesComponent } from './show-vehicles/show-vehicles.component';
 import { ShowTypesOfVehiclesComponent } from './show-types-of-vehicles/show-types-of-vehicles.component';
 import { AddTypeOfVehicleServiceService } from 'src/app/type-of-vehicle-service/add-type-of-vehicle-service.service';
-<<<<<<< HEAD
 import { RentAVehicleComponent } from './rent-a-vehicle/rent-a-vehicle.component';
 import { ShowVehiclesOfServiceComponent } from './show-vehicles-of-service/show-vehicles-of-service.component';
 import { RentComponent } from './rent/rent.component';
-=======
 import { MapComponent } from './map/map.component';
->>>>>>> e5c554d75926da18dd46567a2492512f9fbae154
 
 const Routes = [
   {
@@ -95,7 +92,6 @@ const Routes = [
     component: ShowTypesOfVehiclesComponent
   },
   {
-<<<<<<< HEAD
     path: "rentAVehicle",
     component: RentAVehicleComponent
   },
@@ -106,10 +102,10 @@ const Routes = [
   {
     path: "rentVehicle/:Id",
     component: RentComponent
-=======
+  },
+  {
     path: "map",
     component: MapComponent
->>>>>>> e5c554d75926da18dd46567a2492512f9fbae154
   }
 
   
@@ -132,13 +128,10 @@ const Routes = [
     AddTypeOfVehicleComponent,
     ShowVehiclesComponent,
     ShowTypesOfVehiclesComponent,
-<<<<<<< HEAD
     RentAVehicleComponent,
     ShowVehiclesOfServiceComponent,
-    RentComponent
-=======
+    RentComponent,
     MapComponent
->>>>>>> e5c554d75926da18dd46567a2492512f9fbae154
   ],
   imports: [
     BrowserModule,

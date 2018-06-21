@@ -54,7 +54,6 @@ export class ShowVehiclesComponent implements OnInit {
   }
 
   changeVehicleAvailability(i : number){
-    debugger
     if(this.vehicles[i].Unavailable){
       this.vehicles[i].Unavailable = false;
     }

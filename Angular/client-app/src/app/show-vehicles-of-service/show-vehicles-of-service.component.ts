@@ -26,11 +26,19 @@ export class ShowVehiclesOfServiceComponent implements OnInit {
       data => {
         this.service = data;
         this.vehicles = this.service.Vehicles;
-        debugger
       },
       error => {
         alert(error.error.ModelState[""][0])
       })
+  }
+
+  checkVehicleAvailability(i : number){
+    if(this.vehicles[i].Unavailable){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
 }

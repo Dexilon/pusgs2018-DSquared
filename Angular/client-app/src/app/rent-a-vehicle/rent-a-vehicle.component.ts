@@ -27,13 +27,4 @@ export class RentAVehicleComponent implements OnInit {
         alert(error.error.ModelState[""][0])
       })
   }
-
-
-  showVehicles(i : number){
-    debugger
-
-  }
-
-
-
 }
