@@ -11,6 +11,7 @@ using System.Web.Http.Description;
 using RentApp.Models.Entities;
 using RentApp.Persistance;
 using RentApp.Persistance.UnitOfWork;
+using System.Net.Mail;
 
 namespace RentApp.Controllers
 {
@@ -54,6 +55,39 @@ namespace RentApp.Controllers
             var appUser = user.AppUser;
 
             return Ok(appUser);
+        }
+
+        [Route("api/AppUsers/AproveUser/{id}")]
+        [HttpPost]
+        public IHttpActionResult UserAproving(int id)
+        {
+            AppUser user = unitOfWork.AppUsers.Get(id);
+
+            if (user.Activated == true)
+            {
+                MailMessage mail = new MailMessage("admin@gmail.com", user.Email);
+                SmtpClient client = new SmtpClient();
+                client.Port = 587;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new NetworkCredential("admin@gmail.com", "admin");
+                client.Host = "smtp.gmail.com";
+                client.EnableSsl = true;
+                mail.From = new MailAddress("admin@gmail.com");
+                mail.To.Add(user.Email);
+                mail.Subject = "Profile approved";
+                mail.Body = "The account that you have made has been approved by our administrators!";
+                try
+                {
+                    client.Send(mail);
+                }
+                catch
+                {
+
+                }
+            }
+
+            return Ok();
         }
 
 

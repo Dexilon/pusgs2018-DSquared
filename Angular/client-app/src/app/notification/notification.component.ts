@@ -47,6 +47,15 @@ export class NotificationComponent implements OnInit {
       .subscribe(
         data => {
           alert("User validated successfully!");
+
+          this.profileServiceService.sendMail(this.profiles[id].Id)
+          .subscribe(
+            data => {
+            },
+            error => {
+              alert(error.error.ModelState[""][0])
+            });
+
           this.profileServiceService.getMethodProfileForValidation()
           .subscribe(
             data => {
@@ -71,6 +80,15 @@ export class NotificationComponent implements OnInit {
       .subscribe(
         data => {
           alert("Service validated successfully!");
+
+          this.serviceServiceService.sendMailService(this.services[id].Id)
+          .subscribe(
+            data => {
+            },
+            error => {
+              alert(error.error.ModelState[""][0])
+            });
+
           this.serviceServiceService.getMethodServiceForValidation()
           .subscribe(
             data => {

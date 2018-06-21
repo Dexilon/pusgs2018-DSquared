@@ -11,6 +11,7 @@ using System.Web.Http.Description;
 using RentApp.Models.Entities;
 using RentApp.Persistance;
 using RentApp.Persistance.UnitOfWork;
+using System.Net.Mail;
 
 namespace RentApp.Controllers
 {
@@ -167,6 +168,8 @@ namespace RentApp.Controllers
                 return BadRequest(ModelState);
             }
 
+            service.Owner = User.Identity.Name;
+
             unitOfWork.Services.Add(service);
             unitOfWork.Complete();
 
@@ -196,6 +199,46 @@ namespace RentApp.Controllers
             unitOfWork.Complete();
 
             return Ok(service);
+        }
+
+        [Route("api/Services/aproveService/{id}")]
+        [HttpPost]
+        public IHttpActionResult ServiceAproving(int id)
+        {
+            Service service = unitOfWork.Services.Get(id);
+
+            var serviceOwner = service.Owner;
+
+            if (!service.Owner.Contains("@gmail.com"))
+            {
+                service.Owner = serviceOwner + "@gmail.com";
+            }
+
+            if (service.Activated == true)
+            {
+                MailMessage mail = new MailMessage("admin@gmail.com", service.Owner);
+                SmtpClient client = new SmtpClient();
+                client.Port = 587;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new NetworkCredential("admin@gmail.com", "admin");
+                client.Host = "smtp.gmail.com";
+                client.EnableSsl = true;
+                mail.From = new MailAddress("admin@gmail.com");
+                mail.To.Add(service.Owner);
+                mail.Subject = "Service approved";
+                mail.Body = "The service that you have made has been approved by our administrators! \n You are now able to add vehicles and branches!";
+                try
+                {
+                    client.Send(mail);
+                }
+                catch
+                {
+
+                }
+            }
+
+            return Ok();
         }
 
         protected override void Dispose(bool disposing)
