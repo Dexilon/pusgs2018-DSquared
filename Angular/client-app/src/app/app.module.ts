@@ -40,6 +40,7 @@ import { RentAVehicleComponent } from './rent-a-vehicle/rent-a-vehicle.component
 import { ShowVehiclesOfServiceComponent } from './show-vehicles-of-service/show-vehicles-of-service.component';
 import { RentComponent } from './rent/rent.component';
 import { MapComponent } from './map/map.component';
+import { ShowUserRentsComponent } from './show-user-rents/show-user-rents.component';
 
 const Routes = [
   {
@@ -106,6 +107,10 @@ const Routes = [
   {
     path: "map",
     component: MapComponent
+  },
+  {
+    path: "showUserRents",
+    component: ShowUserRentsComponent
   }
 
   
@@ -131,7 +136,8 @@ const Routes = [
     RentAVehicleComponent,
     ShowVehiclesOfServiceComponent,
     RentComponent,
-    MapComponent
+    MapComponent,
+    ShowUserRentsComponent
   ],
   imports: [
     BrowserModule,

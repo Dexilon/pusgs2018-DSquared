@@ -69,27 +69,25 @@ appUser: AppUser;
   }
 
   onSubmit(rent:Rent,f: NgForm){
+    debugger
     // console.log(f.value.serviceName, f.value.email)
     rent.Vehicle = this.vehicle;
     this.profileServiceService.getMethodProfile()
     .subscribe(
       data => {
         this.appUser = data;
-      },
-      error => {
-        alert(error.error.ModelState[""][0])
-      });
-    
-      rent.Email = this.appUser.Email;
-    //console.log(vehicle);
-debugger
-    // vehicle.Images.push(this.url);
-    this.rentServiceService.postMethodRent(rent)
-    .subscribe(
-      data => {
-        debugger
-        alert("You rented vehicle successfully!");
-        f.reset();
+        rent.Email = this.appUser.Email;
+        
+      this.rentServiceService.postMethodRent(rent)
+      .subscribe(
+        data => {
+          debugger
+          alert("You rented vehicle successfully!");
+          f.reset();
+        },
+        error => {
+          alert(error.error.ModelState[""][0])
+        });
       },
       error => {
         alert(error.error.ModelState[""][0])

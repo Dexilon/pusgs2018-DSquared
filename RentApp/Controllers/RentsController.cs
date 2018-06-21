@@ -30,6 +30,17 @@ namespace RentApp.Controllers
             return unitOfWork.Rents.GetAll();
         }
 
+        [Route("api/RentsByUserId/{email}")]
+        [HttpGet]
+        public IHttpActionResult GetRentsByUserId(string email)
+        {
+            List<AppUser> users = unitOfWork.AppUsers.GetAll().Where(x => x.Email == email).ToList();
+
+            var rents = users[0].Rents;
+
+            return Ok(rents);
+        }
+
         // GET: api/Rents/5
         [ResponseType(typeof(Rent))]
         public IHttpActionResult GetRent(int id)

@@ -1,0 +1,59 @@
+<h2>Rent reservations:</h2>
+<table class="table table-striped table-dark" >
+    <tbody *ngFor = "let item of rents; let i = index">
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">Car:</label>  
+                    <div class="col-md-4">
+                    <label>{{item.Vehicle.Manufactor}} {{item.Vehicle.Model}}</label> 
+                    </div>
+                  </div>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">Branch Address:</label>  
+                    <div class="col-md-4">
+                    <label>{{item.Branch.Address}}</label>
+                    </div>
+                  </div>
+              </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="textinput">Rent start:</label>
+                <div class="col-md-4">
+                    <label>{{item.Start}}</label>
+                <!--<input [(ngModel)]="item.Start" type="date" class="form-control" name="Start" required length="10" ngModel #Start="ngModel">
+                <div *ngIf="Start.errors && (Start.dirty || Start.touched)" class="alert alert-danger">
+                  <div [hidden]="!Start.errors.required">
+                      Start day is required!
+                  </div>
+                </div>-->
+              </div>
+              </div>
+          </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">Rent end:</label>
+                    <div class="col-md-4">
+                        <label>{{item.End}}</label>
+                    <!--<input [(ngModel)]="item.End" type="date" class="form-control" name="End" required length="10" ngModel #End="ngModel">
+                    <div *ngIf="End.errors && (End.dirty || End.touched)" class="alert alert-danger">
+                      <div [hidden]="!End.errors.required">
+                          End day is required!
+                      </div>
+                    </div>-->
+                  </div>
+                  </div>
+              </td>
+        </tr>
+        
+        <br>
+        <hr>
+    </tbody>
+  </table>
