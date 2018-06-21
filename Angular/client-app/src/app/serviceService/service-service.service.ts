@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { Service } from '../models/service';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import { UserComment } from 'src/app/models/comment';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,12 @@ export class ServiceServiceService {
       .catch(this.handleError);
   }
 
+  getMethodComment(): Observable<UserComment[]> {
+    return this.http.get('http://localhost:51680/api/Comments')
+      .map(this.parseData)
+      .catch(this.handleError);
+  }
+
   getMethodServiceById(Id: number): Observable<Service> {
     return this.http.get('http://localhost:51680/api/Services/'+Id)
       .map(this.parseData)
@@ -49,6 +56,10 @@ export class ServiceServiceService {
   }
 
   deleteMethodService(serviceId): Observable<any> {
+    return this.httpClient.delete("http://localhost:51680/api/Services/"+serviceId)
+  }
+
+  rateMethodService(serviceId): Observable<any> {
     return this.httpClient.delete("http://localhost:51680/api/Services/"+serviceId)
   }
 

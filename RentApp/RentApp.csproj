@@ -347,8 +347,10 @@
     <Compile Include="Persistance\RADBContext.cs" />
     <Compile Include="Persistance\Repository\AppUserRepository.cs" />
     <Compile Include="Persistance\Repository\BranchRepository.cs" />
+    <Compile Include="Persistance\Repository\CommentRepository.cs" />
     <Compile Include="Persistance\Repository\IAppUserRepository.cs" />
     <Compile Include="Persistance\Repository\IBranchRepository.cs" />
+    <Compile Include="Persistance\Repository\ICommentRepository.cs" />
     <Compile Include="Persistance\Repository\IRentRepository.cs" />
     <Compile Include="Persistance\Repository\IRepository.cs" />
     <Compile Include="Persistance\Repository\IServicesRepository.cs" />

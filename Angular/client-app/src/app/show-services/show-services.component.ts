@@ -15,6 +15,7 @@ import { Services } from '@angular/core/src/view';
 })
 export class ShowServicesComponent implements OnInit {
     services: Service[];
+    comments: UserComment[];
   
     constructor(private serviceServiceService: ServiceServiceService, private navbarComponent: NavbarComponent) { }
 
@@ -27,6 +28,17 @@ export class ShowServicesComponent implements OnInit {
       error => {
         alert(error.error.ModelState[""][0])
       })
+        debugger
+      this.serviceServiceService.getMethodComment()
+      .subscribe(
+        data => {
+          this.comments = data;
+          debugger
+        },
+        error => {
+          alert(error.error.ModelState[""][0])
+        })
+  
   }
 
   onSubmit(comment: UserComment, form: NgForm, Id: number) {
@@ -36,13 +48,29 @@ export class ShowServicesComponent implements OnInit {
       this.serviceServiceService.postMethodComment(comment)
       .subscribe(
         data => {
-          alert("You added service successfully!");
+          alert("You commented successfully!");
           form.reset();
         },
         error => {
           alert(error.error.ModelState[""][0])
         });
     }
+
+    submitRatingPos(id: number) {
+      this.serviceServiceService.rateMethodService(id)
+      .subscribe(
+        data => {
+          alert("Service rated successfully!");
+          this.serviceServiceService.getMethodService();
+        },
+        error => {
+          alert(error.error.ModelState[""][0])
+        })
+      }
+
+    submitRatingNeg(id: number) {
+        
+      }
 
   deleteService(id : number){
     debugger
@@ -56,6 +84,8 @@ export class ShowServicesComponent implements OnInit {
         alert(error.error.ModelState[""][0])
       })
   }
+
+  
 
   saveChanges(i : number){
     debugger

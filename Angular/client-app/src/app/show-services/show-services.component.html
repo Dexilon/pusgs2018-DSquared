@@ -62,13 +62,29 @@
                 </div>
             </td>
       </tr>
-      <form class="form-horizontal" #f="ngForm" (ngSubmit)="onSubmit(f.value, f, item.Id)">
-      <tr>
+
+
+
+      
+        <tr>
+          <td>
+              
+              <button (click)="submitRatingPos(i)">Like</button>   
+              <button (click)="submitRatingNeg(i)">Dislike  </button>
+              
+          </td>
+          </tr>
+      
+
+
+
+      <form class="form-horizontal" #f="ngForm" (ngSubmit)="onSubmit(f.value, f, item.Id, item.Id)">
+      <tr *ngFor = "let comment of comments">
         <td>
           <div class="form-group">
-            <label class="col-md-4 control-label" for="textinput">Comments:</label>  
+            <label *ngIf="comment.Service_Id == item.Id" class="col-md-4 control-label" for="textinput">Comments:</label>  
             <div class="col-md-4">
-            <input id="manufactor" [(ngModel)]="vehicle.Manufactor" name="manufactor" type="text" placeholder="" class="form-control input-md">    
+            <label *ngIf="comment.Service_Id == item.Id">{{comment.Text}}</label>    
             </div>
           </div>
         </td>
@@ -78,7 +94,7 @@
           <div class="form-group">
             <label class="col-md-4 control-label" for="textinput"></label>  
             <div class="col-md-4">
-            <input id="manufactor" name="manufactor" type="text" placeholder="" class="form-control input-md" ngModel #comment="ngModel">    
+            <input id="Text" name="Text" type="text" placeholder="" class="form-control input-md" ngModel #Text="ngModel">    
             </div>
           </div>
           <div class="form-group">

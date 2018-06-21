@@ -25,6 +25,7 @@ namespace RentApp.Persistance.UnitOfWork
         [Dependency]
         public ITypeOfVehicleRepository TypesOfVehicle { get; set; }
 
+        
         public UnitOfWork(DbContext context)
         {
             _context = context;
@@ -39,5 +40,8 @@ namespace RentApp.Persistance.UnitOfWork
         {
             _context.Dispose();
         }
+
+        [Dependency]
+        public ICommentRepository Comments { get; set; }
     }
 }

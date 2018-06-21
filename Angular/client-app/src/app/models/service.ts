@@ -10,8 +10,9 @@ export class Service {
     Description: string;
     Vehicles: Vehicle[];
     Branches: Branch[];
+    Rating: number;
 
-    constructor(Id : number, Name:string, Logo:string,Email: string, Description: string, Vehicles: Vehicle[], Branches: Branch[])
+    constructor(Id : number, Name:string, Logo:string,Email: string, Description: string, Vehicles: Vehicle[], Branches: Branch[], Rating: number)
     {
         this.Id = Id;
         this.Name = Name;
@@ -20,6 +21,7 @@ export class Service {
         this.Description = Description;
         this.Branches = Branches;
         this.Vehicles = Vehicles;
+        this.Rating = Rating;
     }
 
 }

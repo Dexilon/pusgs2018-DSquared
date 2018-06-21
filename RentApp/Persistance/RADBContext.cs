@@ -17,6 +17,7 @@ namespace RentApp.Persistance
         public DbSet<Rent> Rents { get; set; }
         public DbSet<Branch> Branches { get; set; }
 
+        public DbSet<Comment> Comments { get; set; }
         public RADBContext() : base("name=RADB")
         {
         }
@@ -25,7 +26,6 @@ namespace RentApp.Persistance
         {
             return new RADBContext();
         }
-
-        public System.Data.Entity.DbSet<RentApp.Models.Entities.Comment> Comments { get; set; }
+        
     }
 }
