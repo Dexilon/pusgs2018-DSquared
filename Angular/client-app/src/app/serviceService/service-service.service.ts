@@ -33,6 +33,12 @@ export class ServiceServiceService {
       .catch(this.handleError);
   }
 
+  getMethodServicePag(pageNumber): Observable<Service[]> {
+    return this.http.get('http://localhost:51680/api/Services?pageIndex='+pageNumber+'&pageSize='+2)
+      .map(this.parseData)
+      .catch(this.handleError);
+  }
+
   getMethodComment(): Observable<UserComment[]> {
     return this.http.get('http://localhost:51680/api/Comments')
       .map(this.parseData)

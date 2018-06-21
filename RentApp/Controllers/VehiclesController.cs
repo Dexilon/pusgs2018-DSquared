@@ -42,6 +42,24 @@ namespace RentApp.Controllers
             return retValue;
         }
 
+
+        public IEnumerable<Vehicle> GetVehicles(int pageIndex, int pageSize)
+        {
+            var retValue = unitOfWork.Vehicles.GetAll(pageIndex, pageSize);
+            foreach (var item in retValue)
+            {
+                item.Images = new List<string>();
+                string[] str = item.VehicleImagesBase.Split(';');
+                foreach (var img in str)
+                {
+                    if (img != "")
+                        item.Images.Add(img);
+                }
+            }
+
+            return retValue;
+        }
+
         // GET: api/Vehicles/5
         [ResponseType(typeof(Vehicle))]
         public IHttpActionResult GetVehicle(int id)

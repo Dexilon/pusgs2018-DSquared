@@ -40,6 +40,12 @@ export class VehicleServiceService {
         .catch(this.handleError);
     }
 
+    getMethodVehiclePag(pageNumber): Observable<Vehicle[]> {
+      return this.http.get('http://localhost:51680/api/Vehicles?pageIndex='+pageNumber+'&pageSize='+2)
+        .map(this.parseData)
+        .catch(this.handleError);
+    }
+
     getMethodVehicleById(Id: number): Observable<Vehicle> {
       return this.http.get('http://localhost:51680/api/Vehicles/'+Id)
         .map(this.parseData)

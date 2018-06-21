@@ -21,13 +21,15 @@ export class ShowVehiclesComponent implements OnInit {
   keyWord: string;
   typesOfVehicle : TypeOfVehicle[];
   vehicles: Vehicle[];
+  pageNumber: number = 1;
   pomVehicles : Vehicle[];
-  
+
+
     constructor(private vehicleServiceService: VehicleServiceService, private navbarComponent: NavbarComponent, 
       private addTypeOfVehicleServiceService: AddTypeOfVehicleServiceService) { }
 
   ngOnInit() {
-    this.vehicleServiceService.getMethodVehicle()
+    this.vehicleServiceService.getMethodVehiclePag(this.pageNumber)
     .subscribe(
       data => {
         this.vehicles = data;
@@ -119,6 +121,18 @@ export class ShowVehiclesComponent implements OnInit {
       error => {
         alert(error.error.ModelState[""][0])
       })
+  }
+
+  setPageNumber(num: number)
+  {
+    this.pageNumber = num;
+    this.ngOnInit();
+  }
+
+  incPageNumber()
+  {
+    this.pageNumber +=1;
+    this.ngOnInit();
   }
 
   saveChanges(i : number){
