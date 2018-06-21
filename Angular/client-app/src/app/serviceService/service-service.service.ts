@@ -33,6 +33,12 @@ export class ServiceServiceService {
       .catch(this.handleError);
   }
 
+  getMethodServiceForValidation(): Observable<Service[]> {
+    return this.http.get('http://localhost:51680/api/Services/GetServicesForValidation')
+      .map(this.parseData)
+      .catch(this.handleError);
+  }
+
   getMethodServicePag(pageNumber): Observable<Service[]> {
     return this.http.get('http://localhost:51680/api/Services?pageIndex='+pageNumber+'&pageSize='+2)
       .map(this.parseData)
@@ -54,6 +60,11 @@ export class ServiceServiceService {
   postMethodService(newMember): Observable<any> {
     console.log(newMember);
     return this.httpClient.post("http://localhost:51680/api/Services", newMember)
+  }
+
+  approveService(id, name):Observable<any>
+  {
+    return this.httpClient.post("http://localhost:51680/api/Notify/NotifyAdmins?serviceName="+name+"&id="+id,"");
   }
 
   postMethodComment(newMember): Observable<any> {

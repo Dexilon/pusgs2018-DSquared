@@ -31,6 +31,8 @@ namespace RentApp.Models.Entities
 
         public int Rating { get; set; }
 
+        public bool Activated { get; set; }
+
         public virtual List<Vehicle> Vehicles { get; set; }
         public virtual List<Branch> Branches { get; set; }
     }

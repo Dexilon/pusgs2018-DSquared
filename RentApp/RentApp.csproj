@@ -337,6 +337,10 @@
     <Compile Include="Migrations\201806211049480_Service model changed.Designer.cs">
       <DependentUpon>201806211049480_Service model changed.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806211840212_Added Activated field in service.cs" />
+    <Compile Include="Migrations\201806211840212_Added Activated field in service.Designer.cs">
+      <DependentUpon>201806211840212_Added Activated field in service.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -489,6 +493,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806211049480_Service model changed.resx">
       <DependentUpon>201806211049480_Service model changed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806211840212_Added Activated field in service.resx">
+      <DependentUpon>201806211840212_Added Activated field in service.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

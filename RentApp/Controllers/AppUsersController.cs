@@ -54,7 +54,29 @@ namespace RentApp.Controllers
             var appUser = user.AppUser;
 
             return Ok(appUser);
-        } 
+        }
+
+
+        [Route("api/AppUsers/GetAppUsersForValidation")]
+        [HttpGet]
+        //[Authorize]
+        public IHttpActionResult GetAppUsersForValidation()
+        {
+            var username = User.Identity.Name;
+
+            List<AppUser> users = unitOfWork.AppUsers.GetAll().ToList();
+
+            List<AppUser> appUsers = new List<AppUser>();
+            foreach (var item in users)
+            {
+                if (item.PersonalDocument != null && item.PersonalDocument!="" && item.Activated == false)
+                {
+                    appUsers.Add(item);
+                }
+            }
+
+            return Ok(appUsers);
+        }
 
         // PUT: api/AppUsers/5
         [ResponseType(typeof(void))]
@@ -89,6 +111,7 @@ namespace RentApp.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
+
 
         // POST: api/AppUsers
         [ResponseType(typeof(AppUser))]

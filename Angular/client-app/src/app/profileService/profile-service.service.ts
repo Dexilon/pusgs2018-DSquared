@@ -28,6 +28,10 @@ export class ProfileServiceService {
     getMethodProfile(): Observable<any> {
       return this.httpClient.get("http://localhost:51680/api/AppUsers/GetCurrentUser");
     }
+
+    getMethodProfileForValidation(): Observable<any> {
+      return this.httpClient.get("http://localhost:51680/api/AppUsers/GetAppUsersForValidation");
+    }
   
     putMethodProfile(id, newMember): Observable<any> {
       return this.httpClient.put("http://localhost:51680/api/AppUsers/" + id,newMember);
@@ -36,4 +40,5 @@ export class ProfileServiceService {
     postMethodProfile(newMember): Observable<any> {
       return this.httpClient.post("http://localhost:51680/api/Account/ChangePassword",newMember);
     }
+    
 }
