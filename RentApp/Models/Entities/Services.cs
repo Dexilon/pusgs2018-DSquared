@@ -29,6 +29,8 @@ namespace RentApp.Models.Entities
         [Display(Name = "Description")]
         public string Description { get; set; }
 
+        public string Owner { get; set; }
+
         public int Rating { get; set; }
 
         public bool Activated { get; set; }

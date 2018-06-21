@@ -27,7 +27,6 @@ export class ShowBranchesComponent implements OnInit {
   }
 
   deleteBranch(id : number){
-    debugger
     this.branchServiceService.deleteMethodBranch(id)
     .subscribe(
       data => {

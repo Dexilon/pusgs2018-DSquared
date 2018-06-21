@@ -40,5 +40,9 @@ export class ProfileServiceService {
     postMethodProfile(newMember): Observable<any> {
       return this.httpClient.post("http://localhost:51680/api/Account/ChangePassword",newMember);
     }
-    
+
+    sendMail(id): Observable<any> {
+      return this.httpClient.post("http://localhost:51680/api/AppUsers/AproveUser/" + id);
+    }
+  
 }
