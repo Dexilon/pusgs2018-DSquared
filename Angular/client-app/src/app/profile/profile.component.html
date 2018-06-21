@@ -1,3 +1,5 @@
+<label *ngIf="!checkIfUploaded()">PLEASE UPLOAD YOUR PERSONAL DOCUMENT</label>
+
 <form #f="ngForm" (ngSubmit)="onSubmit(f.value, f)">
     <div class="row">
       <div class="col col-lg-4 col-lg-push-4">

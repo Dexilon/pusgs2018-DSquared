@@ -61,6 +61,30 @@ export class NotificationComponent implements OnInit {
           alert(error.error.ModelState[""][0])
         });
     }
+
+
+    validateService(id:number)
+    {
+      this.services[id].Activated = true;
+      debugger
+      this.serviceServiceService.updateMethodService(this.services[id].Id,this.services[id])
+      .subscribe(
+        data => {
+          alert("Service validated successfully!");
+          this.serviceServiceService.getMethodServiceForValidation()
+          .subscribe(
+            data => {
+              this.services = data;
+              
+            },
+            error => {
+              alert(error.error.ModelState[""][0])
+            });
+        },
+        error => {
+          alert(error.error.ModelState[""][0])
+        });
+    }
     // checkIfUploaded(){
     //   for(var i = 0; i<this.profiles.length; i++)
     //   {

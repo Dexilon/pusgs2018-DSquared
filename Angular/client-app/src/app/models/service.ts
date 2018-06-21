@@ -11,8 +11,9 @@ export class Service {
     Vehicles: Vehicle[];
     Branches: Branch[];
     Rating: number;
+    Activated: boolean;
 
-    constructor(Id : number, Name:string, Logo:string,Email: string, Description: string, Vehicles: Vehicle[], Branches: Branch[], Rating: number)
+    constructor(Id : number, Name:string, Logo:string,Email: string, Description: string, Vehicles: Vehicle[], Branches: Branch[], Rating: number, Activated: boolean)
     {
         this.Id = Id;
         this.Name = Name;
@@ -22,6 +23,7 @@ export class Service {
         this.Branches = Branches;
         this.Vehicles = Vehicles;
         this.Rating = Rating;
+        this.Activated = Activated;
     }
 
 }

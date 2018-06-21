@@ -9,9 +9,9 @@
 
 <p>------------Services----------------</p>
 <table>
-    <tr *ngFor = "let item of services; let i = index">
+    <tr *ngFor = "let item of services; let ii = index">
       <td><label>Service {{item.Name}} needs to be validated</label></td>
-      <td><a (click)="validateAppUser(i)">  Validate   </a></td>
+      <td><a (click)="validateService(ii)">  Validate   </a></td>
       <td><a>  Decline   </a></td>
     </tr>
   </table>

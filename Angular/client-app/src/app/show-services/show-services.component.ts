@@ -52,7 +52,7 @@ export class ShowServicesComponent implements OnInit {
         data => {
           alert("You commented successfully!");
           form.reset();
-          this.serviceServiceService.getMethodService()
+          this.serviceServiceService.getMethodServicePag(this.pageNumber)
           .subscribe(
             data => {
               this.services = data;
@@ -94,7 +94,7 @@ export class ShowServicesComponent implements OnInit {
       .subscribe(
         data => {
           alert("Service rated successfully!");
-          this.serviceServiceService.getMethodService()
+          this.serviceServiceService.getMethodServicePag(this.pageNumber)
           .subscribe(
             data => {
               this.services = data;
@@ -124,7 +124,7 @@ export class ShowServicesComponent implements OnInit {
       .subscribe(
         data => {
           alert("Service rated successfully!");
-          this.serviceServiceService.getMethodService()
+          this.serviceServiceService.getMethodServicePag(this.pageNumber)
           .subscribe(
             data => {
               this.services = data;
@@ -155,7 +155,7 @@ export class ShowServicesComponent implements OnInit {
     .subscribe(
       data => {
         alert("Service successfully deleted!");
-        this.serviceServiceService.getMethodService()
+        this.serviceServiceService.getMethodServicePag(this.pageNumber)
         .subscribe(
           data => {
             this.services = data;
@@ -187,7 +187,7 @@ export class ShowServicesComponent implements OnInit {
     .subscribe(
       data => {
         alert("Service successfully updated!");
-        this.serviceServiceService.getMethodService()
+        this.serviceServiceService.getMethodServicePag(this.pageNumber)
         .subscribe(
           data => {
             this.services = data;
