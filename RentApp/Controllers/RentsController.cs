@@ -88,6 +88,34 @@ namespace RentApp.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        // DELETE: api/Rents/5
+        [ResponseType(typeof(Rent))]
+        public IHttpActionResult DeleteRent(int id)
+        {
+            var ren = unitOfWork.Rents.Get(id);
+
+            if (ren == null)
+            {
+                return NotFound();
+            }
+
+            var listOfUsers = unitOfWork.AppUsers.GetAll();
+
+            foreach (var item in listOfUsers)
+            {
+                if (item.Rents.Contains(ren))
+                {
+                    item.Rents.Remove(ren);
+                    unitOfWork.AppUsers.Update(item);
+                }
+            }
+
+            unitOfWork.Rents.Remove(ren);
+            unitOfWork.Complete();
+
+            return Ok(ren);
+        }
+
         // POST: api/Rents
         [ResponseType(typeof(Rent))]
         public IHttpActionResult PostRent(RentBindingModel rentBindingModel)

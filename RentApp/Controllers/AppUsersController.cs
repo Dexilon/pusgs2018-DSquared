@@ -44,7 +44,7 @@ namespace RentApp.Controllers
 
         [Route("api/AppUsers/GetCurrentUser")]
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         public IHttpActionResult GetCurrentAppUser()
         {
             var username = User.Identity.Name;

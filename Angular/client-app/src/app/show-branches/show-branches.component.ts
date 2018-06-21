@@ -32,7 +32,14 @@ export class ShowBranchesComponent implements OnInit {
     .subscribe(
       data => {
         alert("Branch successfully deleted!");
-        this.branchServiceService.getMethodBranch();
+        this.branchServiceService.getMethodBranch()
+        .subscribe(
+          data => {
+            this.branches = data;
+          },
+          error => {
+            alert(error.error.ModelState[""][0])
+          })
       },
       error => {
         alert(error.error.ModelState[""][0])
@@ -40,12 +47,18 @@ export class ShowBranchesComponent implements OnInit {
   }
 
   saveChanges(i : number){
-    debugger
     this.branchServiceService.updateMethodBranch(this.branches[i].Id,this.branches[i])
     .subscribe(
       data => {
         alert("Branch successfully updated!");
-        this.branchServiceService.getMethodBranch();
+        this.branchServiceService.getMethodBranch()
+        .subscribe(
+          data => {
+            this.branches = data;
+          },
+          error => {
+            alert(error.error.ModelState[""][0])
+          })
       },
       error => {
         alert(error.error.ModelState[""][0])

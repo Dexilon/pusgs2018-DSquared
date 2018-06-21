@@ -20,6 +20,8 @@ import { Http } from '@angular/http/src/http';
   styleUrls: ['./rent.component.css']
 })
 export class RentComponent implements OnInit {
+  someDate: Date;
+  today: Date;
   Id: number = -1;
   service: Service;
   branchesTemp: Branch[];
@@ -69,29 +71,42 @@ appUser: AppUser;
   }
 
   onSubmit(rent:Rent,f: NgForm){
-    debugger
-    // console.log(f.value.serviceName, f.value.email)
-    rent.Vehicle = this.vehicle;
-    this.profileServiceService.getMethodProfile()
-    .subscribe(
-      data => {
-        this.appUser = data;
-        rent.Email = this.appUser.Email;
-        
-      this.rentServiceService.postMethodRent(rent)
-      .subscribe(
-        data => {
-          debugger
-          alert("You rented vehicle successfully!");
-          f.reset();
-        },
-        error => {
-          alert(error.error.ModelState[""][0])
-        });
-      },
-      error => {
-        alert(error.error.ModelState[""][0])
-      });
+    this.today = new Date();
+    this.someDate = new Date(rent.Start);
+    if(this.someDate < this.today){
+      alert("You can't reserve vehicle before today!");
+    }
+    else{
+      this.someDate = new Date(rent.End);
+      if(this.someDate < this.today){
+        alert("Your reservation can't be ended before today!");
+      }
+      else{
+        // console.log(f.value.serviceName, f.value.email)
+        rent.Vehicle = this.vehicle;
+        this.profileServiceService.getMethodProfile()
+        .subscribe(
+          data => {
+            this.appUser = data;
+            rent.Email = this.appUser.Email;
+            
+          this.rentServiceService.postMethodRent(rent)
+          .subscribe(
+            data => {
+              debugger
+              alert("You rented vehicle successfully!");
+              f.reset();
+            },
+            error => {
+              alert(error.error.ModelState[""][0])
+            });
+          },
+          error => {
+            alert(error.error.ModelState[""][0])
+          });
+      }
+    }
+    
   }
 
 }

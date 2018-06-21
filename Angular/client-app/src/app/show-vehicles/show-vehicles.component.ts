@@ -99,7 +99,22 @@ export class ShowVehiclesComponent implements OnInit {
     .subscribe(
       data => {
         alert("Vehicle successfully deleted!");
-        this.vehicleServiceService.getMethodVehicle();
+        this.vehicleServiceService.getMethodVehicle()
+        .subscribe(
+          data => {
+            this.vehicles = data;
+            this.addTypeOfVehicleServiceService.getMethodTypeOfVehicle()
+            .subscribe(
+              data => {
+                this.typesOfVehicle = data;
+              },
+              error => {
+                alert(error.error.ModelState[""][0])
+              })
+          },
+          error => {
+            alert(error.error.ModelState[""][0])
+          })
       },
       error => {
         alert(error.error.ModelState[""][0])
@@ -111,7 +126,22 @@ export class ShowVehiclesComponent implements OnInit {
     .subscribe(
       data => {
         alert("Vehicle successfully updated!");
-        this.vehicleServiceService.getMethodVehicle();
+        this.vehicleServiceService.getMethodVehicle()
+        .subscribe(
+          data => {
+            this.vehicles = data;
+            this.addTypeOfVehicleServiceService.getMethodTypeOfVehicle()
+            .subscribe(
+              data => {
+                this.typesOfVehicle = data;
+              },
+              error => {
+                alert(error.error.ModelState[""][0])
+              })
+          },
+          error => {
+            alert(error.error.ModelState[""][0])
+          })
       },
       error => {
         alert(error.error.ModelState[""][0])
