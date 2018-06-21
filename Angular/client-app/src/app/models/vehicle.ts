@@ -3,7 +3,7 @@ import { TypeOfVehicle } from "src/app/models/typeOfVehicle";
 import { Service } from "src/app/models/service";
 
 export class Vehicle {
-    id: number;
+    Id: number;
     Model: string;
     Manufactor: string;
     Year: number;
@@ -14,9 +14,9 @@ export class Vehicle {
     Type: TypeOfVehicle;
     Service: Service;
 
-    constructor(id:number, Model:string,Manufactor: string, Year: number, Description: string, PricePerHour: number, Unavailable: boolean, Images: string[], Type: TypeOfVehicle, Service: Service)
+    constructor(Id:number, Model:string,Manufactor: string, Year: number, Description: string, PricePerHour: number, Unavailable: boolean, Images: string[], Type: TypeOfVehicle, Service: Service)
     {
-        this.id = id;
+        this.Id = Id;
         this.Model= Model;
         this.Manufactor = Manufactor;
         this.Year = Year;

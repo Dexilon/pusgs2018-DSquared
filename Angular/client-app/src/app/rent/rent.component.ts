@@ -49,7 +49,7 @@ appUser: AppUser;
             {
               for(var ii = 0; ii<this.services[i].Vehicles.length; ii++ )
               {
-                if(this.services[i].Vehicles[ii].id == this.vehicle.id)
+                if(this.services[i].Vehicles[ii].Id == this.vehicle.Id)
                 {
                   this.branches = this.services[i].Branches;
   
