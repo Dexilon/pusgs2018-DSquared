@@ -1,4 +1,4 @@
-<label *ngIf="!checkIfUploaded()">PLEASE UPLOAD YOUR PERSONAL DOCUMENT</label>
+<p align="center" style="font-size:300%;" *ngIf="!checkIfUploaded()"><font color="red">PLEASE UPLOAD YOUR PERSONAL DOCUMENT</font></p>
 
 <form #f="ngForm" (ngSubmit)="onSubmit(f.value, f)">
     <div class="row">

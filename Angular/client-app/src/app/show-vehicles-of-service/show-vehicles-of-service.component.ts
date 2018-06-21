@@ -7,6 +7,8 @@ import { Rent } from 'src/app/models/rent';
 import { RentServiceService } from 'src/app/rent-service/rent-service.service';
 import { DatePipe } from '@angular/common/src/pipes';
 import { isDate } from '@angular/common/src/i18n/format_date';
+import { AppUser } from 'src/app/models/AppUser';
+import { ProfileServiceService } from 'src/app/profileService/profile-service.service';
 
 @Component({
   selector: 'app-show-vehicles-of-service',
@@ -22,32 +24,41 @@ export class ShowVehiclesOfServiceComponent implements OnInit {
   rents: Rent[];
   today: Date;
   end: Date;
+  profile: AppUser;
 
 
   temp1: number;
   temp2: number;
 
-  constructor(private rentServiceService: RentServiceService, private activatedRoute: ActivatedRoute, private serviceServiceService: ServiceServiceService ) { 
+  constructor(private profileServiceService: ProfileServiceService, private rentServiceService: RentServiceService, private activatedRoute: ActivatedRoute, private serviceServiceService: ServiceServiceService ) { 
     activatedRoute.params.subscribe(params => {this.Id = params["Id"]});
     this.today = new Date();
     this.end = new Date();
-    debugger
 
   }
   
   ngOnInit() {
-    this.serviceServiceService.getMethodServiceById(this.Id)
+    this.profileServiceService.getMethodProfile()
     .subscribe(
       data => {
-        this.service = data;
-        this.vehicles = this.service.Vehicles;
+        this.profile = data;
 
-        this.rentServiceService.getMethodRent()
+        this.serviceServiceService.getMethodServiceById(this.Id)
         .subscribe(
           data => {
-            this.rents = data;
-            this.checkRentDate();
-            debugger
+            this.service = data;
+            this.vehicles = this.service.Vehicles;
+    
+            this.rentServiceService.getMethodRent()
+            .subscribe(
+              data => {
+                this.rents = data;
+                this.checkRentDate();
+                
+              },
+              error => {
+                alert(error.error.ModelState[""][0])
+              })
           },
           error => {
             alert(error.error.ModelState[""][0])
@@ -55,7 +66,9 @@ export class ShowVehiclesOfServiceComponent implements OnInit {
       },
       error => {
         alert(error.error.ModelState[""][0])
-      })
+      });
+
+
       
 
 
@@ -74,17 +87,23 @@ export class ShowVehiclesOfServiceComponent implements OnInit {
         this.temp2 = this.vehicles[j].Id;
         if(this.temp1 == this.temp2 )
         {
-          
-          debugger
-          
           this.end = new Date(this.rents[i].End);
           if(this.end >= this.today)
           {
             this.vehiclesForbidden.push(this.vehicles[j]);
-            debugger
           }
         }
       }
+    }
+  }
+
+  checkIfActivated(){
+    debugger
+    if(this.profile.Activated == false){
+      return false;
+    }
+    else{
+      return true;
     }
   }
 

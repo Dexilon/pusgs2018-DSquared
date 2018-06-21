@@ -50,6 +50,14 @@ export class AddServiceComponent implements OnInit {
       .subscribe(
         data => {
           alert("You added service successfully!");
+          this.serviceServiceService.approveService(data.Id,service.Name)
+          .subscribe(
+            data => {
+                alert("Notification sent");
+            },
+            error => {
+              console.log(error);
+            })
           form.reset();
         },
         error => {

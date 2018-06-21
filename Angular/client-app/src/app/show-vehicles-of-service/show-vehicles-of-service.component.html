@@ -121,7 +121,7 @@
         <div  class="form-group" *ngIf="!checkVehicleAvailability(ii)">
             <label class="col-md-4 control-label" for="singlebutton"></label>
                 <div class="col-md-4">
-                    <a *ngIf="!checkIfRented(ii)" [routerLink]="['/rentVehicle/' + vehicle.Id]">Rent Vehicle</a>
+                    <a *ngIf="!checkIfRented(ii) && checkIfActivated()" [routerLink]="['/rentVehicle/' + vehicle.Id]">Rent Vehicle</a>
                     <label *ngIf="checkIfRented(ii)">Vehicle Rented</label>
                 </div>
         </div>
