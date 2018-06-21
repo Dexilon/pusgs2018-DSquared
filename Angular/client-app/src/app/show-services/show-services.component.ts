@@ -16,11 +16,14 @@ import { Services } from '@angular/core/src/view';
 export class ShowServicesComponent implements OnInit {
     services: Service[];
     comments: UserComment[];
+    pageNumber: number = 1;
+    
   
     constructor(private serviceServiceService: ServiceServiceService, private navbarComponent: NavbarComponent) { }
 
   ngOnInit() {
-    this.serviceServiceService.getMethodService()
+    debugger
+    this.serviceServiceService.getMethodServicePag(this.pageNumber)
     .subscribe(
       data => {
         this.services = data;
@@ -54,6 +57,18 @@ export class ShowServicesComponent implements OnInit {
         error => {
           alert(error.error.ModelState[""][0])
         });
+    }
+
+    setPageNumber(num: number)
+    {
+      this.pageNumber = num;
+      this.ngOnInit();
+    }
+
+    incPageNumber()
+    {
+      this.pageNumber +=1;
+      this.ngOnInit();
     }
 
     submitRatingPos(id: number) {

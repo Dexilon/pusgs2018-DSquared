@@ -26,20 +26,6 @@ namespace RentApp.Controllers
         // GET: api/Services
         public IEnumerable<Service> GetServices()
         {
-            /*var retValue = unitOfWork.Vehicles.GetAll();
-            foreach (var item in retValue)
-            {
-                item.Images = new List<string>();
-                string[] str = item.VehicleImagesBase.Split(';');
-                foreach (var img in str)
-                {
-                    if (img != "")
-                        item.Images.Add(img);
-                }
-            }
-
-            return retValue; */
-
 
             var retValue = unitOfWork.Services.GetAll();
             foreach (var item in retValue)
@@ -58,6 +44,27 @@ namespace RentApp.Controllers
 
             return retValue;
             
+        }
+
+        public IEnumerable<Service> GetServices(int pageIndex, int pageSize)
+        {
+            var retValue = unitOfWork.Services.GetAll(pageIndex,pageSize);
+            foreach (var item in retValue)
+            {
+                foreach (var item2 in item.Vehicles)
+                {
+                    item2.Images = new List<string>();
+                    string[] str = item2.VehicleImagesBase.Split(';');
+                    foreach (var img in str)
+                    {
+                        if (img != "")
+                            item2.Images.Add(img);
+                    }
+                }
+            }
+
+            return retValue;
+
         }
 
         // GET: api/Services/5

@@ -15,7 +15,11 @@ namespace RentApp.Persistance.Repository
 
         public IEnumerable<Service> GetAll(int pageIndex, int pageSize)
         {
-            return RadbContext.Services.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+            RADBContext db = new RADBContext();
+            List<Service> services = new List<Service>(db.Services);
+            services = new List<Service>(services.OrderBy(s=>s.Name).Skip((pageIndex - 1) * pageSize).Take(pageSize));
+
+            return services;
         }
 
         protected RADBContext RadbContext { get { return context as RADBContext; } }
