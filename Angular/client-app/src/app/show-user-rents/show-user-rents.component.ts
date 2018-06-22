@@ -41,7 +41,6 @@ export class ShowUserRentsComponent implements OnInit {
   }
 
   checkButton(rent: Rent){
-    debugger
     this.today = new Date();
     this.buttonStart = new Date(rent.Start)
     if(this.buttonStart < this.today){
@@ -53,10 +52,22 @@ export class ShowUserRentsComponent implements OnInit {
   }
 
   deleteRent(Id : number){
+    debugger
     this.rentServiceService.deleteMethodRent(Id).
     subscribe(
       data => {
-        this.rents = data;
+        this.rents = [];
+        this.profileServiceService.getMethodProfile()
+        .subscribe(
+          data => {
+            debugger
+            this.appUser = data;
+            this.rents = this.appUser.Rents;
+            this.pomList = [];
+          },
+          error => {
+            alert(error.error.ModelState[""][0])
+          });
       },
       error => {
         alert(error.error.ModelState[""][0])

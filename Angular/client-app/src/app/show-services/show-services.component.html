@@ -1,10 +1,13 @@
+<h2>Services</h2>
 <table class="table table-striped table-dark" >
   <tbody *ngFor = "let item of services; let i = index">
       <tr>
           <td style="width: 250px;"><label class="col-md-4 control-label">Slika</label><img width="200" src='{{item.Logo}}' /></td>
-          <td><div class="form-group">
-                <label class="col-md-4 control-label" for="Email">E-mail</label>  
-                <div class="col-md-4">
+      </tr>
+      <tr>
+          <td><div >
+                <label for="Email">E-mail</label>  
+                <div>
                 <input id="Email" size="40" [(ngModel)]="item.Email" name="Email" type="text" ngModel required #Email="ngModel" class="form-control input-md"
                 pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
                 <div *ngIf="Email.errors && (Email.dirty || Email.touched)"
@@ -19,9 +22,11 @@
                 </div>
               </div>
             </td>
-            <td><div class="form-group">
-                    <label class="col-md-4 control-label" for="textinput">Service Name</label>  
-                    <div class="col-md-4">
+      </tr>
+      <tr>
+            <td><div>
+                    <label for="textinput">Service Name</label>  
+                    <div>
                     <input id="Name" name="Name" type="text" [(ngModel)]="item.Name" ngModel #Name="ngModel" required minlength="6" maxlength="42" class="form-control input-md">
                     <div *ngIf="Name.errors && (Name.dirty || Name.touched)" class="alert alert-danger">
                       <div [hidden]="!Name.errors.required">
@@ -37,31 +42,32 @@
                     </div>
                   </div>
             </td>
-            <td><div class="form-group">
-                    <label class="col-md-4 control-label" for="Description">Description</label>
-                    <div class="col-md-4">                     
+            </tr>
+            <tr>
+            <td><div >
+                    <label  for="Description">Description</label>
+                    <div>                     
                       <textarea class="form-control" [(ngModel)]="item.Description" id="Description" name="Description" ngModel #Description="ngModel"></textarea>
                     </div>
                   </div>
             </td>
-            <td *ngFor = "let im of item.Vehicles">{{im.Model}}</td>
+            </tr>
+            <tr><label>Vehicle</label></tr>
+            <tr>
+            <td *ngFor = "let im of item.Vehicles">{{im.Manufactor}} {{im.Model}}</td>
+            </tr>
           <td>
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="singlebutton"></label>
                         <div class="col-md-4">
                             <button *ngIf="this.navbarComponent.checkIfLogged() && this.navbarComponent.checkUserType()" (click)="deleteService(item.Id)" id="singlebutton" name="singlebutton" class="btn btn-danger">Delete Service</button>
                         </div>
-                </div>
+
             </td>
             <td>
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="singlebutton"></label>
+
                         <div class="col-md-4">
                             <button *ngIf="this.navbarComponent.checkIfLogged() && this.navbarComponent.checkUserType()" (click)="saveChanges(i)" id="singlebutton" name="singlebutton" class="btn btn-primary">Save Service</button>
                         </div>
-                </div>
             </td>
-      </tr>
 
 
 
@@ -80,10 +86,10 @@
 
 
       <form class="form-horizontal" #f="ngForm" (ngSubmit)="onSubmit(f.value, f, item.Id, item.Id)">
+        <tr><label>Comments:</label></tr>
       <tr *ngFor = "let comment of comments">
         <td>
           <div class="form-group">
-            <label *ngIf="comment.Service_Id == item.Id" class="col-md-4 control-label" for="textinput">Comments:</label>  
             <div class="col-md-4">
             <label *ngIf="comment.Service_Id == item.Id">{{comment.Text}}</label>    
             </div>
@@ -95,7 +101,7 @@
           <div class="form-group">
             <label class="col-md-4 control-label" for="textinput"></label>  
             <div class="col-md-4">
-            <input id="Text" name="Text" type="text" placeholder="" class="form-control input-md" ngModel #Text="ngModel">    
+            <input id="Text" style="width: 200px" name="Text" type="text" placeholder="" class="form-control input-md" ngModel #Text="ngModel">    
             </div>
           </div>
           <div class="form-group">
@@ -107,6 +113,11 @@
         </td>
       </tr>
     </form>
+  <br>
+<br>
+<br>
+<br>
+
   </tbody>
 </table>
 

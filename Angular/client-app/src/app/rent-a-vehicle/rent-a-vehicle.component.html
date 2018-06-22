@@ -1,37 +1,27 @@
+<h2>Services</h2>
 <table class="table table-striped table-dark" >
   <tbody *ngFor = "let item of services; let i = index">
       <tr>
-          <td style="width: 250px;"><label class="col-md-4 control-label">Slika</label><img width="200" src='{{item.Logo}}' /></td>
+          <td style="width: 250px;"><label class="col-md-4 control-label">Slika:</label><img width="200" src='{{item.Logo}}' /></td>
           <td><div class="form-group">
-                <label class="col-md-4 control-label" for="Email">E-mail</label>  
+                <label class="col-md-4 control-label" for="Email">E-mail:</label>  
                 <div class="col-md-4">
-                <label id="Email" size="40" name="Email" type="text" class="form-control input-md">{{item.Name}}</label>
+                <label id="Email" name="Email" type="text">{{item.Email}}</label>
                 
                 </div>
               </div>
             </td>
             <td><div class="form-group">
-                    <label class="col-md-4 control-label" for="textinput">Service Name</label>  
+                    <label class="col-md-4 control-label" for="textinput">Service Name:</label>  
                     <div class="col-md-4">
-                    <input id="Name" name="Name" type="text" [(ngModel)]="item.Name" ngModel #Name="ngModel" required minlength="6" maxlength="42" class="form-control input-md">
-                    <div *ngIf="Name.errors && (Name.dirty || Name.touched)" class="alert alert-danger">
-                      <div [hidden]="!Name.errors.required">
-                        Service name is required!
-                      </div>
-                      <div [hidden]="!Name.errors.minlength">
-                        Service name must be at least 6 characters long.
-                      </div>
-                      <div [hidden]="!Name.errors.maxlength">
-                        Service name cannot be more than 42 characters long.
-                      </div>
-                    </div>
+                    <label id="Name" name="Name" type="text">{{item.Name}}</label>
                     </div>
                   </div>
             </td>
             <td><div class="form-group">
-                    <label class="col-md-4 control-label" for="Description">Description</label>
+                    <label class="col-md-4 control-label" for="Description">Description:</label>
                     <div class="col-md-4">                     
-                      <textarea class="form-control" [(ngModel)]="item.Description" id="Description" name="Description" ngModel #Description="ngModel"></textarea>
+                      <label class="form-control">{{item.Description}}</label>
                     </div>
                   </div>
             </td>
