@@ -57,6 +57,7 @@ namespace RentApp.Controllers
             return Ok(appUser);
         }
 
+        [Authorize(Roles = "Admin")]
         [Route("api/AppUsers/AproveUser/{id}")]
         [HttpPost]
         public IHttpActionResult UserAproving(int id)
@@ -91,6 +92,7 @@ namespace RentApp.Controllers
         }
 
 
+        [Authorize(Roles = "Admin")]
         [Route("api/AppUsers/GetAppUsersForValidation")]
         [HttpGet]
         //[Authorize]
@@ -113,6 +115,7 @@ namespace RentApp.Controllers
         }
 
         // PUT: api/AppUsers/5
+        [Authorize]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutAppUser(int id, AppUser appUser)
         {

@@ -128,6 +128,7 @@ namespace RentApp.Controllers
 
         // PUT: api/Services/5
         [ResponseType(typeof(void))]
+        [Authorize(Roles = "Manager, Admin")]
         public IHttpActionResult PutService(int id, Service service)
         {
             if (!ModelState.IsValid)
@@ -162,6 +163,7 @@ namespace RentApp.Controllers
 
         // POST: api/Services
         [ResponseType(typeof(Service))]
+        [Authorize(Roles = "Manager, Admin")]
         public IHttpActionResult PostService(Service service)
         {
             if (!ModelState.IsValid)
@@ -181,6 +183,7 @@ namespace RentApp.Controllers
 
         // DELETE: api/Services/5
         [ResponseType(typeof(Service))]
+        [Authorize(Roles = "Manager, Admin")]
         public IHttpActionResult DeleteService(int id)
         {
             Service service = unitOfWork.Services.Get(id);
@@ -206,6 +209,7 @@ namespace RentApp.Controllers
 
         [Route("api/Services/aproveService/{id}")]
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult ServiceAproving(int id)
         {
             Service service = unitOfWork.Services.Get(id);

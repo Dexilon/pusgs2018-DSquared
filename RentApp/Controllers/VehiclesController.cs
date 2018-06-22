@@ -115,6 +115,7 @@ namespace RentApp.Controllers
 
         // PUT: api/Vehicles/5
         [ResponseType(typeof(void))]
+        [Authorize(Roles = "Manager, Admin")]
         public IHttpActionResult PutVehicle(int id, Vehicle vehicle)
         {
             if (!ModelState.IsValid)
@@ -149,6 +150,7 @@ namespace RentApp.Controllers
 
         // POST: api/Vehicles
         [ResponseType(typeof(Vehicle))]
+        [Authorize(Roles = "Manager, Admin")]
         public IHttpActionResult PostVehicle(VehicleBindingModel vehicleBindingModel)
         {
             if (!ModelState.IsValid)
@@ -210,6 +212,7 @@ namespace RentApp.Controllers
 
         // DELETE: api/Vehicles/5
         [ResponseType(typeof(Vehicle))]
+        [Authorize(Roles = "Manager, Admin")]
         public IHttpActionResult DeleteVehicle(int id)
         {
             Vehicle vehicle = unitOfWork.Vehicles.Get(id);

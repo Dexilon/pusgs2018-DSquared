@@ -55,6 +55,7 @@ namespace RentApp.Controllers
         }
 
         // PUT: api/Rents/5
+        [Authorize(Roles = "Manager, Admin, AppUser")]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutRent(int id, Rent rent)
         {
@@ -89,6 +90,7 @@ namespace RentApp.Controllers
         }
 
         // DELETE: api/Rents/5
+        [Authorize(Roles = "Manager, Admin, AppUser")]
         [ResponseType(typeof(Rent))]
         public IHttpActionResult DeleteRent(int id)
         {
@@ -117,6 +119,7 @@ namespace RentApp.Controllers
         }
 
         // POST: api/Rents
+        [Authorize(Roles = "Manager, Admin, AppUser")]
         [ResponseType(typeof(Rent))]
         public IHttpActionResult PostRent(RentBindingModel rentBindingModel)
         {

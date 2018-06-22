@@ -54,9 +54,11 @@
       <tr>
           <!--<td style="width: 250px;"><label class="col-md-4 control-label">Logo</label><img width="200" src='{{item.Logo}}' /></td>-->
           <td>
-            <div>
-                  <label for="textinput">Manufactor:</label>  
-                  <input id="manufactor" [(ngModel)]="item.Manufactor" name="manufactor" type="text" placeholder="" class="form-control input-md" ngModel required #manufactor="ngModel">    
+            <div class="form-group">
+                  <label style="width: 80px" class="col-md-4 control-label" for="textinput">Manufactor:</label>  
+                  <div class="col-md-4">
+                  <input style="width: 100px" id="manufactor" [(ngModel)]="item.Manufactor" name="manufactor" type="text" placeholder="" class="form-control input-md" ngModel required #manufactor="ngModel">    
+                  </div>
                 </div>
                 
                 <div class="row">
@@ -73,12 +75,10 @@
                   </div>
                 </div>
               </td>
-      </tr>
-      <tr>
-          <td><div >
-                  <label  for="textinput">Model:</label>  
-                  <div >
-                  <input id="model" [(ngModel)]="item.Model" name="model" type="text" class="form-control input-md" ngModel required #model="ngModel">   
+          <td><div class="form-group">
+                  <label class="col-md-4 control-label" for="textinput">Model:</label>  
+                  <div class="col-md-4">
+                  <input style="width: 100px" id="model" [(ngModel)]="item.Model" name="model" type="text" class="form-control input-md" ngModel required #model="ngModel">   
                   </div>
                 </div>
                 
@@ -95,12 +95,10 @@
                     </div>
                   </div>
                 </div></td>
-      </tr>
-      <tr>
-          <td><div >
-            <label for="textinput">Year:</label>  
-            <div >
-            <input id="year" name="year" type="text" [(ngModel)]="item.Year" class="form-control input-md" ngModel required #year="ngModel">   
+          <td><div class="form-group">
+            <label  class="col-md-4 control-label" for="textinput">Year:</label>  
+            <div class="col-md-4">
+            <input style="width: 100px" id="year" name="year" type="text" [(ngModel)]="item.Year" class="form-control input-md" ngModel required #year="ngModel">   
             </div>
           </div>
         
@@ -121,10 +119,10 @@
       </tr>
       <tr>
         <td>
-          <div >
-            <label for="textinput">Price Per Hour:</label>  
-            <div >
-            <input id="pricePerHour" name="pricePerHour" type="text" [(ngModel)]="item.PricePerHour" class="form-control input-md" ngModel required #pricePerHour="ngModel">   
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="textinput">Price Per Hour:</label>  
+            <div class="col-md-4">
+            <input style="width: 100px" id="pricePerHour" name="pricePerHour" type="text" [(ngModel)]="item.PricePerHour" class="form-control input-md" ngModel required #pricePerHour="ngModel">   
             </div>
           </div>
         
@@ -145,20 +143,20 @@
       </tr>
       <tr>
         <td>
-          <div >
-            <label for="textarea">Description:</label>
-            <div >                     
-              <textarea class="form-control" id="description" [(ngModel)]="item.Description" name="description" ngModel  #description="ngModel"></textarea>
+          <div class="form-group">
+            <label style="width: 80px" class="col-md-4 control-label" for="textarea">Description:</label>
+            <div class="col-md-4">                     
+              <textarea style="width: 100px" class="form-control" id="description" [(ngModel)]="item.Description" name="description" ngModel  #description="ngModel"></textarea>
             </div>
           </div>
         </td>
       </tr>
       <tr>
         <td>
-            <div >
-              <label  for="textinput">Type of Vehicle:</label>  
-              <div >
-              <input id="type" name="type" type="text" [(ngModel)]="item.Type.Name" class="form-control input-md" ngModel required #type="ngModel">   
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="textinput">Type of Vehicle:</label>  
+              <div class="col-md-4">
+              <input style="width: 100px" id="type" name="type" type="text" [(ngModel)]="item.Type.Name" class="form-control input-md" ngModel required #type="ngModel">   
               </div>
             </div>
           

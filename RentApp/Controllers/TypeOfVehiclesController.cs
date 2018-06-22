@@ -44,6 +44,7 @@ namespace RentApp.Controllers
 
         // PUT: api/TypeOfVehicles/5
         [ResponseType(typeof(void))]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult PutTypeOfVehicle(int id, TypeOfVehicle typeOfVehicle)
         {
             if (!ModelState.IsValid)
@@ -78,6 +79,7 @@ namespace RentApp.Controllers
 
         // POST: api/TypeOfVehicles
         [ResponseType(typeof(TypeOfVehicle))]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult PostTypeOfVehicle(TypeOfVehicle typeOfVehicle)
         {
             if (!ModelState.IsValid)
@@ -93,6 +95,7 @@ namespace RentApp.Controllers
 
         // DELETE: api/TypeOfVehicles/5
         [ResponseType(typeof(TypeOfVehicle))]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult DeleteTypeOfVehicle(int id)
         {
             TypeOfVehicle typeOfVehicle = unitOfWork.TypesOfVehicle.Get(id);
