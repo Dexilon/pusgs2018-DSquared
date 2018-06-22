@@ -61,12 +61,14 @@ const Routes = [
   {
     path: "addVehicle",
     component: AddVehicleComponent,
-    canActivate: [CanActivateViaAuthGuard]
+    canActivate: [CanActivateViaAuthGuard],
+    canActivateManager: [CanActivateViaAuthGuard] 
   },
   {
     path: "addBranch",
     component: AddBranchComponent,
-    canActivate: [CanActivateViaAuthGuard]
+    canActivate: [CanActivateViaAuthGuard],
+    canActivateManager: [CanActivateViaAuthGuard] 
   },
   {
     path: "showServices",
@@ -78,12 +80,13 @@ const Routes = [
   },
   {
     path: "profile",
-    component: ProfileComponent
+    component: ProfileComponent,
+    canActivateUser: [CanActivateViaAuthGuard]    
   },
   {
     path: "addTypeOfVehicle",
     component: AddTypeOfVehicleComponent,
-    canActivate: [CanActivateViaAuthGuard]
+    canActivate: [CanActivateViaAuthGuard]     
   },
   {
     path: "showVehicles",
@@ -111,11 +114,13 @@ const Routes = [
   },
   {
     path: "showUserRents",
-    component: ShowUserRentsComponent
+    component: ShowUserRentsComponent,
+    canActivateUser: [CanActivateViaAuthGuard]    
   },
   {
     path: "notifications",
-    component: NotificationComponent
+    component: NotificationComponent,
+    canActivateAdmin: [CanActivateViaAuthGuard]    
   }
 
   
