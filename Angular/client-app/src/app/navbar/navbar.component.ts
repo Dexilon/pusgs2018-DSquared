@@ -21,6 +21,12 @@ export class NavbarComponent implements OnInit {
     return localStorage.role == 'Admin' || localStorage.role == 'Manager';
   }
 
+  checkIfManager()
+  {
+    
+    return localStorage.role == 'Manager';
+  }
+  
   logout()
   {
     localStorage.clear();

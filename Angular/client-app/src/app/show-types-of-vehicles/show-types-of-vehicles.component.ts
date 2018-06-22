@@ -66,4 +66,9 @@ export class ShowTypesOfVehiclesComponent implements OnInit {
       })
   }
 
+  checkIfAdmin()
+  {
+    return localStorage.role == "Admin";
+  }
+
 }

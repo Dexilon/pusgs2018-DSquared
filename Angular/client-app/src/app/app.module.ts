@@ -78,12 +78,13 @@ const Routes = [
   },
   {
     path: "profile",
-    component: ProfileComponent
+    component: ProfileComponent,
+    canActivate: ['CanUserActivateGuard']    
   },
   {
     path: "addTypeOfVehicle",
     component: AddTypeOfVehicleComponent,
-    canActivate: [CanActivateViaAuthGuard]
+    canActivate: ['CanAdminActivateGuard']     
   },
   {
     path: "showVehicles",
@@ -111,11 +112,13 @@ const Routes = [
   },
   {
     path: "showUserRents",
-    component: ShowUserRentsComponent
+    component: ShowUserRentsComponent,
+    canActivate: ['CanUserActivateGuard']    
   },
   {
     path: "notifications",
-    component: NotificationComponent
+    component: NotificationComponent,
+    canActivate: ['CanAdminActivateGuard']    
   }
 
   
@@ -166,7 +169,37 @@ const Routes = [
       useValue: () => {
         return true;
       } 
-    }],
+    },
+    {
+      provide: 'CanAdminActivateGuard',
+      useValue: () => { 
+        if(localStorage.role == "Admin")
+        {
+          return true;
+        }
+        
+      } 
+    },
+    {
+      provide: 'CanManagerActivateGuard',
+      useValue: () => {
+        if(localStorage.role == "Manager")
+        {
+          return true;
+        }
+      } 
+    },
+    {
+      provide: 'CanUserActivateGuard',
+      useValue: () => {
+        if(localStorage.role == "AppUser")
+        {
+          return true;
+        }
+      } 
+    }
+  
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
