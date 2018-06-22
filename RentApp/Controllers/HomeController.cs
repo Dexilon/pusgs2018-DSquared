@@ -12,7 +12,6 @@ namespace RentApp.Controllers
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
-            NotificationsHub.Hello();
             return View();
         }
     }

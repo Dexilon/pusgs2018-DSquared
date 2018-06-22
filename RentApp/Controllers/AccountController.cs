@@ -18,6 +18,7 @@ using RentApp.Models.Entities;
 using RentApp.Providers;
 using RentApp.Results;
 using System.Linq;
+using RentApp.Hubs;
 
 namespace RentApp.Controllers
 {
@@ -338,6 +339,8 @@ namespace RentApp.Controllers
                 Email = model.Email,
                 
             };
+
+            NotificationsHub.NotifyAdmin("New user added!");
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
             UserManager.AddToRole(user.Id,"AppUser");

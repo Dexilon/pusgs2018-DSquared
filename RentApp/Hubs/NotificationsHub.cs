@@ -15,11 +15,16 @@ namespace RentApp.Hubs
         private static Timer t = new Timer();
         public static void Hello()
         {
-            hubContext.Clients.All.hello("Hello from server");
+            hubContext.Clients.All.hello();
         }
         public void GetRealTime()
         {
             Clients.All.setRealTime(DateTime.Now.ToString("h:mm:ss tt"));
+        }
+
+        public static void NotifyAdmin(string message)
+        {
+            hubContext.Clients.All.notify(message);
         }
     }
 }
