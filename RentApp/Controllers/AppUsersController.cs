@@ -18,7 +18,7 @@ namespace RentApp.Controllers
     public class AppUsersController : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
-
+        private static object o = new object();
         public AppUsersController(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
@@ -62,33 +62,36 @@ namespace RentApp.Controllers
         [HttpPost]
         public IHttpActionResult UserAproving(int id)
         {
-            AppUser user = unitOfWork.AppUsers.Get(id);
-
-            if (user.Activated == true)
+            lock (o)
             {
-                MailMessage mail = new MailMessage("admin@gmail.com", user.Email);
-                SmtpClient client = new SmtpClient();
-                client.Port = 587;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.UseDefaultCredentials = false;
-                client.Credentials = new NetworkCredential("admin@gmail.com", "admin");
-                client.Host = "smtp.gmail.com";
-                client.EnableSsl = true;
-                mail.From = new MailAddress("admin@gmail.com");
-                mail.To.Add(user.Email);
-                mail.Subject = "Profile approved";
-                mail.Body = "The account that you have made has been approved by our administrators!";
-                try
-                {
-                    client.Send(mail);
-                }
-                catch
-                {
+                AppUser user = unitOfWork.AppUsers.Get(id);
 
+                if (user.Activated == true)
+                {
+                    MailMessage mail = new MailMessage("admin@gmail.com", user.Email);
+                    SmtpClient client = new SmtpClient();
+                    client.Port = 587;
+                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    client.UseDefaultCredentials = false;
+                    client.Credentials = new NetworkCredential("admin@gmail.com", "admin");
+                    client.Host = "smtp.gmail.com";
+                    client.EnableSsl = true;
+                    mail.From = new MailAddress("admin@gmail.com");
+                    mail.To.Add(user.Email);
+                    mail.Subject = "Profile approved";
+                    mail.Body = "The account that you have made has been approved by our administrators!";
+                    try
+                    {
+                        client.Send(mail);
+                    }
+                    catch
+                    {
+
+                    }
                 }
+
+                return Ok();
             }
-
-            return Ok();
         }
 
 
@@ -119,34 +122,37 @@ namespace RentApp.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutAppUser(int id, AppUser appUser)
         {
-            if (!ModelState.IsValid)
+            lock (o)
             {
-                return BadRequest(ModelState);
-            }
-
-            if (id != appUser.Id)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                unitOfWork.AppUsers.Update(appUser);
-                unitOfWork.Complete();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AppUserExists(id))
+                if (!ModelState.IsValid)
                 {
-                    return NotFound();
+                    return BadRequest(ModelState);
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return StatusCode(HttpStatusCode.NoContent);
+                if (id != appUser.Id)
+                {
+                    return BadRequest();
+                }
+
+                try
+                {
+                    unitOfWork.AppUsers.Update(appUser);
+                    unitOfWork.Complete();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AppUserExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
         }
 
 
@@ -154,31 +160,37 @@ namespace RentApp.Controllers
         [ResponseType(typeof(AppUser))]
         public IHttpActionResult PostAppUser(AppUser appUser)
         {
-            if (!ModelState.IsValid)
+            lock (o)
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                unitOfWork.AppUsers.Add(appUser);
+                unitOfWork.Complete();
+
+                return CreatedAtRoute("DefaultApi", new { id = appUser.Id }, appUser);
             }
-
-            unitOfWork.AppUsers.Add(appUser);
-            unitOfWork.Complete();
-
-            return CreatedAtRoute("DefaultApi", new { id = appUser.Id }, appUser);
         }
 
         // DELETE: api/AppUsers/5
         [ResponseType(typeof(AppUser))]
         public IHttpActionResult DeleteAppUser(int id)
         {
-            AppUser appUser = unitOfWork.AppUsers.Get(id);
-            if (appUser == null)
+            lock (o)
             {
-                return NotFound();
+                AppUser appUser = unitOfWork.AppUsers.Get(id);
+                if (appUser == null)
+                {
+                    return NotFound();
+                }
+
+                unitOfWork.AppUsers.Remove(appUser);
+                unitOfWork.Complete();
+
+                return Ok(appUser);
             }
-
-            unitOfWork.AppUsers.Remove(appUser);
-            unitOfWork.Complete();
-
-            return Ok(appUser);
         }
 
         protected override void Dispose(bool disposing)

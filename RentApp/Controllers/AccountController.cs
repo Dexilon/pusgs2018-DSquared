@@ -27,7 +27,7 @@ namespace RentApp.Controllers
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
-
+        private static object o = new object();
         public AccountController()
         {
         }
@@ -62,8 +62,11 @@ namespace RentApp.Controllers
         [Route("Logout")]
         public IHttpActionResult Logout()
         {
-            Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
-            return Ok();
+            lock (o)
+            {
+                Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
+                return Ok();
+            }
         }
 
         // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
@@ -130,6 +133,7 @@ namespace RentApp.Controllers
         [Route("SetPassword")]
         public async Task<IHttpActionResult> SetPassword(SetPasswordBindingModel model)
         {
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -315,6 +319,7 @@ namespace RentApp.Controllers
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

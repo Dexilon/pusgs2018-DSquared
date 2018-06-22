@@ -18,7 +18,7 @@ namespace RentApp.Controllers
     public class RentsController : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
-
+        private static object o = new object();
         public RentsController(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
@@ -59,34 +59,37 @@ namespace RentApp.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutRent(int id, Rent rent)
         {
-            if (!ModelState.IsValid)
+            lock (o)
             {
-                return BadRequest(ModelState);
-            }
-
-            if (id != rent.Id)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                unitOfWork.Rents.Update(rent);
-                unitOfWork.Complete();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RentExists(id))
+                if (!ModelState.IsValid)
                 {
-                    return NotFound();
+                    return BadRequest(ModelState);
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return StatusCode(HttpStatusCode.NoContent);
+                if (id != rent.Id)
+                {
+                    return BadRequest();
+                }
+
+                try
+                {
+                    unitOfWork.Rents.Update(rent);
+                    unitOfWork.Complete();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!RentExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
         }
 
         // DELETE: api/Rents/5
@@ -94,28 +97,31 @@ namespace RentApp.Controllers
         [ResponseType(typeof(Rent))]
         public IHttpActionResult DeleteRent(int id)
         {
-            var ren = unitOfWork.Rents.Get(id);
-
-            if (ren == null)
+            lock (o)
             {
-                return NotFound();
-            }
+                var ren = unitOfWork.Rents.Get(id);
 
-            var listOfUsers = unitOfWork.AppUsers.GetAll();
-
-            foreach (var item in listOfUsers)
-            {
-                if (item.Rents.Contains(ren))
+                if (ren == null)
                 {
-                    item.Rents.Remove(ren);
-                    unitOfWork.AppUsers.Update(item);
+                    return NotFound();
                 }
+
+                var listOfUsers = unitOfWork.AppUsers.GetAll();
+
+                foreach (var item in listOfUsers)
+                {
+                    if (item.Rents.Contains(ren))
+                    {
+                        item.Rents.Remove(ren);
+                        unitOfWork.AppUsers.Update(item);
+                    }
+                }
+
+                unitOfWork.Rents.Remove(ren);
+                unitOfWork.Complete();
+
+                return Ok(ren);
             }
-
-            unitOfWork.Rents.Remove(ren);
-            unitOfWork.Complete();
-
-            return Ok(ren);
         }
 
         // POST: api/Rents
@@ -123,61 +129,64 @@ namespace RentApp.Controllers
         [ResponseType(typeof(Rent))]
         public IHttpActionResult PostRent(RentBindingModel rentBindingModel)
         {
-            if (!ModelState.IsValid)
+            lock (o)
             {
-                return BadRequest(ModelState);
-            }
-
-            var branches = unitOfWork.Branches.GetAll();
-
-            Branch branch = new Branch();
-
-            foreach (var item in branches)
-            {
-                if (item.Address == rentBindingModel.Branch)
+                if (!ModelState.IsValid)
                 {
-                    branch = item;
+                    return BadRequest(ModelState);
                 }
-            }
 
-            var vehicles = unitOfWork.Vehicles.GetAll();
+                var branches = unitOfWork.Branches.GetAll();
 
-            Vehicle vehicle = new Vehicle();
+                Branch branch = new Branch();
 
-            foreach (var item in vehicles)
-            {
-                if (item.Id == rentBindingModel.Vehicle.Id)
+                foreach (var item in branches)
                 {
-                    vehicle = item;
+                    if (item.Address == rentBindingModel.Branch)
+                    {
+                        branch = item;
+                    }
                 }
-            }
 
-            var username = User.Identity.Name;
+                var vehicles = unitOfWork.Vehicles.GetAll();
 
-            var users = unitOfWork.AppUsers.GetAll();
+                Vehicle vehicle = new Vehicle();
 
-            AppUser appUser = new AppUser();
-
-            foreach(var item in users)
-            {
-                if(item.Email == rentBindingModel.Email)
+                foreach (var item in vehicles)
                 {
-                    appUser = item;
+                    if (item.Id == rentBindingModel.Vehicle.Id)
+                    {
+                        vehicle = item;
+                    }
                 }
+
+                var username = User.Identity.Name;
+
+                var users = unitOfWork.AppUsers.GetAll();
+
+                AppUser appUser = new AppUser();
+
+                foreach (var item in users)
+                {
+                    if (item.Email == rentBindingModel.Email)
+                    {
+                        appUser = item;
+                    }
+                }
+
+                Rent rent = new Rent();
+                rent.Branch = branch;
+                rent.End = rentBindingModel.End;
+                rent.Start = rentBindingModel.Start;
+                rent.Vehicle = vehicle;
+
+                appUser.Rents.Add(rent);
+                unitOfWork.AppUsers.Update(appUser);
+                unitOfWork.Rents.Add(rent);
+                unitOfWork.Complete();
+
+                return CreatedAtRoute("DefaultApi", new { id = rent.Id }, rent);
             }
-
-            Rent rent = new Rent();
-            rent.Branch = branch;
-            rent.End = rentBindingModel.End;
-            rent.Start = rentBindingModel.Start;
-            rent.Vehicle = vehicle;
-
-            appUser.Rents.Add(rent);
-            unitOfWork.AppUsers.Update(appUser); 
-            unitOfWork.Rents.Add(rent);
-            unitOfWork.Complete();
-
-            return CreatedAtRoute("DefaultApi", new { id = rent.Id }, rent);
         }
 
         protected override void Dispose(bool disposing)

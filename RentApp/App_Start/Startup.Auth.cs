@@ -17,6 +17,7 @@ using RentApp.Providers;
 using RentApp.Persistance;
 using Microsoft.Owin.Security.DataProtection;
 using System.Web.Mvc;
+using System.Threading.Tasks;
 
 namespace RentApp
 {
@@ -66,6 +67,7 @@ namespace RentApp
             app.UseJwtBearerAuthentication(
                 new JwtBearerAuthenticationOptions
                 {
+                    Provider = new QueryStringOAuthBearerProvider("token"),//Dodato rukovanje tokenom kroz query string
                     AuthenticationMode = AuthenticationMode.Active,
                     AllowedAudiences = new[] { audienceId },
                     IssuerSecurityTokenProviders = new IIssuerSecurityTokenProvider[]
@@ -73,6 +75,29 @@ namespace RentApp
                         new SymmetricKeyIssuerSecurityTokenProvider(issuer, audienceSecret)
                     }
                 });
+        }
+
+        public class QueryStringOAuthBearerProvider : OAuthBearerAuthenticationProvider
+        {
+            readonly string _name;
+
+            public QueryStringOAuthBearerProvider(string name)
+            {
+                _name = name;
+            }
+
+            public override Task RequestToken(OAuthRequestTokenContext context)
+            {
+                var value = context.Request.Query.Get(_name);
+
+                if (!string.IsNullOrEmpty(value))
+                {
+                    value = value.Split(' ')[1];
+                    context.Token = value;
+                }
+
+                return Task.FromResult<object>(null);
+            }
         }
     }
 }
