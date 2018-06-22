@@ -21,7 +21,7 @@
             </td>
             <td *ngFor = "let im of item.Vehicles">{{im.Model}}</td>
           <td>
-                <div class="form-group">
+                <div *ngIf="checkIfAdmin()" class="form-group">
                     <label class="col-md-4 control-label" for="singlebutton"></label>
                         <div class="col-md-4">
                             <button *ngIf="this.navbarComponent.checkIfLogged() && this.navbarComponent.checkUserType()" (click)="deleteTypeOfVehicle(item.Id)" id="singlebutton" name="singlebutton" class="btn btn-danger">Delete Type Of Vehicle</button>
@@ -29,7 +29,7 @@
                 </div>
             </td>
             <td>
-                <div class="form-group">
+                <div *ngIf="checkIfAdmin()" class="form-group">
                     <label class="col-md-4 control-label" for="singlebutton"></label>
                         <div class="col-md-4">
                             <button *ngIf="this.navbarComponent.checkIfLogged() && this.navbarComponent.checkUserType()" (click)="saveChanges(i)" id="singlebutton" name="singlebutton" class="btn btn-primary">Save Type Of Vehicle</button>

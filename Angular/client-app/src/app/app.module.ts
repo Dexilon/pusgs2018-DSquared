@@ -61,14 +61,12 @@ const Routes = [
   {
     path: "addVehicle",
     component: AddVehicleComponent,
-    canActivate: [CanActivateViaAuthGuard],
-    canActivateManager: [CanActivateViaAuthGuard] 
+    canActivate: [CanActivateViaAuthGuard]
   },
   {
     path: "addBranch",
     component: AddBranchComponent,
-    canActivate: [CanActivateViaAuthGuard],
-    canActivateManager: [CanActivateViaAuthGuard] 
+    canActivate: [CanActivateViaAuthGuard]
   },
   {
     path: "showServices",
@@ -81,12 +79,12 @@ const Routes = [
   {
     path: "profile",
     component: ProfileComponent,
-    canActivateUser: [CanActivateViaAuthGuard]    
+    canActivate: ['CanUserActivateGuard']    
   },
   {
     path: "addTypeOfVehicle",
     component: AddTypeOfVehicleComponent,
-    canActivate: [CanActivateViaAuthGuard]     
+    canActivate: ['CanAdminActivateGuard']     
   },
   {
     path: "showVehicles",
@@ -115,12 +113,12 @@ const Routes = [
   {
     path: "showUserRents",
     component: ShowUserRentsComponent,
-    canActivateUser: [CanActivateViaAuthGuard]    
+    canActivate: ['CanUserActivateGuard']    
   },
   {
     path: "notifications",
     component: NotificationComponent,
-    canActivateAdmin: [CanActivateViaAuthGuard]    
+    canActivate: ['CanAdminActivateGuard']    
   }
 
   
@@ -171,7 +169,37 @@ const Routes = [
       useValue: () => {
         return true;
       } 
-    }],
+    },
+    {
+      provide: 'CanAdminActivateGuard',
+      useValue: () => { 
+        if(localStorage.role == "Admin")
+        {
+          return true;
+        }
+        
+      } 
+    },
+    {
+      provide: 'CanManagerActivateGuard',
+      useValue: () => {
+        if(localStorage.role == "Manager")
+        {
+          return true;
+        }
+      } 
+    },
+    {
+      provide: 'CanUserActivateGuard',
+      useValue: () => {
+        if(localStorage.role == "AppUser")
+        {
+          return true;
+        }
+      } 
+    }
+  
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

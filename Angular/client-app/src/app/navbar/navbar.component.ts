@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit {
 
   checkIfManager()
   {
+    
     return localStorage.role == 'Manager';
   }
   
