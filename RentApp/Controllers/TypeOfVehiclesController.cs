@@ -106,6 +106,23 @@ namespace RentApp.Controllers
 
             List<Vehicle> vehicles = unitOfWork.Vehicles.GetAll().Where(x => x.Type == typeOfVehicle).ToList();
 
+            List<Rent> rents = unitOfWork.Rents.GetAll().ToList();
+            List<Rent> rentsToDelete = new List<Rent>();
+
+            foreach(var item in rents)
+            {
+                foreach(var item2 in vehicles)
+                {
+                    if(item.Vehicle.Id == item2.Id)
+                    {
+                        rentsToDelete.Add(item);
+                    }
+                }
+            }
+
+            unitOfWork.Rents.RemoveRange(rentsToDelete);
+            unitOfWork.Complete();
+
             unitOfWork.Vehicles.RemoveRange(vehicles);
             unitOfWork.Complete();
 

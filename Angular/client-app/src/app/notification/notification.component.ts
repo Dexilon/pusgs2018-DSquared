@@ -71,6 +71,26 @@ export class NotificationComponent implements OnInit {
         });
     }
 
+    invalidateAppUser(id:number)
+    {
+      this.profileServiceService.sendMailDisapprovedUser(this.profiles[id].Id)
+          .subscribe(
+            data => {
+              this.profileServiceService.getMethodProfileForValidation()
+              .subscribe(
+                data => {
+                  this.profiles = data;
+                  
+                },
+                error => {
+                  alert(error.error.ModelState[""][0])
+                });
+            },
+            error => {
+              alert(error.error.ModelState[""][0])
+            });
+    }
+
 
     validateService(id:number)
     {
@@ -105,25 +125,34 @@ export class NotificationComponent implements OnInit {
     }
 
 
-    deleteService(id : number){
+    invalidateService(id : number){
       debugger
-      this.serviceServiceService.deleteMethodService(id)
+
+      this.serviceServiceService.sendMailDisaprovedService(this.services[id].Id)
       .subscribe(
         data => {
-          alert("Service successfully deleted!");
-          this.serviceServiceService.getMethodServiceForValidation()
+          this.serviceServiceService.deleteMethodService(this.services[id].Id)
           .subscribe(
             data => {
-              this.services = data;
-              
+              this.serviceServiceService.getMethodServiceForValidation()
+              .subscribe(
+                data => {
+                  this.services = data;
+                  
+                },
+                error => {
+                  alert(error.error.ModelState[""][0])
+                });
             },
             error => {
               alert(error.error.ModelState[""][0])
-            });
+            })
         },
         error => {
           alert(error.error.ModelState[""][0])
-        })
+        });
+
+      
     }
     // checkIfUploaded(){
     //   for(var i = 0; i<this.profiles.length; i++)

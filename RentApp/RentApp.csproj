@@ -280,8 +280,10 @@
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\RentsController.cs" />
     <Compile Include="Controllers\ServicesController.cs" />
+    <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\TypeOfVehiclesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\VehiclesController.cs" />
@@ -345,6 +347,14 @@
     <Compile Include="Migrations\201806212118009_Service Owner added.Designer.cs">
       <DependentUpon>201806212118009_Service Owner added.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807061117498_New migration.cs" />
+    <Compile Include="Migrations\201807061117498_New migration.Designer.cs">
+      <DependentUpon>201807061117498_New migration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807161647236_Transaction added.cs" />
+    <Compile Include="Migrations\201807161647236_Transaction added.Designer.cs">
+      <DependentUpon>201807161647236_Transaction added.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -352,8 +362,10 @@
     <Compile Include="Models\Entities\Comment.cs" />
     <Compile Include="Models\Entities\RAIdentityUser.cs" />
     <Compile Include="Models\Entities\AppUser.cs" />
+    <Compile Include="Models\Entities\Rating.cs" />
     <Compile Include="Models\Entities\Rent.cs" />
     <Compile Include="Models\Entities\Services.cs" />
+    <Compile Include="Models\Entities\Transaction.cs" />
     <Compile Include="Models\Entities\TypeOfVehicle.cs" />
     <Compile Include="Models\Entities\Vehicle.cs" />
     <Compile Include="Persistance\RADBContext.cs" />
@@ -363,14 +375,18 @@
     <Compile Include="Persistance\Repository\IAppUserRepository.cs" />
     <Compile Include="Persistance\Repository\IBranchRepository.cs" />
     <Compile Include="Persistance\Repository\ICommentRepository.cs" />
+    <Compile Include="Persistance\Repository\IRatingRepository.cs" />
     <Compile Include="Persistance\Repository\IRentRepository.cs" />
     <Compile Include="Persistance\Repository\IRepository.cs" />
     <Compile Include="Persistance\Repository\IServicesRepository.cs" />
+    <Compile Include="Persistance\Repository\ITransactionRepository.cs" />
     <Compile Include="Persistance\Repository\ITypeOfVehicleRepository.cs" />
     <Compile Include="Persistance\Repository\IVehicleRepository.cs" />
+    <Compile Include="Persistance\Repository\RatingRepository.cs" />
     <Compile Include="Persistance\Repository\RentRepository.cs" />
     <Compile Include="Persistance\Repository\Repository.cs" />
     <Compile Include="Persistance\Repository\ServicesRepository.cs" />
+    <Compile Include="Persistance\Repository\TransactionRepository.cs" />
     <Compile Include="Persistance\Repository\TypeOfVehicleRepository.cs" />
     <Compile Include="Persistance\Repository\VehicleRepository.cs" />
     <Compile Include="Persistance\UnitOfWork\IUnitOfWork.cs" />
@@ -503,6 +519,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806212118009_Service Owner added.resx">
       <DependentUpon>201806212118009_Service Owner added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807061117498_New migration.resx">
+      <DependentUpon>201807061117498_New migration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807161647236_Transaction added.resx">
+      <DependentUpon>201807161647236_Transaction added.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

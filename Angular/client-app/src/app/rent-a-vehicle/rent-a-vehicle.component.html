@@ -21,7 +21,7 @@
             <td><div class="form-group">
                     <label class="col-md-4 control-label" for="Description">Description:</label>
                     <div class="col-md-4">                     
-                      <label class="form-control">{{item.Description}}</label>
+                      <label id="Description" name="Description" type="text">{{item.Description}}</label>
                     </div>
                   </div>
             </td>
@@ -30,20 +30,11 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="singlebutton"></label>
                         <div class="col-md-4">
-                          <a [routerLink]="['/showVehiclesOfService/' + item.Id]">Show Vehicles</a>
+                          <a class="btn btn-info" [routerLink]="['/showVehiclesOfService/' + item.Id]">Show Vehicles</a>
                         </div>
                 </div>
             </td>
       </tr>
-
-
-
-
-
-
-
-
-
   </tbody>
 </table>
 

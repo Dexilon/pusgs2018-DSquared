@@ -1,4 +1,78 @@
 <h2>Services</h2>
+<div *ngIf="!this.navbarComponent.checkUserType()" class="table-responsive">          
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Picture</th>
+          <th>E-mail</th>
+          <th>Service Name</th>
+          <th>Description</th>
+          <th>Vehicles</th>
+        </tr>
+      </thead>
+  <tbody *ngFor = "let item of services; let i = index">
+    <tr>
+      <td style="width: 250px;">
+          <img width="200" src='{{item.Logo}}'>
+      </td>
+      <td>
+        <label>{{item.Email}}</label>
+      </td>
+      <td>
+        <label>{{item.Name}}</label>
+      </td>
+      <td>
+        <label>{{item.Description}}</label>
+      </td>
+      <td>
+        <tr *ngFor = "let im of item.Vehicles">
+          <td><label>{{im.Manufactor}} {{im.Model}}</label></td>
+        </tr>
+      </td>
+    </tr>
+    <tr>
+      <td><label>Rating: </label></td>
+      <td>
+          <label ><font *ngIf="item.Rating>=0" color="green">{{item.Rating}}</font></label>
+          <label ><font *ngIf="item.Rating<0" color="red">{{item.Rating}}</font></label>
+          <button class="btn btn-default btn-sm" *ngIf="checkForCommentAndRating(i)" (click)="submitRatingPos(i)"><span class="glyphicon glyphicon-thumbs-up"></span></button>   
+          <button class="btn btn-default btn-sm" *ngIf="checkForCommentAndRating(i)" (click)="submitRatingNeg(i)"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+      </td>
+    </tr>
+    <form class="form-horizontal" #f="ngForm" (ngSubmit)="onSubmit(f.value, f, item.Id, item.Id)">
+        <tr><label>Comments:</label></tr>
+      <tr *ngFor = "let comment of comments">
+        <td>
+          <div class="form-group">
+            <div class="col-md-4">
+            <label *ngIf="comment.Service_Id == item.Id">{{comment.Text}}</label>    
+            </div>
+          </div>
+        </td>
+        </tr>
+        <tr>
+        <td *ngIf="checkForCommentAndRating(i)">
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="textinput"></label>  
+            <div class="col-md-4">
+            <input id="Text" style="width: 200px" name="Text" type="text" placeholder="" class="form-control input-md" ngModel #Text="ngModel">    
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="singlebutton"></label>
+            <div class="col-md-4">
+              <button type="submit"  id="singlebutton" name="singlebutton" class="btn btn-success" [disabled]="!f.valid">Add Comment</button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </form>
+    <br>
+    <hr>
+  </tbody>
+</table>
+</div>
+<div *ngIf="this.navbarComponent.checkUserType()">
 <table class="table table-striped table-dark" >
   <tbody *ngFor = "let item of services; let i = index">
       <tr>
@@ -76,8 +150,8 @@
           <td>
               <label ><font *ngIf="item.Rating>=0" color="green">{{item.Rating}}</font></label>
               <label ><font *ngIf="item.Rating<0" color="red">{{item.Rating}}</font></label>
-              <button (click)="submitRatingPos(i)">Like</button>   
-              <button (click)="submitRatingNeg(i)">Dislike  </button>
+              <button *ngIf="checkForCommentAndRating(i)" (click)="submitRatingPos(i)">Like</button>   
+              <button *ngIf="checkForCommentAndRating(i)" (click)="submitRatingNeg(i)">Dislike  </button>
               
           </td>
           </tr>
@@ -97,7 +171,7 @@
         </td>
         </tr>
         <tr>
-        <td>
+        <td *ngIf="checkForCommentAndRating(i)">
           <div class="form-group">
             <label class="col-md-4 control-label" for="textinput"></label>  
             <div class="col-md-4">
@@ -120,12 +194,11 @@
 
   </tbody>
 </table>
+</div>
 
 <table align="center">
   <tr>
-    <td align="center"><a style="font-size: 50px;text-align:center" (click)="setPageNumber(1)">1    </a></td>
-    <td align="center"><a style="font-size: 50px;text-align:center" (click)="setPageNumber(2)">2    </a></td>
-    <td align="center"><a style="font-size: 50px;text-align:center" (click)="setPageNumber(3)">3    </a></td>
-    <td align="center"><a style="font-size: 50px;text-align:center" (click)="incPageNumber()"> Next Page</a></td>
+    <td *ngIf="this.pageNumber > 1" align="center"><a style="font-size: 50px;text-align:center" (click)="decPageNumber()"> Previous Page</a></td>
+    <td *ngIf="checkForNextPage()" align="center"><a style="font-size: 50px;text-align:center" (click)="incPageNumber()"> Next Page</a></td>
   </tr>
 </table>

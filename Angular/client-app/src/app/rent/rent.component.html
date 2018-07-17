@@ -43,13 +43,15 @@
              <!-- U info-window stavljamo html -->
              <span style="font-size: 16px;font-family:'Times New Roman'">{{item.Address}}</span>
              <br/>
-             <a type="submit" class="btn btn-primary" (click)="setBranch(item.Address)">Set Branch</a>
+             <a type="submit" class="btn btn-primary" (click)="setStartBranch(item.Address)">Set Start Branch</a>
+             <a type="submit" class="btn btn-primary" (click)="setBranch(item.Address)">Set Return Branch</a>
            </agm-info-window>
      
          </agm-marker>
         </div>
        </agm-map>
-          
+       <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+
             <br>
               <button type="submit" class="btn btn-success" [disabled]="!f.valid">Rent</button>
           </div>

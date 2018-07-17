@@ -42,6 +42,15 @@ namespace RentApp.Controllers
             return retValue;
         }
 
+        [Route("api/Vehicles/GetNumberOfVehicles")]
+        [HttpGet]
+        public int GetNumberOfVehicles()
+        {
+            var retValue = unitOfWork.Vehicles.GetAll();
+
+            return retValue.Count();
+        }
+
 
         public IEnumerable<Vehicle> GetVehicles(int pageIndex, int pageSize)
         {
@@ -220,6 +229,11 @@ namespace RentApp.Controllers
             {
                 return NotFound();
             }
+
+            List<Rent> rents = unitOfWork.Rents.GetAll().Where(x => x.Vehicle.Id == id).ToList();
+
+            unitOfWork.Rents.RemoveRange(rents);
+            unitOfWork.Complete();
 
             unitOfWork.Vehicles.Remove(vehicle);
             unitOfWork.Complete();

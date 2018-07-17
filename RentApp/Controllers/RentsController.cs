@@ -12,6 +12,7 @@ using RentApp.Models.Entities;
 using RentApp.Persistance;
 using RentApp.Persistance.UnitOfWork;
 using RentApp.Models;
+using System.Text;
 
 namespace RentApp.Controllers
 {
@@ -71,9 +72,23 @@ namespace RentApp.Controllers
                     return BadRequest();
                 }
 
+                var rents = unitOfWork.Rents.GetAll();
+
+                Rent r = new Rent();
+
+                foreach(var item in rents)
+                {
+                    if(item.Id == id)
+                    {
+                        r = item;
+                    }
+                }
+
+                r.Paid = true;
+
                 try
                 {
-                    unitOfWork.Rents.Update(rent);
+                    unitOfWork.Rents.Update(r);
                     unitOfWork.Complete();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -117,6 +132,20 @@ namespace RentApp.Controllers
                     }
                 }
 
+                var transactions = unitOfWork.Transactions.GetAll();
+
+                var transaction = new Transaction();
+
+                foreach (var item in transactions)
+                {
+                    if(item.Rent.Id == id)
+                    {
+                        transaction = item;
+                    }
+                }
+
+                unitOfWork.Transactions.Remove(transaction);
+
                 unitOfWork.Rents.Remove(ren);
                 unitOfWork.Complete();
 
@@ -136,9 +165,12 @@ namespace RentApp.Controllers
                     return BadRequest(ModelState);
                 }
 
+                bool found = false;
+
                 var branches = unitOfWork.Branches.GetAll();
 
                 Branch branch = new Branch();
+                Branch branchStart = new Branch();
 
                 foreach (var item in branches)
                 {
@@ -146,6 +178,12 @@ namespace RentApp.Controllers
                     {
                         branch = item;
                     }
+                }
+
+                foreach (var item in branches)
+                {
+                    if (item.Address == rentBindingModel.BranchStart)
+                        branchStart = item;
                 }
 
                 var vehicles = unitOfWork.Vehicles.GetAll();
@@ -164,28 +202,75 @@ namespace RentApp.Controllers
 
                 var users = unitOfWork.AppUsers.GetAll();
 
-                AppUser appUser = new AppUser();
+                List<DateTime> startDates = new List<DateTime>();
+                List<DateTime> endDates = new List<DateTime>();
 
-                foreach (var item in users)
+                foreach(var item in users)
                 {
-                    if (item.Email == rentBindingModel.Email)
+                    foreach(var item2 in item.Rents)
                     {
-                        appUser = item;
+                        if(item2.Vehicle == vehicle)
+                        {
+                            startDates.Add(item2.Start);
+                            endDates.Add(Convert.ToDateTime(item2.End));
+                            if (rentBindingModel.Start >= item2.Start && rentBindingModel.Start <= item2.End)
+                            {
+                                //onda ne moze
+                                found = true;
+                            }
+                            else if (rentBindingModel.End >= item2.Start && rentBindingModel.End <= item2.End)
+                            {
+                                //onda ne moze
+                                found = true;
+                            }
+                            else if (rentBindingModel.Start <= item2.Start && rentBindingModel.End >= item2.End)
+                            {
+                                //onda ne moze
+                                found = true;
+                            }
+                        }
                     }
                 }
 
-                Rent rent = new Rent();
-                rent.Branch = branch;
-                rent.End = rentBindingModel.End;
-                rent.Start = rentBindingModel.Start;
-                rent.Vehicle = vehicle;
+                if(!found)
+                {
+                    AppUser appUser = new AppUser();
 
-                appUser.Rents.Add(rent);
-                unitOfWork.AppUsers.Update(appUser);
-                unitOfWork.Rents.Add(rent);
-                unitOfWork.Complete();
+                    foreach (var item in users)
+                    {
+                        if (item.Email == rentBindingModel.Email)
+                        {
+                            appUser = item;
+                        }
+                    }
 
-                return CreatedAtRoute("DefaultApi", new { id = rent.Id }, rent);
+                    Rent rent = new Rent();
+                    rent.Branch = branch;
+                    rent.BranchStart = branchStart;
+                    rent.End = rentBindingModel.End;
+                    rent.Start = rentBindingModel.Start;
+                    rent.Vehicle = vehicle;
+                    //rent.Paid = false;
+
+                    appUser.Rents.Add(rent);
+                    unitOfWork.AppUsers.Update(appUser);
+                    unitOfWork.Rents.Add(rent);
+                    unitOfWork.Complete();
+
+                    return CreatedAtRoute("DefaultApi", new { id = rent.Id }, rent);
+
+                }
+
+                else
+                {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.Append("This vehicle is already reserved by another users in these period of times: ");
+                    for (int i = 0; i < startDates.Count; i++)
+                    {
+                        stringBuilder.AppendLine("Start date: " + startDates[i] + ", end date: " + endDates[i]);
+                    }
+                    return BadRequest(stringBuilder.ToString());
+                }
             }
         }
 

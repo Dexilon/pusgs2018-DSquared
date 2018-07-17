@@ -80,6 +80,10 @@ namespace RentApp.Models
         [Display(Name = "Branch")]
         public string Branch { get; set; }
 
+        [Required]
+        [Display(Name = "BranchStart")]
+        public string BranchStart { get; set; }
+
         [Display(Name = "Vehicle")]
         public Vehicle Vehicle { get; set; }
 

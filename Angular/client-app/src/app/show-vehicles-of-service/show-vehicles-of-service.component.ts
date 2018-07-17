@@ -23,6 +23,7 @@ export class ShowVehiclesOfServiceComponent implements OnInit {
   vehiclesForbidden: Vehicle[] = [];
   rents: Rent[];
   today: Date;
+  start: Date;
   end: Date;
   profile: AppUser;
 
@@ -33,7 +34,7 @@ export class ShowVehiclesOfServiceComponent implements OnInit {
   constructor(private profileServiceService: ProfileServiceService, private rentServiceService: RentServiceService, private activatedRoute: ActivatedRoute, private serviceServiceService: ServiceServiceService ) { 
     activatedRoute.params.subscribe(params => {this.Id = params["Id"]});
     this.today = new Date();
-    this.end = new Date();
+    this.start = new Date();
 
   }
   
@@ -82,13 +83,13 @@ export class ShowVehiclesOfServiceComponent implements OnInit {
     {
       for(var j=0; j<this.vehicles.length; j++)
       {
-
         this.temp1 = this.rents[i].Vehicle.Id;
         this.temp2 = this.vehicles[j].Id;
         if(this.temp1 == this.temp2 )
         {
+          this.start = new Date(this.rents[i].Start);
           this.end = new Date(this.rents[i].End);
-          if(this.end >= this.today)
+          if(this.start <= this.today && this.end >= this.today)
           {
             this.vehiclesForbidden.push(this.vehicles[j]);
           }

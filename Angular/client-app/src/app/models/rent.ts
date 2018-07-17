@@ -7,17 +7,22 @@ export class Rent {
     Start: Date;
     End: Date;
     Branch: string;
+    BranchStart: string;
     Vehicle: Vehicle;
     Email: string;
+    Paid: boolean;
 
-    constructor(Id : number, Start:Date, End:Date, Branch: string, Vehicle: Vehicle, Email: string)
+    constructor(Id : number, Start:Date, End:Date, Branch: string, BranchStart: string, Vehicle: Vehicle, Email: string,
+    Paid : boolean)
     {
         this.Id = Id;
         this.Start = Start;
         this.End= End;
         this.Branch = Branch;
+        this.BranchStart = BranchStart;
         this.Vehicle = Vehicle;
         this.Email = Email;
+        this.Paid = Paid;
     }
 
 }

@@ -9,6 +9,7 @@ import { Service } from '../models/service';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { UserComment } from 'src/app/models/comment';
+import { RatingList } from '../models/RatingService';
 
 @Injectable({
   providedIn: 'root'
@@ -39,14 +40,26 @@ export class ServiceServiceService {
       .catch(this.handleError);
   }
 
-  getMethodServicePag(pageNumber): Observable<Service[]> {
-    return this.http.get('http://localhost:51680/api/Services?pageIndex='+pageNumber+'&pageSize='+2)
+  getMethodServicePag(pageNumber,pageSize): Observable<Service[]> {
+    return this.http.get('http://localhost:51680/api/Services?pageIndex='+pageNumber+'&pageSize='+pageSize)
       .map(this.parseData)
       .catch(this.handleError);
   }
 
+  getNumberOfServices(): Observable<number> {
+    return this.http.get('http://localhost:51680/api/Services/GetNumberOfServices')
+      .map(this.parseData)
+      .catch(this.handleError);
+  }
+  
   getMethodComment(): Observable<UserComment[]> {
     return this.http.get('http://localhost:51680/api/Comments')
+      .map(this.parseData)
+      .catch(this.handleError);
+  }
+
+  getMethodRatings(): Observable<RatingList[]> {
+    return this.http.get('http://localhost:51680/api/Ratings')
       .map(this.parseData)
       .catch(this.handleError);
   }
@@ -58,7 +71,6 @@ export class ServiceServiceService {
   }
 
   postMethodService(newMember): Observable<any> {
-    console.log(newMember);
     return this.httpClient.post("http://localhost:51680/api/Services", newMember)
   }
 
@@ -68,8 +80,11 @@ export class ServiceServiceService {
   }
 
   postMethodComment(newMember): Observable<any> {
-    console.log(newMember);
     return this.httpClient.post("http://localhost:51680/api/Comments", newMember)
+  }
+
+  postMethodRating(newMember): Observable<any> {
+    return this.httpClient.post("http://localhost:51680/api/Ratings", newMember)
   }
 
   deleteMethodService(serviceId): Observable<any> {
@@ -77,10 +92,18 @@ export class ServiceServiceService {
   }
 
   sendMailService(id): Observable<any> {
-    return this.httpClient.post("http://localhost:51680/api/Services/aproveService/" + id);
+    return this.httpClient.post("http://localhost:51680/api/Services/aproveService/" + id,id);
+  }
+
+  sendMailDisaprovedService(id): Observable<any> {
+    return this.httpClient.post("http://localhost:51680/api/Services/disapproveService/" + id,id);
   }
 
   updateMethodService(serviceId, newMember): Observable<any> {
     return this.httpClient.put("http://localhost:51680/api/Services/"+serviceId,newMember)
+  }
+
+  updateMethodRating(ratingId, newMember): Observable<any> {
+    return this.httpClient.put("http://localhost:51680/api/Ratings/"+ratingId,newMember)
   }
 }

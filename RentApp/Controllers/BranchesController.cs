@@ -135,6 +135,11 @@ namespace RentApp.Controllers
                     return NotFound();
                 }
 
+                List<Rent> rents = unitOfWork.Rents.GetAll().Where(x => x.Branch.Id == id || x.BranchStart.Id == id).ToList();
+
+                unitOfWork.Rents.RemoveRange(rents);
+                unitOfWork.Complete();
+
                 unitOfWork.Branches.Remove(branch);
                 unitOfWork.Complete();
 

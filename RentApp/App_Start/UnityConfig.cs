@@ -65,6 +65,8 @@ namespace RentApp
             container.RegisterType<IServicesRepository, ServicesRepository>();
             container.RegisterType<IUnitOfWork, UnitOfWork>();
             container.RegisterType<ICommentRepository, CommentRepository>();
+            container.RegisterType<IRatingRepository, RatingRepository>();
+            container.RegisterType<ITransactionRepository, TransactionRepository>();
         }
     }
 }

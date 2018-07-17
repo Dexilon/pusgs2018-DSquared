@@ -42,6 +42,7 @@ import { RentComponent } from './rent/rent.component';
 import { MapComponent } from './map/map.component';
 import { ShowUserRentsComponent } from './show-user-rents/show-user-rents.component';
 import { NotificationComponent } from './notification/notification.component';
+import { NgxPayPalModule } from 'ngx-paypal';
 
 const Routes = [
   {
@@ -96,15 +97,18 @@ const Routes = [
   },
   {
     path: "rentAVehicle",
-    component: RentAVehicleComponent
+    component: RentAVehicleComponent,
+    canActivate: ['CanAllRolesActivateGuard']
   },
   {
     path: "showVehiclesOfService/:Id",
-    component: ShowVehiclesOfServiceComponent
+    component: ShowVehiclesOfServiceComponent,
+    canActivate: ['CanAllRolesActivateGuard']
   },
   {
     path: "rentVehicle/:Id",
-    component: RentComponent
+    component: RentComponent,
+    canActivate: ['CanUserActivateGuard']
   },
   {
     path: "map",
@@ -150,6 +154,7 @@ const Routes = [
   ],
   imports: [
     BrowserModule,
+    NgxPayPalModule,
     FormsModule,
     HttpModule,
     RouterModule.forRoot(Routes),
@@ -193,6 +198,15 @@ const Routes = [
       provide: 'CanUserActivateGuard',
       useValue: () => {
         if(localStorage.role == "AppUser")
+        {
+          return true;
+        }
+      } 
+    },
+    {
+      provide: 'CanAllRolesActivateGuard',
+      useValue: () => {
+        if(localStorage.role == "AppUser" || localStorage.role == "Manager" || localStorage.role == "Admin")
         {
           return true;
         }

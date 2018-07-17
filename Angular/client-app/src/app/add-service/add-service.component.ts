@@ -49,7 +49,7 @@ export class AddServiceComponent implements OnInit {
       this.serviceServiceService.postMethodService(service)
       .subscribe(
         data => {
-          alert("You added service successfully!");
+          alert("You created service successfully! Service will be available when administrator approve it!");
           this.serviceServiceService.approveService(data.Id,service.Name)
           .subscribe(
             data => {

@@ -42,6 +42,11 @@ export class RentServiceService {
       console.log(newMember);
       return this.httpClient.post("http://localhost:51680/api/Rents", newMember)
     }
+
+    postNewTransaction(newMember): Observable<any> {
+      debugger
+      return this.httpClient.post("http://localhost:51680/api/Transactions", newMember)
+    }
   
     deleteMethodRent(serviceId): Observable<any> {
       debugger

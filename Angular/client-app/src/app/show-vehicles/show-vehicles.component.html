@@ -49,6 +49,7 @@
                     </div>
         </td>
       </tr>
+<div *ngIf="this.navbarComponent.checkUserType()">
   <tbody *ngFor = "let item of vehicles; let i = index">
     
       <tr>
@@ -177,7 +178,7 @@
       </tr>
       <tr>
           <div class="col-md-4">
-        <label class="col-md-4 control-label">Slike</label>
+        <label class="col-md-4 control-label">Pictures</label>
         </div>
           <td *ngFor = "let im of item.Images" style="width: 250px;"><img width="200" src='{{im}}' /></td>
       </tr>
@@ -214,13 +215,59 @@
         </td>
       </tr>
   </tbody>
+</div>
 </table>
+<div *ngIf="!this.navbarComponent.checkUserType()" class="table-responsive">          
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Manufactor</th>
+          <th>Model</th>
+          <th>Year</th>
+          <th>Price Per Hour</th>
+          <th>Description</th>
+          <th>Type of Vehicle</th>
+        </tr>
+      </thead>
+  <tbody *ngFor = "let item of vehicles; let i = index">
+    <tr>
+      <td>
+        <label>{{item.Manufactor}}</label>
+      </td>
+      <td>
+        <label>{{item.Model}}</label>
+      </td>
+      <td>
+        <label>{{item.Year}}</label>
+      </td>
+      <td>
+        <label>{{item.PricePerHour}}</label>
+      </td>
+      <td>
+        <label>{{item.Description}}</label>
+      </td>
+      <td>
+        <label>{{item.Type.Name}}</label>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Pictures: </label>
+      </td>
+      <td *ngFor = "let im of item.Images" style="width: 250px;">
+        <img width="200" src='{{im}}'>
+      </td>
+    </tr>
+    <br>
+    <hr>
+  </tbody>
+</table>
+</div>
+
 
 <table align="center">
   <tr>
-    <td align="center"><a style="font-size: 50px;text-align:center" (click)="setPageNumber(1)">1    </a></td>
-    <td align="center"><a style="font-size: 50px;text-align:center" (click)="setPageNumber(2)">2    </a></td>
-    <td align="center"><a style="font-size: 50px;text-align:center" (click)="setPageNumber(3)">3    </a></td>
-    <td align="center"><a style="font-size: 50px;text-align:center" (click)="incPageNumber()"> Next Page</a></td>
+    <td *ngIf="this.pageNumber > 1" align="center"><a style="font-size: 50px;text-align:center" (click)="decPageNumber()"> Previous Page</a></td>
+    <td *ngIf="checkForNextPage()" align="center"><a style="font-size: 50px;text-align:center" (click)="incPageNumber()"> Next Page</a></td>
   </tr>
 </table>

@@ -13,7 +13,8 @@ export class Service {
     Rating: number;
     Activated: boolean;
 
-    constructor(Id : number, Name:string, Logo:string,Email: string, Description: string, Vehicles: Vehicle[], Branches: Branch[], Rating: number, Activated: boolean)
+    constructor(Id : number, Name:string, Logo:string,Email: string, Description: string, 
+        Vehicles: Vehicle[], Branches: Branch[], Rating: number, Activated: boolean)
     {
         this.Id = Id;
         this.Name = Name;

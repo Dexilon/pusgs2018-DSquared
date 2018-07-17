@@ -53,6 +53,15 @@ namespace RentApp.Controllers
             
         }
 
+        [Route("api/Services/GetNumberOfServices")]
+        [HttpGet]
+        public int GetNumberOfServices()
+        {
+            var retValue = unitOfWork.Services.GetAll();
+
+            return retValue.Count();
+        }
+
 
         [Route("api/Services/GetServicesForValidation")]
         [HttpGet]
@@ -128,7 +137,7 @@ namespace RentApp.Controllers
 
         // PUT: api/Services/5
         [ResponseType(typeof(void))]
-        [Authorize(Roles = "Manager, Admin")]
+        [Authorize(Roles = "Manager, Admin, AppUser")]
         public IHttpActionResult PutService(int id, Service service)
         {
             lock(o)
@@ -202,7 +211,52 @@ namespace RentApp.Controllers
                 }
 
                 List<Vehicle> vehicles = unitOfWork.Vehicles.GetAll().Where(x => service.Vehicles.Contains(x)).ToList();
+                List<Rent> rents = unitOfWork.Rents.GetAll().ToList();
+                List<Rent> rentsToDelete = new List<Rent>();
+
+                foreach(var item in rents)
+                {
+                    foreach(var item2 in vehicles)
+                    {
+                        if(item.Vehicle.Id == item2.Id)
+                        {
+                            rentsToDelete.Add(item);
+                        }
+                    }
+                }
+
+                unitOfWork.Rents.RemoveRange(rentsToDelete);
+                unitOfWork.Complete();
+
+                rents.Clear();
+                rentsToDelete.Clear();
+
+                rents = unitOfWork.Rents.GetAll().ToList();
+
+                foreach (var item in rents)
+                {
+                    foreach (var item2 in service.Branches)
+                    {
+                        if (item.Branch.Id == item2.Id || item.BranchStart.Id == item2.Id)
+                        {
+                            rentsToDelete.Add(item);
+                        }
+                    }
+                }
+
+                unitOfWork.Rents.RemoveRange(rentsToDelete);
+                unitOfWork.Complete();
+
                 List<Branch> branches = unitOfWork.Branches.GetAll().Where(x => service.Branches.Contains(x)).ToList();
+
+                List<Comment> comments = unitOfWork.Comments.GetAll().Where(x => x.Service_Id == id).ToList();
+                List<Rating> ratings = unitOfWork.Ratings.GetAll().Where(x => x.Service.Id == id).ToList();
+
+                unitOfWork.Comments.RemoveRange(comments);
+                unitOfWork.Complete();
+
+                unitOfWork.Ratings.RemoveRange(ratings);
+                unitOfWork.Complete();
 
                 unitOfWork.Vehicles.RemoveRange(vehicles);
                 unitOfWork.Complete();
@@ -247,6 +301,50 @@ namespace RentApp.Controllers
                     mail.To.Add(service.Owner);
                     mail.Subject = "Service approved";
                     mail.Body = "The service that you have made has been approved by our administrators! \n You are now able to add vehicles and branches!";
+                    try
+                    {
+                        client.Send(mail);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+
+                return Ok();
+            }
+        }
+
+        [Route("api/Services/disapproveService/{id}")]
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public IHttpActionResult ServiceDisapproving(int id)
+        {
+            lock (o)
+            {
+                Service service = unitOfWork.Services.Get(id);
+
+                var serviceOwner = service.Owner;
+
+                if (!service.Owner.Contains("@gmail.com"))
+                {
+                    service.Owner = serviceOwner + "@gmail.com";
+                }
+
+                if (service.Activated == false)
+                {
+                    MailMessage mail = new MailMessage("admin@gmail.com", service.Owner);
+                    SmtpClient client = new SmtpClient();
+                    client.Port = 587;
+                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    client.UseDefaultCredentials = false;
+                    client.Credentials = new NetworkCredential("admin@gmail.com", "admin");
+                    client.Host = "smtp.gmail.com";
+                    client.EnableSsl = true;
+                    mail.From = new MailAddress("admin@gmail.com");
+                    mail.To.Add(service.Owner);
+                    mail.Subject = "Service disapproved";
+                    mail.Body = "The service that you have made has been disapproved by our administrators! \n Please, create service on a proper way!";
                     try
                     {
                         client.Send(mail);

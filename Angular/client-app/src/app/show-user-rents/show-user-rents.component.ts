@@ -3,6 +3,8 @@ import {ProfileServiceService} from '../profileService/profile-service.service';
 import {AppUser} from '../models/appUser'
 import { Rent } from 'src/app/models/rent';
 import { RentServiceService } from '../rent-service/rent-service.service';
+import { PayPalConfig, PayPalEnvironment, PayPalIntegrationType } from 'ngx-paypal';
+import { Transaction } from '../models/transaction';
 
 @Component({
   selector: 'app-show-user-rents',
@@ -17,6 +19,15 @@ export class ShowUserRentsComponent implements OnInit {
   rents: Rent[];
   pomList: Rent[]=[];
   appUser: AppUser;
+  //odavde je dodato
+  startDay: any;
+  endDay: any;
+  difference: number;
+  pricePH: number;
+  transaction: Transaction;
+  flag : boolean = false;
+
+  public payPalConfig?: PayPalConfig;
 
   constructor(private profileServiceService: ProfileServiceService, private rentServiceService: RentServiceService) { }
 
@@ -27,12 +38,13 @@ export class ShowUserRentsComponent implements OnInit {
         debugger
         this.appUser = data;
         this.rents = this.appUser.Rents;
+        // U slucaju ako treba nakon proglasavanja vozila nedostupnim, da se sklone rente
 
-        this.checkRentForDelete();
-
-        this.rents = [];
-
-        this.rents = this.pomList;
+        /*for(var i = 0; i<this.pomList.length; i++ ){
+          if(!this.pomList[i].Vehicle.Unavailable){
+            this.rents.push(this.pomList[i]);
+          }
+        }*/
       },
       error => {
         alert(error.error.ModelState[""][0])
@@ -52,7 +64,6 @@ export class ShowUserRentsComponent implements OnInit {
   }
 
   deleteRent(Id : number){
-    debugger
     this.rentServiceService.deleteMethodRent(Id).
     subscribe(
       data => {
@@ -60,10 +71,8 @@ export class ShowUserRentsComponent implements OnInit {
         this.profileServiceService.getMethodProfile()
         .subscribe(
           data => {
-            debugger
             this.appUser = data;
             this.rents = this.appUser.Rents;
-            this.pomList = [];
           },
           error => {
             alert(error.error.ModelState[""][0])
@@ -74,23 +83,67 @@ export class ShowUserRentsComponent implements OnInit {
       });
   }
 
-  checkRentForDelete(){
-    debugger
-    this.today = new Date();
-    for(var it = 0; it < this.rents.length; it++){
-      this.end = new Date(this.rents[it].End);
-      if(this.today > this.end){
-        this.rentServiceService.deleteMethodRent(this.rents[it].Id).
-        subscribe(
-          data => {
-          },
-          error => {
-            alert(error.error.ModelState[""][0])
-          });
-      }
-      else{
-        this.pomList.push(this.rents[it]);
-      }
+  checkForPayment(rent: Rent){
+    if(rent.Paid){
+      return true;
     }
+    else {
+      return false;
+    }
+  }
+
+  payWithPayPal(rent : Rent){
+    this.flag = true;
+    debugger
+    this.startDay = new Date(rent.Start);
+    this.endDay = new Date(rent.End);
+    let diffInMs : number = Date.parse(this.endDay) - Date.parse(this.startDay);
+    let diffInH : number = diffInMs / 1000 / 60 / 60;
+    this.difference = diffInH;
+    this.pricePH = rent.Vehicle.PricePerHour;
+    this.payPalConfig = new PayPalConfig(PayPalIntegrationType.ClientSideREST, PayPalEnvironment.Sandbox, {
+      commit: true,
+      client: {
+        sandbox: 'ARnZWQ8IICo9PI-OAZEw0JJal_VAWoJdIWOZi25aH0GejdkZsm4XOw2JwJWnKC_5FvZe4MzM5oFJbsFI'
+      },
+      button: {
+        label: 'paypal',
+      },
+          onPaymentComplete: (data, actions) => {
+            this.transaction = new Transaction();
+            this.transaction.Amount = this.pricePH * this.difference;
+            this.transaction.Rent = rent;
+            this.transaction.User = this.appUser;
+            this.rentServiceService.postNewTransaction(this.transaction)
+            .subscribe(
+              data => {
+                rent.Paid = true;
+                this.rentServiceService.updateMethodRent(rent.Id,rent)
+                .subscribe(
+                  data => {
+                    this.flag = false;
+                    this.ngOnInit();
+                  },
+                  error => {
+                    alert(error.error.ModelState[""][0])
+                  });
+              },
+              error => {
+                alert(error.error.ModelState[""][0])
+              });
+      },
+      onCancel: (data, actions) => {
+        alert("Paypal transaction has been canceled!");
+      },
+      onError: (err) => {
+        alert("Error occured: " + err);
+      },
+      transactions: [{
+        amount: {
+          currency: 'USD',
+          total: this.pricePH * this.difference
+        }
+      }]
+    });
   }
 }

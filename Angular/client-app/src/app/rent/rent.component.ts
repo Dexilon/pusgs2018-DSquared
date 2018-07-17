@@ -13,6 +13,7 @@ import {ProfileServiceService} from '../profileService/profile-service.service';
 import { Http } from '@angular/http/src/http';
 import { MapInfo } from '../map/map-info.model';
 import { Router, RouterModule, Routes, ActivatedRoute } from '@angular/router';
+import { PayPalConfig, PayPalEnvironment, PayPalIntegrationType } from 'ngx-paypal';
 
 @Component({
   selector: 'app-rent',
@@ -21,9 +22,11 @@ import { Router, RouterModule, Routes, ActivatedRoute } from '@angular/router';
   styles: ['agm-map {height: 500px; width: 700px;}'] //postavljamo sirinu i visinu mape
 })
 export class RentComponent implements OnInit {
+  branchToRet: string;
   branchToSend: string;
   mapInfo: any;
   someDate: Date;
+  someDate2: Date;
   today: Date;
   Id: number = -1;
   service: Service;
@@ -33,6 +36,12 @@ export class RentComponent implements OnInit {
   services: Service[];
   branchMarker: any;
 appUser: AppUser;
+startDay: any;
+endDay: any;
+difference: number;
+pricePH: number;
+
+public payPalConfig?: PayPalConfig;
 
   constructor(private router: Router,private profileServiceService: ProfileServiceService,private rentServiceService: RentServiceService, private serviceServiceService: ServiceServiceService, private activatedRoute: ActivatedRoute, private branchServiceService: BranchServiceService, private vehicleServiceService: VehicleServiceService) {
     activatedRoute.params.subscribe(params => {this.Id = params["Id"]});
@@ -47,15 +56,13 @@ appUser: AppUser;
       data => {
         debugger
         this.services = data;
-        
 
         this.vehicleServiceService.getMethodVehicleById(this.Id)
         .subscribe(
           data => {
-            debugger
             this.vehicle = data;
-  
-            debugger
+            this.pricePH = this.vehicle.PricePerHour;
+
             for(var i = 0; i<this.services.length; i++ )
             {
               for(var ii = 0; ii<this.services[i].Vehicles.length; ii++ )
@@ -77,22 +84,65 @@ appUser: AppUser;
       error => {
         alert(error.error.ModelState[""][0])
       }) 
+
+  }
+
+  payWithPayPal(){
+    debugger
+    this.startDay = document.getElementsByName("Start")[0];
+    this.endDay = document.getElementsByName("End")[0];
+    let diffInMs : number = Date.parse(this.endDay.value) - Date.parse(this.startDay.value);
+    let diffInH : number = diffInMs / 1000 / 60 / 60;
+    this.difference = diffInH;
+    this.payPalConfig = new PayPalConfig(PayPalIntegrationType.ClientSideREST, PayPalEnvironment.Sandbox, {
+      commit: true,
+      client: {
+        sandbox: 'ARnZWQ8IICo9PI-OAZEw0JJal_VAWoJdIWOZi25aH0GejdkZsm4XOw2JwJWnKC_5FvZe4MzM5oFJbsFI'
+      },
+      button: {
+        label: 'paypal',
+      },
+      onPaymentComplete: (data, actions) => {
+        console.log('OnPaymentComplete');
+      },
+      onCancel: (data, actions) => {
+        console.log('OnCancel');
+      },
+      onError: (err) => {
+        console.log('OnError');
+      },
+      transactions: [{
+        amount: {
+          currency: 'USD',
+          total: this.pricePH * this.difference
+        }
+      }]
+    });
   }
 
   onSubmit(rent:Rent,f: NgForm){
-    debugger
     this.today = new Date();
     this.someDate = new Date(rent.Start);
-    if(this.someDate < this.today){
-      alert("You can't reserve vehicle before today!");
-    }
-    else{
-      this.someDate = new Date(rent.End);
-      if(this.someDate < this.today){
-        alert("Your reservation can't be ended before today!");
-      }
-      else{
-        // console.log(f.value.serviceName, f.value.email)
+    //if(this.someDate < this.today){
+      //alert("You cannot reserve vehicle before today!");
+    //}
+    //else{
+      //this.someDate = new Date(rent.End);
+      //if(this.someDate < this.today){
+        //alert("Your reservation cannot be ended before today!");
+      //}
+      //else{
+        this.someDate = new Date(rent.Start);
+        this.someDate2 = new Date(rent.End);
+        debugger
+        if(this.someDate > this.someDate2){
+          alert("Reservation cannot be ended before it started!");
+        }
+        else if(this.someDate == this.someDate2){
+          alert("Reservation cannot be ended at same time when it starts!");
+        }
+        else{
+          // console.log(f.value.serviceName, f.value.email)
         rent.Vehicle = this.vehicle;
         this.profileServiceService.getMethodProfile()
         .subscribe(
@@ -100,6 +150,7 @@ appUser: AppUser;
             this.appUser = data;
             rent.Email = this.appUser.Email;
             rent.Branch = this.branchToSend;
+            rent.BranchStart = this.branchToRet;
           this.rentServiceService.postMethodRent(rent)
           .subscribe(
             data => {
@@ -109,19 +160,25 @@ appUser: AppUser;
               this.router.navigateByUrl("/showUserRents");              
             },
             error => {
-              alert(error.error.ModelState[""][0])
+              debugger
+              alert(error.error.Message)
             });
           },
           error => {
             alert(error.error.ModelState[""][0])
           });
-      }
-    }
+        }
+      //}
+    //}
     
   }
 
   setBranch(br : string){
     this.branchToSend = br;
+  }
+
+  setStartBranch(br : string){
+    this.branchToRet = br;
   }
 
 }

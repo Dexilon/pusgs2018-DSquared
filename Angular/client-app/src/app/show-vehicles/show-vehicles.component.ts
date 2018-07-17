@@ -22,14 +22,15 @@ export class ShowVehiclesComponent implements OnInit {
   typesOfVehicle : TypeOfVehicle[];
   vehicles: Vehicle[];
   pageNumber: number = 1;
+  pageSize: number = 2;
   pomVehicles : Vehicle[];
-
+  numberOfVehicles: number;
 
     constructor(private vehicleServiceService: VehicleServiceService, private navbarComponent: NavbarComponent, 
       private addTypeOfVehicleServiceService: AddTypeOfVehicleServiceService) { }
 
   ngOnInit() {
-    this.vehicleServiceService.getMethodVehiclePag(this.pageNumber)
+    this.vehicleServiceService.getMethodVehiclePag(this.pageNumber, this.pageSize)
     .subscribe(
       data => {
         this.vehicles = data;
@@ -41,6 +42,15 @@ export class ShowVehiclesComponent implements OnInit {
           error => {
             alert(error.error.ModelState[""][0])
           })
+      },
+      error => {
+        alert(error.error.ModelState[""][0])
+      })
+
+      this.vehicleServiceService.getNumberOfVehicles()
+    .subscribe(
+      data => {
+        this.numberOfVehicles = data;
       },
       error => {
         alert(error.error.ModelState[""][0])
@@ -113,6 +123,15 @@ export class ShowVehiclesComponent implements OnInit {
               error => {
                 alert(error.error.ModelState[""][0])
               })
+
+              this.vehicleServiceService.getNumberOfVehicles()
+              .subscribe(
+                data => {
+                  this.numberOfVehicles = data;
+                },
+                error => {
+                  alert(error.error.ModelState[""][0])
+                })
           },
           error => {
             alert(error.error.ModelState[""][0])
@@ -123,15 +142,15 @@ export class ShowVehiclesComponent implements OnInit {
       })
   }
 
-  setPageNumber(num: number)
-  {
-    this.pageNumber = num;
-    this.ngOnInit();
-  }
-
   incPageNumber()
   {
     this.pageNumber +=1;
+    this.ngOnInit();
+  }
+
+  decPageNumber()
+  {
+    this.pageNumber -=1;
     this.ngOnInit();
   }
 
@@ -185,6 +204,15 @@ export class ShowVehiclesComponent implements OnInit {
       return true;
     }
     else{
+      return false;
+    }
+  }
+
+  checkForNextPage(){
+    if(this.pageNumber * this.pageSize < this.numberOfVehicles){
+      return true;
+    }
+    else {
       return false;
     }
   }

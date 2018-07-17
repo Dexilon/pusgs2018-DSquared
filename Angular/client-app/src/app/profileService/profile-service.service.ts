@@ -42,7 +42,11 @@ export class ProfileServiceService {
     }
 
     sendMail(id): Observable<any> {
-      return this.httpClient.post("http://localhost:51680/api/AppUsers/AproveUser/" + id);
+      return this.httpClient.post("http://localhost:51680/api/AppUsers/AproveUser/" + id, id);
+    }
+
+    sendMailDisapprovedUser(id): Observable<any> {
+      return this.httpClient.post("http://localhost:51680/api/AppUsers/DisapproveUser/" + id, id);
     }
   
 }

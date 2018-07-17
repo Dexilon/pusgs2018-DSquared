@@ -22,7 +22,17 @@
         <tr>
             <td>
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="textinput">Branch Address:</label>  
+                    <label class="col-md-4 control-label" for="textinput">Branch Address to pick up car:</label>  
+                    <div class="col-md-4">
+                    <label>{{item.BranchStart.Address}}</label>
+                    </div>
+                  </div>
+              </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">Branch  Address to retrieve car:</label>  
                     <div class="col-md-4">
                     <label>{{item.Branch.Address}}</label>
                     </div>
@@ -61,8 +71,26 @@
                   </div>
               </td>
         </tr>
-        
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">Payment:</label>  
+                    <div class="col-md-4">
+                        <label *ngIf="checkForPayment(item)">Paid!</label>
+                    </div>
+                  </div>
+            </td>
+            <td>
+                <div *ngIf="!checkForPayment(item)" class="form-group">
+                        <label class="col-md-4 control-label" for="singlebutton"></label>
+                            <div class="col-md-4">
+                                <button id="singlebutton" (click)="payWithPayPal(item)" name="singlebutton" class="btn btn-success">Pay with paypal</button>
+                            </div>
+                </div>
+              </td>
+        </tr>
         <br>
         <hr>
     </tbody>
+    <ngx-paypal *ngIf="this.flag" [config]="payPalConfig"></ngx-paypal>
   </table>

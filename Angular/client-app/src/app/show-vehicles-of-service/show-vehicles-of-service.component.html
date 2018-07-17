@@ -1,3 +1,66 @@
+<div class="table-responsive">          
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Manufactor</th>
+          <th>Model</th>
+          <th>Year</th>
+          <th>Price Per Hour</th>
+          <th>Description</th>
+          <th>Type of Vehicle</th>
+        </tr>
+      </thead>
+  <tbody *ngFor = "let vehicle of service.Vehicles; let ii = index">
+    <tr>
+      <td>
+        <label>{{vehicle.Manufactor}}</label>
+      </td>
+      <td>
+        <label>{{vehicle.Model}}</label>
+      </td>
+      <td>
+        <label>{{vehicle.Year}}</label>
+      </td>
+      <td>
+        <label>{{vehicle.PricePerHour}}</label>
+      </td>
+      <td>
+        <label>{{vehicle.Description}}</label>
+      </td>
+      <td>
+        <label>{{vehicle.Type.Name}}</label>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Pictures: </label>
+      </td>
+      <td *ngFor = "let im of vehicle.Images" style="width: 250px;">
+        <img width="200" src='{{im}}'>
+      </td>
+    </tr>
+    <tr>
+        <td>  
+          <div  class="form-group" *ngIf="!checkVehicleAvailability(ii)">
+              <label class="col-md-4 control-label" for="singlebutton"></label>
+                  <div class="col-md-4">
+                      <a *ngIf="!checkIfRented(ii) && checkIfActivated()" class="btn btn-info" [routerLink]="['/rentVehicle/' + vehicle.Id]">Rent Vehicle</a>
+                      <label *ngIf="checkIfRented(ii)">Vehicle Rented</label>
+                  </div>
+          </div>
+          <div  class="form-group" *ngIf="checkVehicleAvailability(ii)">
+            <label class="col-md-4 control-label" for="singlebutton"></label>
+                <div class="col-md-4">
+                    <span><label>Vehicle is unavailable at this moment!</label></span>
+                </div>
+        </div>
+      </td></tr>
+    <br>
+    <hr>
+  </tbody>
+</table>
+</div>
+<!--
 <table>
   <tbody *ngFor = "let vehicle of service.Vehicles; let ii = index">
     <tr>
@@ -81,4 +144,4 @@
     
   </tbody>
 
-</table>
+</table>-->

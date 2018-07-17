@@ -40,8 +40,14 @@ export class VehicleServiceService {
         .catch(this.handleError);
     }
 
-    getMethodVehiclePag(pageNumber): Observable<Vehicle[]> {
-      return this.http.get('http://localhost:51680/api/Vehicles?pageIndex='+pageNumber+'&pageSize='+2)
+    getMethodVehiclePag(pageNumber, pageSize): Observable<Vehicle[]> {
+      return this.http.get('http://localhost:51680/api/Vehicles?pageIndex='+pageNumber+'&pageSize='+pageSize)
+        .map(this.parseData)
+        .catch(this.handleError);
+    }
+
+    getNumberOfVehicles(): Observable<number> {
+      return this.http.get('http://localhost:51680/api/Vehicles/GetNumberOfVehicles')
         .map(this.parseData)
         .catch(this.handleError);
     }

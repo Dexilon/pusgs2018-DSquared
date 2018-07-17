@@ -94,6 +94,48 @@ namespace RentApp.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
+        [Route("api/AppUsers/DisapproveUser/{id}")]
+        [HttpPost]
+        public IHttpActionResult DisapproveUser(int id)
+        {
+            lock (o)
+            {
+                AppUser user = unitOfWork.AppUsers.Get(id);
+
+                if (user.Activated == false)
+                {
+                    MailMessage mail = new MailMessage("admin@gmail.com", user.Email);
+                    SmtpClient client = new SmtpClient();
+                    client.Port = 587;
+                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    client.UseDefaultCredentials = false;
+                    client.Credentials = new NetworkCredential("admin@gmail.com", "admin");
+                    client.Host = "smtp.gmail.com";
+                    client.EnableSsl = true;
+                    mail.From = new MailAddress("admin@gmail.com");
+                    mail.To.Add(user.Email);
+                    mail.Subject = "Profile disapproved";
+                    mail.Body = "The account that you have made has been disapproved by our administrators!\n You need to upload valid personal document!";
+                    try
+                    {
+                        client.Send(mail);
+                    }
+                    catch
+                    {
+
+                    }
+                }
+
+                user.PersonalDocument = "";
+
+                unitOfWork.AppUsers.Update(user);
+                unitOfWork.Complete();
+
+                return Ok();
+            }
+        }
+
 
         [Authorize(Roles = "Admin")]
         [Route("api/AppUsers/GetAppUsersForValidation")]
