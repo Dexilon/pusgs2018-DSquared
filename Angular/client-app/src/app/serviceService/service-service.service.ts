@@ -103,6 +103,10 @@ export class ServiceServiceService {
     return this.httpClient.put("http://localhost:51680/api/Services/"+serviceId,newMember)
   }
 
+  updateServiceRating(id, service): Observable<any> {
+    return this.httpClient.put("http://localhost:51680/api/Services/UpdateServiceRating/"+id + "/" + service,service)
+  }
+
   updateMethodRating(ratingId, newMember): Observable<any> {
     return this.httpClient.put("http://localhost:51680/api/Ratings/"+ratingId,newMember)
   }

@@ -141,10 +141,9 @@ namespace RentApp.Controllers
                     if(item.Rent.Id == id)
                     {
                         transaction = item;
+                        unitOfWork.Transactions.Remove(transaction);
                     }
                 }
-
-                unitOfWork.Transactions.Remove(transaction);
 
                 unitOfWork.Rents.Remove(ren);
                 unitOfWork.Complete();

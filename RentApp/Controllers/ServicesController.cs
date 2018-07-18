@@ -135,6 +135,59 @@ namespace RentApp.Controllers
             return Ok(service);
         }
 
+        [Route("api/Services/UpdateServiceRating/{id}/{service}")]
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        [Authorize(Roles = "Manager, Admin, AppUser")]
+        public IHttpActionResult UpdateServiceRating(int id, Service service)
+        {
+            lock (o)
+            {
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                if (id != service.Id)
+                {
+                    return BadRequest();
+                }
+
+                var services = unitOfWork.Services.GetAll();
+                var ser = new Service();
+
+                foreach (var item in services)
+                {
+                    if(item.Id == id)
+                    {
+                        ser = item;
+                    }
+                }
+
+                ser.Rating = service.Rating;
+
+                try
+                {
+                    unitOfWork.Services.Update(ser);
+                    unitOfWork.Complete();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ServiceExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+        }
+
         // PUT: api/Services/5
         [ResponseType(typeof(void))]
         [Authorize(Roles = "Manager, Admin, AppUser")]

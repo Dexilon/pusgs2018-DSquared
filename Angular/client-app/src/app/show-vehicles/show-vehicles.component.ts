@@ -15,6 +15,8 @@ import { NavbarComponent } from '../navbar/navbar.component';
 export class ShowVehiclesComponent implements OnInit {
   mode : string;
   criteria : string;
+  typeOV : string;
+  pricePH : string;
   from: number;
   to: number;
   type: string;

@@ -123,15 +123,15 @@ public payPalConfig?: PayPalConfig;
   onSubmit(rent:Rent,f: NgForm){
     this.today = new Date();
     this.someDate = new Date(rent.Start);
-    //if(this.someDate < this.today){
-      //alert("You cannot reserve vehicle before today!");
-    //}
-    //else{
-      //this.someDate = new Date(rent.End);
-      //if(this.someDate < this.today){
-        //alert("Your reservation cannot be ended before today!");
-      //}
-      //else{
+    if(this.someDate < this.today){
+      alert("You cannot reserve vehicle before today!");
+    }
+    else{
+      this.someDate = new Date(rent.End);
+      if(this.someDate < this.today){
+        alert("Your reservation cannot be ended before today!");
+      }
+      else{
         this.someDate = new Date(rent.Start);
         this.someDate2 = new Date(rent.End);
         debugger
@@ -168,8 +168,8 @@ public payPalConfig?: PayPalConfig;
             alert(error.error.ModelState[""][0])
           });
         }
-      //}
-    //}
+      }
+    }
     
   }
 

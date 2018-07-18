@@ -186,7 +186,7 @@ submitRatingPos(id: number) {
 
           this.services[id].Rating += 1;
 
-        this.serviceServiceService.updateMethodService(this.services[id].Id, this.services[id])
+        this.serviceServiceService.updateServiceRating(this.services[id].Id, this.services[id])
         .subscribe(
           data => {
             debugger
@@ -232,7 +232,7 @@ submitRatingPos(id: number) {
               debugger
               this.ratings = data;
 
-        this.serviceServiceService.updateMethodService(this.services[id].Id, this.services[id])
+        this.serviceServiceService.updateServiceRating(this.services[id].Id, this.services[id])
         .subscribe(
           data => {
             debugger
@@ -323,7 +323,7 @@ submitRatingNeg(id: number) {
 
       this.services[id].Rating -= 1;
 
-    this.serviceServiceService.updateMethodService(this.services[id].Id, this.services[id])
+    this.serviceServiceService.updateServiceRating(this.services[id].Id, this.services[id])
     .subscribe(
       data => {
         debugger
@@ -369,7 +369,7 @@ submitRatingNeg(id: number) {
           debugger
           this.ratings = data;
 
-    this.serviceServiceService.updateMethodService(this.services[id].Id, this.services[id])
+    this.serviceServiceService.updateServiceRating(this.services[id].Id, this.services[id])
     .subscribe(
       data => {
         debugger
